@@ -4,57 +4,29 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { CheckCircle2, ArrowRight, Calculator } from "lucide-react";
 import accountingImage from "@/assets/services-accounting.jpg";
-
 const Accounting = () => {
-  const services = [
-    {
-      title: "Bookkeeping Services",
-      description: "Accurate, timely recording of all financial transactions to maintain clear financial records.",
-      features: [
-        "Daily transaction recording",
-        "Bank reconciliation",
-        "Accounts payable and receivable",
-        "General ledger maintenance",
-      ],
-    },
-    {
-      title: "Financial Statements",
-      description: "Comprehensive financial reporting to give you clear insights into your business performance.",
-      features: [
-        "Balance sheets",
-        "Income statements",
-        "Cash flow statements",
-        "Custom financial reports",
-      ],
-    },
-    {
-      title: "Payroll Support",
-      description: "Complete payroll processing services to ensure your employees are paid accurately and on time.",
-      features: [
-        "Payroll processing",
-        "Tax withholding calculations",
-        "Quarterly payroll tax returns",
-        "W-2 and 1099 preparation",
-      ],
-    },
-    {
-      title: "QuickBooks Services",
-      description: "Expert setup, training, and ongoing support for QuickBooks accounting software.",
-      features: [
-        "QuickBooks setup and customization",
-        "Staff training",
-        "Ongoing technical support",
-        "Data cleanup and optimization",
-      ],
-    },
-  ];
-
-  return (
-    <div className="min-h-screen">
+  const services = [{
+    title: "Bookkeeping Services",
+    description: "Accurate, timely recording of all financial transactions to maintain clear financial records.",
+    features: ["Daily transaction recording", "Bank reconciliation", "Accounts payable and receivable", "General ledger maintenance"]
+  }, {
+    title: "Financial Statements",
+    description: "Comprehensive financial reporting to give you clear insights into your business performance.",
+    features: ["Balance sheets", "Income statements", "Cash flow statements", "Custom financial reports"]
+  }, {
+    title: "Payroll Support",
+    description: "Complete payroll processing services to ensure your employees are paid accurately and on time.",
+    features: ["Payroll processing", "Tax withholding calculations", "Quarterly payroll tax returns", "W-2 and 1099 preparation"]
+  }, {
+    title: "QuickBooks Services",
+    description: "Expert setup, training, and ongoing support for QuickBooks accounting software.",
+    features: ["QuickBooks setup and customization", "Staff training", "Ongoing technical support", "Data cleanup and optimization"]
+  }];
+  return <div className="min-h-screen">
       <Header />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-gradient-to-b from-secondary/50 to-background">
+      <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-gradient-to-b from-secondary/50 to-background py-[50px]">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -77,11 +49,7 @@ const Accounting = () => {
               </Button>
             </div>
             <div className="relative">
-              <img
-                src={accountingImage}
-                alt="Professional accounting services"
-                className="rounded-lg shadow-custom-xl w-full"
-              />
+              <img src={accountingImage} alt="Professional accounting services" className="rounded-lg shadow-custom-xl w-full" />
             </div>
           </div>
         </div>
@@ -119,24 +87,18 @@ const Accounting = () => {
             Our Accounting Services
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {services.map((service, index) => (
-              <div
-                key={service.title}
-                className="bg-card p-8 rounded-lg shadow-custom-md hover:shadow-custom-lg transition-smooth"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
+            {services.map((service, index) => <div key={service.title} className="bg-card p-8 rounded-lg shadow-custom-md hover:shadow-custom-lg transition-smooth" style={{
+            animationDelay: `${index * 100}ms`
+          }}>
                 <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
                 <p className="text-muted-foreground mb-6">{service.description}</p>
                 <ul className="space-y-3">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3">
+                  {service.features.map(feature => <li key={feature} className="flex items-start gap-3">
                       <CheckCircle2 className="h-6 w-6 text-accent flex-shrink-0 mt-0.5" />
                       <span className="text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
+                    </li>)}
                 </ul>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -191,7 +153,7 @@ const Accounting = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 hero-gradient">
+      <section className="py-16 hero-gradient md:py-[55px]">
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
             Ready to Streamline Your Accounting?
@@ -209,8 +171,6 @@ const Accounting = () => {
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Accounting;
