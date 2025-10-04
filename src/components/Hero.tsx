@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import heroImage from "@/assets/hero-image.jpg";
+import heroImage from "@/assets/bridge-hero.jpg";
 
 const Hero = () => {
   return (
@@ -10,7 +10,7 @@ const Hero = () => {
       <div className="absolute inset-0">
         <img
           src={heroImage}
-          alt="Professional financial services team"
+          alt="Frog Bridge in Willimantic, Connecticut - symbolizing our commitment to connecting clients with financial success"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 hero-gradient opacity-80" />

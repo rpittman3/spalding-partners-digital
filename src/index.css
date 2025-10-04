@@ -29,9 +29,13 @@ All colors MUST be HSL.
     --muted: 210 20% 94%;
     --muted-foreground: 215 16% 47%;
 
-    /* Warm gold for CTAs and highlights */
-    --accent: 38 92% 50%;
+    /* Warm coral-gold for CTAs and highlights - more boutique feel */
+    --accent: 16 85% 58%;
     --accent-foreground: 0 0% 100%;
+    
+    /* Warm secondary tones for boutique feel */
+    --warm-accent: 28 76% 65%;
+    --soft-peach: 20 60% 88%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -71,7 +75,7 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Cabin', system-ui, -apple-system, sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -148,5 +152,23 @@ All colors MUST be HSL.
   .section-padding {
     padding-top: var(--section-padding);
     padding-bottom: var(--section-padding);
+  }
+
+  /* 3D flip card utilities */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .rotate-y-180 {
+    transform: rotateY(180deg);
   }
 }
