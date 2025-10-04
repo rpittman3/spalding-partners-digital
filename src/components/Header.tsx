@@ -151,15 +151,6 @@ const Header = () => {
               Resources
             </Link>
             <Link
-              to="/blog"
-              className={cn(
-                "text-sm font-medium transition-colors hover:text-primary",
-                isActive("/blog") ? "text-primary" : "text-muted-foreground"
-              )}
-            >
-              Blog
-            </Link>
-            <Link
               to="/faq"
               className={cn(
                 "text-sm font-medium transition-colors hover:text-primary",
@@ -229,13 +220,6 @@ const Header = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Resources
-            </Link>
-            <Link
-              to="/blog"
-              className="block py-2 text-sm font-medium text-foreground hover:text-primary"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Blog
             </Link>
             <Link
               to="/faq"

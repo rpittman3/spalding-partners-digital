@@ -35,9 +35,6 @@ const Footer = () => {
               <Link to="/resources" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
                 Resources
               </Link>
-              <Link to="/blog" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
-                Blog
-              </Link>
               <Link to="/faq" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
                 FAQ
               </Link>
