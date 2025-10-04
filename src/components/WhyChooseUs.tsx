@@ -14,7 +14,7 @@ const values = [
   {
     icon: Clock,
     title: "Discipline",
-    description: "Over 30 years of experience have refined our processes to deliver consistent, high-quality service every time.",
+    description: "Over 25 years of experience have refined our processes to deliver consistent, high-quality service every time.",
   },
   {
     icon: Award,
