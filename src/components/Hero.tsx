@@ -2,17 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import heroImage from "@/assets/bridge-hero.jpg";
-
 const Hero = () => {
-  return (
-    <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+  return <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt="Frog Bridge in Willimantic, Connecticut - symbolizing our commitment to connecting clients with financial success"
-          className="w-full h-full object-cover"
-        />
+        <img src={heroImage} alt="Frog Bridge in Willimantic, Connecticut - symbolizing our commitment to connecting clients with financial success" className="w-full h-full object-cover" />
         <div className="absolute inset-0 hero-gradient opacity-80" />
       </div>
 
@@ -24,10 +18,7 @@ const Hero = () => {
           <span className="text-accent">to Successful People</span>
         </h1>
         
-        <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto animate-fade-in text-primary-foreground/90 font-normal">
-          Expert accounting, tax preparation, and financial management services
-          in Connecticut for over 30 years
-        </p>
+        <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto animate-fade-in text-primary-foreground/90 font-normal">Expert accounting, tax preparation, and financial management services in Connecticut for over 25 years</p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
           <Button asChild variant="hero" size="xl">
@@ -46,7 +37,7 @@ const Hero = () => {
         {/* Trust Indicators */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           <div className="text-center">
-            <div className="text-4xl font-bold text-accent mb-2">30+</div>
+            <div className="text-4xl font-bold text-accent mb-2">25+</div>
             <div className="text-sm text-primary-foreground/80">Years of Experience</div>
           </div>
           <div className="text-center">
@@ -66,8 +57,6 @@ const Hero = () => {
           <div className="w-1 h-3 bg-primary-foreground/50 rounded-full" />
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
