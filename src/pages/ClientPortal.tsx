@@ -7,86 +7,69 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, FileText, Upload, Download, Clock, CheckCircle, AlertCircle, File } from "lucide-react";
 
 // Mock data
-const upcomingDeadlines = [
-  {
-    id: 1,
-    title: "Q1 Tax Filing",
-    date: "2025-04-15",
-    status: "upcoming",
-    description: "Individual tax return deadline",
-  },
-  {
-    id: 2,
-    title: "Quarterly Estimated Payment",
-    date: "2025-06-15",
-    status: "upcoming",
-    description: "Q2 estimated tax payment due",
-  },
-  {
-    id: 3,
-    title: "Financial Statement Review",
-    date: "2025-03-31",
-    status: "urgent",
-    description: "Monthly financial review meeting",
-  },
-];
-
-const resources = [
-  {
-    id: 1,
-    title: "Tax Planning Guide 2025",
-    type: "PDF",
-    size: "2.4 MB",
-    date: "2025-01-15",
-  },
-  {
-    id: 2,
-    title: "Quarterly Tax Organizer",
-    type: "Excel",
-    size: "1.2 MB",
-    date: "2025-01-10",
-  },
-  {
-    id: 3,
-    title: "Business Expense Categories",
-    type: "PDF",
-    size: "856 KB",
-    date: "2024-12-20",
-  },
-];
-
-const recentDocuments = [
-  {
-    id: 1,
-    name: "2024_Tax_Return_Final.pdf",
-    uploadedBy: "Sarah Spalding",
-    date: "2025-02-15",
-    size: "3.2 MB",
-  },
-  {
-    id: 2,
-    name: "January_Financial_Statements.xlsx",
-    uploadedBy: "Jennifer Martinez",
-    date: "2025-02-10",
-    size: "1.8 MB",
-  },
-  {
-    id: 3,
-    name: "W2_Forms_2024.pdf",
-    uploadedBy: "You",
-    date: "2025-02-05",
-    size: "524 KB",
-  },
-];
-
+const upcomingDeadlines = [{
+  id: 1,
+  title: "Q1 Tax Filing",
+  date: "2025-04-15",
+  status: "upcoming",
+  description: "Individual tax return deadline"
+}, {
+  id: 2,
+  title: "Quarterly Estimated Payment",
+  date: "2025-06-15",
+  status: "upcoming",
+  description: "Q2 estimated tax payment due"
+}, {
+  id: 3,
+  title: "Financial Statement Review",
+  date: "2025-03-31",
+  status: "urgent",
+  description: "Monthly financial review meeting"
+}];
+const resources = [{
+  id: 1,
+  title: "Tax Planning Guide 2025",
+  type: "PDF",
+  size: "2.4 MB",
+  date: "2025-01-15"
+}, {
+  id: 2,
+  title: "Quarterly Tax Organizer",
+  type: "Excel",
+  size: "1.2 MB",
+  date: "2025-01-10"
+}, {
+  id: 3,
+  title: "Business Expense Categories",
+  type: "PDF",
+  size: "856 KB",
+  date: "2024-12-20"
+}];
+const recentDocuments = [{
+  id: 1,
+  name: "2024_Tax_Return_Final.pdf",
+  uploadedBy: "Sarah Spalding",
+  date: "2025-02-15",
+  size: "3.2 MB"
+}, {
+  id: 2,
+  name: "January_Financial_Statements.xlsx",
+  uploadedBy: "Jennifer Martinez",
+  date: "2025-02-10",
+  size: "1.8 MB"
+}, {
+  id: 3,
+  name: "W2_Forms_2024.pdf",
+  uploadedBy: "You",
+  date: "2025-02-05",
+  size: "524 KB"
+}];
 const ClientPortal = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
-
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-grow pt-32 md:pt-40 pb-16">
+      <main className="flex-grow pt-32 md:pt-40 pb-16 py-[60px]">
         <div className="container-custom">
           {/* Welcome Section */}
           <div className="mb-8">
@@ -169,16 +152,8 @@ const ClientPortal = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {upcomingDeadlines.map((deadline) => (
-                      <div
-                        key={deadline.id}
-                        className="flex items-start gap-4 p-4 rounded-lg border border-border hover:border-accent transition-fast"
-                      >
-                        {deadline.status === "urgent" ? (
-                          <AlertCircle className="h-5 w-5 text-accent mt-0.5" />
-                        ) : (
-                          <CheckCircle className="h-5 w-5 text-primary mt-0.5" />
-                        )}
+                    {upcomingDeadlines.map(deadline => <div key={deadline.id} className="flex items-start gap-4 p-4 rounded-lg border border-border hover:border-accent transition-fast">
+                        {deadline.status === "urgent" ? <AlertCircle className="h-5 w-5 text-accent mt-0.5" /> : <CheckCircle className="h-5 w-5 text-primary mt-0.5" />}
                         <div className="flex-1">
                           <h4 className="font-semibold text-foreground">
                             {deadline.title}
@@ -193,8 +168,7 @@ const ClientPortal = () => {
                         <Button variant="outline" size="sm">
                           View Details
                         </Button>
-                      </div>
-                    ))}
+                      </div>)}
                   </div>
                 </CardContent>
               </Card>
@@ -230,11 +204,7 @@ const ClientPortal = () => {
                   <div>
                     <h3 className="font-semibold mb-4">Recent Documents</h3>
                     <div className="space-y-3">
-                      {recentDocuments.map((doc) => (
-                        <div
-                          key={doc.id}
-                          className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-secondary/30 transition-fast"
-                        >
+                      {recentDocuments.map(doc => <div key={doc.id} className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-secondary/30 transition-fast">
                           <div className="flex items-center gap-4">
                             <File className="h-8 w-8 text-primary" />
                             <div>
@@ -248,8 +218,7 @@ const ClientPortal = () => {
                           <Button variant="ghost" size="sm">
                             <Download className="h-4 w-4" />
                           </Button>
-                        </div>
-                      ))}
+                        </div>)}
                     </div>
                   </div>
                 </CardContent>
@@ -267,11 +236,7 @@ const ClientPortal = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="grid gap-4 md:grid-cols-2">
-                    {resources.map((resource) => (
-                      <div
-                        key={resource.id}
-                        className="p-6 rounded-lg border border-border hover:border-accent hover:shadow-custom-md transition-smooth"
-                      >
+                    {resources.map(resource => <div key={resource.id} className="p-6 rounded-lg border border-border hover:border-accent hover:shadow-custom-md transition-smooth">
                         <div className="flex items-start justify-between mb-3">
                           <FileText className="h-8 w-8 text-primary" />
                           <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
@@ -286,8 +251,7 @@ const ClientPortal = () => {
                           <Download className="h-4 w-4 mr-2" />
                           Download
                         </Button>
-                      </div>
-                    ))}
+                      </div>)}
                   </div>
                 </CardContent>
               </Card>
@@ -318,8 +282,6 @@ const ClientPortal = () => {
       </main>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default ClientPortal;
