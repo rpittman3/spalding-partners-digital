@@ -20,31 +20,33 @@ const Home = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Trusted Financial Partners Since 1987
+                Your Boutique Financial Partner Since 2000
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Spalding & Partners Financial Services, LLC is a full-service accounting firm
-                located in Connecticut, serving the area's accounting needs for over 30 years.
-                We specialize in small business financial management, tax preparation, and
-                Chief Financial Officer consulting services.
+                Spalding & Partners Financial Services, LLC is a boutique accounting firm
+                that takes a different approach. We're not a traditional bookkeeping service—we're
+                your dedicated financial partner who knows you, your business, and your unique goals.
+                Since 2000, we've specialized in providing personalized financial management, tax
+                expertise, and CFO consulting to select clients who value a hands-on, relationship-based approach.
               </p>
               <p className="text-lg text-muted-foreground mb-8">
-                Our firm provides service in a timely, confidential, and professional manner.
-                With a small, dedicated staff and decades of expertise, we ensure your
-                financial information is handled with the utmost care and precision.
+                Unlike large corporate firms where you're just a number, our boutique model means
+                you work directly with experienced professionals who understand your story. We know
+                who you are, and we're invested in your success. With over 25 years of expertise,
+                we deliver timely, confidential, and genuinely personalized service.
               </p>
               <div className="space-y-3 mb-8">
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-6 w-6 text-accent flex-shrink-0" />
-                  <span className="text-muted-foreground">Over 30 years of combined experience</span>
+                  <span className="text-muted-foreground">Over 25 years of trusted expertise</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-6 w-6 text-accent flex-shrink-0" />
-                  <span className="text-muted-foreground">Personalized service from a small, expert team</span>
+                  <span className="text-muted-foreground">Boutique, relationship-focused approach—we know who you are</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-6 w-6 text-accent flex-shrink-0" />
-                  <span className="text-muted-foreground">Comprehensive financial solutions for individuals and businesses</span>
+                  <span className="text-muted-foreground">Tailored solutions for niche clientele, not cookie-cutter services</span>
                 </div>
               </div>
               <Button asChild variant="cta" size="lg">
@@ -57,12 +59,12 @@ const Home = () => {
             <div className="relative">
               <div className="aspect-square rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 p-8 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="text-6xl md:text-7xl font-bold text-primary mb-4">30+</div>
+                  <div className="text-6xl md:text-7xl font-bold text-primary mb-4">25+</div>
                   <div className="text-xl md:text-2xl font-semibold text-foreground mb-2">
                     Years of Excellence
                   </div>
                   <p className="text-muted-foreground">
-                    Serving Connecticut with integrity and expertise
+                    Building lasting relationships with Connecticut's businesses
                   </p>
                 </div>
               </div>

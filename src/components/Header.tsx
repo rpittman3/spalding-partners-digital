@@ -46,11 +46,6 @@ const Header = () => {
       href: "/services/business-advisory",
       description: "Entity selection and growth strategies",
     },
-    {
-      title: "Personal Financial Planning",
-      href: "/services/personal-planning",
-      description: "Retirement and estate planning guidance",
-    },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -164,6 +159,15 @@ const Header = () => {
             >
               Blog
             </Link>
+            <Link
+              to="/faq"
+              className={cn(
+                "text-sm font-medium transition-colors hover:text-primary",
+                isActive("/faq") ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              FAQ
+            </Link>
           </nav>
 
           {/* CTA Button */}
@@ -232,6 +236,13 @@ const Header = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Blog
+            </Link>
+            <Link
+              to="/faq"
+              className="block py-2 text-sm font-medium text-foreground hover:text-primary"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              FAQ
             </Link>
             <Button asChild variant="cta" size="lg" className="w-full">
               <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>

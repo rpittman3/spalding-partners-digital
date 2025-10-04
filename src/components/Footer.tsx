@@ -15,7 +15,7 @@ const Footer = () => {
               Financial Services, LLC
             </p>
             <p className="text-sm text-primary-foreground/70">
-              Professional accounting, tax, and financial management services serving Connecticut for over 30 years.
+              A boutique accounting firm offering personalized financial solutions for niche clientele since 2000.
             </p>
           </div>
 
@@ -38,6 +38,9 @@ const Footer = () => {
               <Link to="/blog" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
                 Blog
               </Link>
+              <Link to="/faq" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
+                FAQ
+              </Link>
               <Link to="/contact" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
                 Contact
               </Link>
@@ -59,9 +62,6 @@ const Footer = () => {
               </Link>
               <Link to="/services/business-advisory" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
                 Business Advisory
-              </Link>
-              <Link to="/services/personal-planning" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
-                Personal Financial Planning
               </Link>
             </nav>
           </div>

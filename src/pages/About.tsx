@@ -17,7 +17,7 @@ const About = () => {
               About Spalding & Partners
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground">
-              Building lasting partnerships through integrity, expertise, and personalized service
+              A boutique firm where you're more than a client number—you're a valued partner we know by name
             </p>
           </div>
         </div>
@@ -30,23 +30,27 @@ const About = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Our Story</h2>
             <div className="prose prose-lg max-w-none space-y-6 text-muted-foreground">
               <p className="text-lg">
-                Founded in 1987, Spalding & Partners Financial Services, LLC has been serving
-                Connecticut's financial needs for over three decades. What began as a vision to
-                provide personalized, professional accounting services has grown into a trusted
-                firm known for integrity, discipline, and exceptional client service.
+                Founded in 2000, Spalding & Partners Financial Services, LLC was born from a
+                simple but powerful vision: to create a boutique accounting firm where clients
+                aren't just account numbers—they're valued partners in a lasting relationship.
+                For over 25 years, we've remained true to that vision, building a practice that
+                prioritizes personal connection, deep expertise, and genuinely customized service.
               </p>
               <p className="text-lg">
-                We specialize in small business financial management, comprehensive tax preparation,
-                and Chief Financial Officer consulting services. Our firm is built on the belief that
-                every client deserves dedicated attention, expert guidance, and solutions tailored to
-                their unique financial situation.
+                We're woman-owned and operated, bringing a unique perspective to financial
+                management, tax strategy, and CFO consulting. Unlike traditional bookkeeping
+                firms or large corporate practices, we take an "I know who you are" approach.
+                We remember your goals, understand your challenges, and celebrate your wins.
+                This isn't about volume—it's about building meaningful, long-term partnerships
+                with niche clientele who value expertise paired with genuine personal attention.
               </p>
               <p className="text-lg">
-                With over 30 years of combined experience in tax preparation and accounting services,
-                we have fine-tuned and streamlined key accounting processes to deliver high-quality
-                service to both corporate and individual clients. Our small staff ensures that your
-                information remains confidential and that you receive the personalized attention you
-                deserve.
+                With over 25 years of specialized experience, we've refined our processes and
+                deepened our expertise while staying small by design. Our boutique model allows
+                us to maintain the highest standards of confidentiality, deliver exceptional
+                quality, and ensure that every client receives the dedicated, hands-on service
+                they deserve. You'll work directly with experienced professionals who truly
+                know your business and your story.
               </p>
             </div>
           </div>
@@ -77,10 +81,10 @@ const About = () => {
               </div>
               <h3 className="text-2xl font-bold mb-4">Discipline</h3>
               <p className="text-muted-foreground">
-                With over 30 years of experience in tax preparation and accounting services,
-                we have fine-tuned and streamlined key accounting processes to deliver
-                high-quality service efficiently and accurately. Our systematic approach
-                ensures consistent excellence.
+                With over 25 years of experience, we've fine-tuned and streamlined our
+                processes to deliver exceptional quality efficiently and accurately. Our
+                systematic, detail-oriented approach ensures consistent excellence while
+                maintaining the personal touch that defines boutique service.
               </p>
             </div>
 
@@ -88,12 +92,12 @@ const About = () => {
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
                 <Heart className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">Client-Focused</h3>
+              <h3 className="text-2xl font-bold mb-4">Relationship-Centered</h3>
               <p className="text-muted-foreground">
-                Your success is our success. We take the time to understand your unique
-                financial situation and goals, providing personalized solutions and advice
-                that truly serve your best interests. We're not just your accountants—we're
-                your financial partners.
+                This is what sets us apart: we know who you are. Your success is our success,
+                and we're invested in your journey. We take the time to deeply understand your
+                unique situation and goals, delivering solutions that are truly tailored to you.
+                We're not transactional—we're your trusted financial partners for the long haul.
               </p>
             </div>
 
@@ -119,16 +123,18 @@ const About = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-8">Our Commitment to You</h2>
             <p className="text-lg md:text-xl text-muted-foreground mb-8">
-              At Spalding & Partners Financial Services, LLC, we understand that your financial
-              well-being is paramount. Our commitment goes beyond numbers—we're dedicated to
-              building long-term relationships based on trust, transparency, and results.
+              At Spalding & Partners, we're redefining what boutique accounting means. We're not
+              chasing volume or treating you like just another file. Our commitment is to select
+              clients who value what we offer: deep expertise, genuine relationships, and truly
+              personalized service. We're small by design because it allows us to deliver
+              exceptional quality and maintain the "I know who you are" approach that defines us.
             </p>
             <p className="text-lg md:text-xl text-muted-foreground mb-12">
-              Whether you're an individual seeking personal financial guidance or a business
-              owner navigating complex financial challenges, we provide the expertise and
-              personalized attention you need to succeed. Our knowledge of small business
-              practice, tax law, and economic impacts ensures that our clients receive the
-              best service possible.
+              As a woman-owned firm with over 25 years of specialized expertise, we bring both
+              technical excellence and a human touch to every engagement. We understand small
+              business intricacies, tax complexities, and financial strategy—but more importantly,
+              we understand you. If you're looking for a firm that prioritizes relationships over
+              transactions and quality over quantity, you've found your financial partner.
             </p>
             <Button asChild variant="cta" size="xl">
               <Link to="/contact">
@@ -148,24 +154,26 @@ const About = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <div className="text-center">
-              <div className="text-5xl font-bold text-accent mb-4">30+</div>
-              <h3 className="text-xl font-semibold mb-2">Years of Experience</h3>
+              <div className="text-5xl font-bold text-accent mb-4">25+</div>
+              <h3 className="text-xl font-semibold mb-2">Years of Excellence</h3>
               <p className="text-muted-foreground">
-                Three decades of proven expertise serving Connecticut
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="text-5xl font-bold text-accent mb-4">500+</div>
-              <h3 className="text-xl font-semibold mb-2">Satisfied Clients</h3>
-              <p className="text-muted-foreground">
-                Individuals and businesses trust us with their finances
+                Over two decades of boutique, relationship-focused service
               </p>
             </div>
             <div className="text-center">
               <div className="text-5xl font-bold text-accent mb-4">100%</div>
-              <h3 className="text-xl font-semibold mb-2">Confidential</h3>
+              <h3 className="text-xl font-semibold mb-2">Personalized</h3>
               <p className="text-muted-foreground">
-                Your privacy and security are always our top priority
+                Every client receives dedicated, hands-on attention
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl font-bold text-accent mb-4">
+                <Heart className="h-16 w-16 mx-auto text-accent" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Woman-Owned</h3>
+              <p className="text-muted-foreground">
+                Bringing unique perspective and care to financial services
               </p>
             </div>
           </div>
