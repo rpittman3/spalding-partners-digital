@@ -1,4 +1,4 @@
-import { Mail, Phone } from "lucide-react";
+import { Mail, Phone, ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -58,62 +58,61 @@ const Staff = () => {
         {/* Team Members Grid */}
         <section className="py-16 md:py-24">
           <div className="container-custom">
-            <div className="grid gap-12 md:gap-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
               {staffMembers.map((member, index) => (
                 <div
                   key={member.email}
-                  className={`grid md:grid-cols-2 gap-8 items-start ${
-                    index % 2 === 1 ? "md:grid-flow-dense" : ""
-                  }`}
+                  className="group perspective-1000 h-[450px]"
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  {/* Photo Placeholder */}
-                  <div
-                    className={`${
-                      index % 2 === 1 ? "md:col-start-2" : ""
-                    }`}
-                  >
-                    <div className="aspect-square rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center shadow-custom-md">
-                      <div className="text-center">
-                        <div className="w-32 h-32 mx-auto rounded-full bg-primary/20 flex items-center justify-center mb-4">
-                          <span className="text-5xl font-bold text-primary">
-                            {member.name.split(" ").map(n => n[0]).join("")}
-                          </span>
+                  <div className="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
+                    {/* Front of card */}
+                    <div className="absolute inset-0 backface-hidden">
+                      <div className="relative h-full rounded-lg overflow-hidden shadow-custom-lg border-2 border-border bg-gradient-to-br from-primary/10 to-accent/10">
+                        <div className="flex flex-col items-center justify-center h-full p-8">
+                          <div className="w-40 h-40 rounded-full bg-primary/20 flex items-center justify-center mb-6 shadow-custom-md">
+                            <span className="text-6xl font-bold text-primary">
+                              {member.name.split(" ").map(n => n[0]).join("")}
+                            </span>
+                          </div>
+                          <h3 className="text-2xl font-bold text-primary mb-2 text-center">
+                            {member.name}
+                          </h3>
+                          <p className="text-lg text-accent font-semibold text-center">
+                            {member.title}
+                          </p>
                         </div>
-                        <p className="text-sm text-muted-foreground">Photo Coming Soon</p>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Bio Content */}
-                  <div
-                    className={`flex flex-col justify-center ${
-                      index % 2 === 1 ? "md:col-start-1 md:row-start-1" : ""
-                    }`}
-                  >
-                    <h2 className="text-3xl md:text-4xl font-bold mb-2 text-primary">
-                      {member.name}
-                    </h2>
-                    <p className="text-xl text-accent font-semibold mb-4">
-                      {member.title}
-                    </p>
-                    <p className="text-muted-foreground mb-6 leading-relaxed">
-                      {member.bio}
-                    </p>
-                    <div className="flex flex-col gap-2 text-sm">
-                      <a
-                        href={`mailto:${member.email}`}
-                        className="flex items-center gap-2 text-primary hover:text-accent transition-fast"
-                      >
-                        <Mail className="h-4 w-4" />
-                        {member.email}
-                      </a>
-                      <a
-                        href={`tel:${member.phone.replace(/\s/g, "")}`}
-                        className="flex items-center gap-2 text-primary hover:text-accent transition-fast"
-                      >
-                        <Phone className="h-4 w-4" />
-                        {member.phone}
-                      </a>
+                    {/* Back of card */}
+                    <div className="absolute inset-0 backface-hidden rotate-y-180">
+                      <div className="h-full rounded-lg bg-card border-2 border-accent shadow-custom-xl p-6 flex flex-col justify-between overflow-y-auto">
+                        <div>
+                          <h3 className="text-xl font-bold text-primary mb-3">
+                            {member.name}
+                          </h3>
+                          <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                            {member.bio}
+                          </p>
+                        </div>
+                        <div className="space-y-2 pt-4 border-t border-border">
+                          <a
+                            href={`mailto:${member.email}`}
+                            className="flex items-center gap-2 text-sm text-primary hover:text-accent transition-fast"
+                          >
+                            <Mail className="h-4 w-4" />
+                            {member.email}
+                          </a>
+                          <a
+                            href={`tel:${member.phone.replace(/\s/g, "")}`}
+                            className="flex items-center gap-2 text-sm text-primary hover:text-accent transition-fast"
+                          >
+                            <Phone className="h-4 w-4" />
+                            {member.phone}
+                          </a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
