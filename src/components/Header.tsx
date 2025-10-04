@@ -107,6 +107,15 @@ const Header = () => {
             >
               About Us
             </Link>
+            <Link
+              to="/staff"
+              className={cn(
+                "text-sm font-medium transition-colors hover:text-primary",
+                isActive("/staff") ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              Our Team
+            </Link>
             
             <NavigationMenu>
               <NavigationMenuList>
@@ -198,6 +207,13 @@ const Header = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               About Us
+            </Link>
+            <Link
+              to="/staff"
+              className="block py-2 text-sm font-medium text-foreground hover:text-primary"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Our Team
             </Link>
             
             <div className="space-y-2">

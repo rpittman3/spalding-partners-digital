@@ -29,6 +29,9 @@ const Footer = () => {
               <Link to="/about" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
                 About Us
               </Link>
+              <Link to="/staff" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
+                Our Team
+              </Link>
               <Link to="/services/accounting" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
                 Services
               </Link>
