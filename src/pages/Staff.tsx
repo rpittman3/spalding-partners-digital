@@ -32,7 +32,7 @@ const Staff = () => {
   return <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-grow pt-32 md:pt-40 py-[60px]">
+      <main className="flex-grow pt-15 pb-[60px]">
         {/* Hero Section */}
         <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 via-background to-accent/5">
           <div className="container-custom">

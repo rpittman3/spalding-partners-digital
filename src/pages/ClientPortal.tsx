@@ -69,7 +69,7 @@ const ClientPortal = () => {
   return <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-grow pt-32 md:pt-40 pb-16 py-[60px]">
+      <main className="flex-grow pt-15 pb-16">
         <div className="container-custom">
           {/* Welcome Section */}
           <div className="mb-8">
