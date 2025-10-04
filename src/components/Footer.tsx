@@ -41,6 +41,9 @@ const Footer = () => {
               <Link to="/faq" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
                 FAQ
               </Link>
+              <Link to="/client-portal" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
+                Client Portal
+              </Link>
               <Link to="/contact" className="text-sm text-primary-foreground/70 hover:text-accent transition-fast">
                 Contact
               </Link>

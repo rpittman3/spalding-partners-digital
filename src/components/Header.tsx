@@ -170,8 +170,11 @@ const Header = () => {
             </Link>
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
+          {/* CTA Buttons */}
+          <div className="hidden lg:flex items-center gap-3">
+            <Button asChild variant="outline" size="lg">
+              <Link to="/client-portal">Client Portal</Link>
+            </Button>
             <Button asChild variant="cta" size="lg">
               <Link to="/contact">Contact Us</Link>
             </Button>
@@ -244,11 +247,18 @@ const Header = () => {
             >
               FAQ
             </Link>
-            <Button asChild variant="cta" size="lg" className="w-full">
-              <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                Contact Us
-              </Link>
-            </Button>
+            <div className="flex flex-col gap-2">
+              <Button asChild variant="outline" size="lg" className="w-full">
+                <Link to="/client-portal" onClick={() => setIsMobileMenuOpen(false)}>
+                  Client Portal
+                </Link>
+              </Button>
+              <Button asChild variant="cta" size="lg" className="w-full">
+                <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                  Contact Us
+                </Link>
+              </Button>
+            </div>
           </div>
         )}
       </div>
