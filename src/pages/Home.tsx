@@ -6,6 +6,7 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import handshakeImage from "@/assets/handshake-trust.jpg";
 
 const Home = () => {
   return (
@@ -57,17 +58,11 @@ const Home = () => {
               </Button>
             </div>
             <div className="relative">
-              <div className="aspect-square rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 p-8 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl md:text-7xl font-bold text-primary mb-4">25+</div>
-                  <div className="text-xl md:text-2xl font-semibold text-foreground mb-2">
-                    Years of Excellence
-                  </div>
-                  <p className="text-muted-foreground">
-                    Building lasting relationships with Connecticut's businesses
-                  </p>
-                </div>
-              </div>
+              <img 
+                src={handshakeImage} 
+                alt="Building trust and lasting relationships with our clients through personalized financial guidance" 
+                className="w-full h-auto rounded-lg shadow-custom-xl"
+              />
             </div>
           </div>
         </div>
