@@ -45,8 +45,8 @@ const WhyChooseUs = () => {
                 className="text-center group"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-accent/10 transition-smooth">
-                  <Icon className="h-10 w-10 text-primary group-hover:text-accent transition-smooth" />
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-smooth">
+                  <Icon className="h-10 w-10 text-accent transition-smooth" />
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold mb-3 text-primary">
                   {value.title}

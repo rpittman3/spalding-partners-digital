@@ -55,8 +55,8 @@ const Header = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-background/95 backdrop-blur-md shadow-custom-md"
-          : "bg-transparent"
+          ? "bg-muted/60 backdrop-blur-md shadow-custom-md"
+          : "bg-muted/40 backdrop-blur-sm"
       )}
     >
       {/* Top Bar */}
