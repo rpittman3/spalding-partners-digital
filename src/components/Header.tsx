@@ -59,7 +59,7 @@ const Header = () => {
           : "backdrop-blur-sm"
       )}
       style={{
-        backgroundColor: isScrolled ? 'rgba(17, 17, 17, 0.8)' : 'rgba(35, 31, 32, 0.8)'
+        backgroundColor: isScrolled ? 'rgba(17, 17, 17, 0.8)' : 'rgb(217 208 210 / 80%)'
       }}
     >
       {/* Top Bar */}
