@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       <Header />
-      <div aria-hidden className="h-[var(--nav-height)]" />
+      
       <Hero />
 
       {/* About Section Preview */}

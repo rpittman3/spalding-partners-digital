@@ -107,8 +107,17 @@ All colors MUST be HSL.
     transition: var(--transition-fast);
   }
 
-  section {
+  /* Apply default section spacing to all sections except the Notifications toaster container */
+  section:not([aria-label^="Notifications" i]) {
     @apply py-16 md:py-24;
+  }
+
+  /* Adjust notifications container spacing to avoid pushing content below the navbar */
+  section[aria-label="Notifications" i],
+  div[aria-label="Notifications" i],
+  ol[aria-label="Notifications" i] {
+    padding-top: 0 !important;
+    padding-bottom: 2rem !important; /* 2rem = 32px = pb-8 */
   }
 }
 
