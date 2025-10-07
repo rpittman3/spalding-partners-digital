@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import heroImage from "@/assets/bridge-hero.jpg";
+import handshakeImage from "@/assets/handshake-trust.jpg";
 const Hero = () => {
   return <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden py-0 pt-0 mt-0">
       {/* Background Image with Overlay */}
@@ -34,20 +35,13 @@ const Hero = () => {
           </Button>
         </div>
 
-        {/* Trust Indicators */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          <div className="text-center">
-            <div className="text-4xl font-bold text-accent mb-2">25+</div>
-            <div className="text-sm text-primary-foreground/80">Years of Experience</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-accent mb-2">500+</div>
-            <div className="text-sm text-primary-foreground/80">Satisfied Clients</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-accent mb-2">100%</div>
-            <div className="text-sm text-primary-foreground/80">Confidential Service</div>
-          </div>
+        {/* Trust Image */}
+        <div className="mt-16 max-w-4xl mx-auto">
+          <img 
+            src={handshakeImage} 
+            alt="Building trust and lasting relationships with our clients through personalized financial guidance" 
+            className="w-full h-auto rounded-lg shadow-custom-xl"
+          />
         </div>
       </div>
 
