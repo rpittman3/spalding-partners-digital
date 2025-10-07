@@ -59,7 +59,7 @@ const Header = () => {
           : "backdrop-blur-sm"
       )}
       style={{
-        backgroundColor: 'rgb(217 208 210 / 80%)'
+        backgroundColor: 'rgb(249 249 232 / 85%)'
       }}
     >
       {/* Top Bar */}
