@@ -55,9 +55,12 @@ const Header = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-muted/60 backdrop-blur-md shadow-custom-md"
-          : "bg-muted/40 backdrop-blur-sm"
+          ? "shadow-custom-md backdrop-blur-md"
+          : "backdrop-blur-sm"
       )}
+      style={{
+        backgroundColor: isScrolled ? 'rgba(17, 17, 17, 0.8)' : 'rgba(35, 31, 32, 0.8)'
+      }}
     >
       {/* Top Bar */}
       <div className="bg-primary text-primary-foreground py-2 px-4">
