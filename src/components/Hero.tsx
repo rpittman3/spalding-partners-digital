@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import heroImage from "@/assets/bridge-hero.jpg";
 const Hero = () => {
-  return <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+  return <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden py-0 pt-0 mt-0">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img src={heroImage} alt="Frog Bridge in Willimantic, Connecticut - symbolizing our commitment to connecting clients with financial success" className="w-full h-full object-cover" />
