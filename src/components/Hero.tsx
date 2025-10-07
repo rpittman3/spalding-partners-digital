@@ -35,13 +35,20 @@ const Hero = () => {
           </Button>
         </div>
 
-        {/* Trust Image */}
-        <div className="mt-16 max-w-4xl mx-auto">
-          <img 
-            src={handshakeImage} 
-            alt="Building trust and lasting relationships with our clients through personalized financial guidance" 
-            className="w-full h-auto rounded-lg shadow-custom-xl"
-          />
+        {/* Trust Indicators */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="text-center">
+            <div className="text-4xl font-bold text-accent mb-2">25+</div>
+            <div className="text-sm text-primary-foreground/80">Years of Experience</div>
+          </div>
+          <div className="text-center">
+            <div className="text-4xl font-bold text-accent mb-2">500+</div>
+            <div className="text-sm text-primary-foreground/80">Satisfied Clients</div>
+          </div>
+          <div className="text-center">
+            <div className="text-4xl font-bold text-accent mb-2">100%</div>
+            <div className="text-sm text-primary-foreground/80">Confidential Service</div>
+          </div>
         </div>
       </div>
 
