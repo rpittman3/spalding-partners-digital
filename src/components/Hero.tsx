@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import heroImage from "@/assets/bridge-hero.jpg";
+import heroImage from "@/assets/hero-lake.jpg";
 import handshakeImage from "@/assets/handshake-trust.jpg";
 const Hero = () => {
   return <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden py-0 pt-0 mt-0">
