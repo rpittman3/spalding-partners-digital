@@ -5,10 +5,9 @@ import heroImage from "@/assets/hero-lake.jpg";
 import handshakeImage from "@/assets/handshake-trust.jpg";
 const Hero = () => {
   return <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden py-0 pt-0 mt-0">
-      {/* Background Image with Overlay */}
+      {/* Background Image */}
       <div className="absolute inset-0">
         <img src={heroImage} alt="Frog Bridge in Willimantic, Connecticut - symbolizing our commitment to connecting clients with financial success" className="w-full h-full object-cover object-top" />
-        <div className="absolute inset-0 hero-gradient opacity-80" />
       </div>
 
       {/* Content */}
