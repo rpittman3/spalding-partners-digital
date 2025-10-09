@@ -72,7 +72,7 @@ const ClientPortal = () => {
       <main className="flex-grow pt-15 pb-16">
         <div className="container-custom">
           {/* Welcome Section */}
-          <div className="mb-8">
+          <div className="mb-8 offset-header">
             <h1 className="text-3xl md:text-4xl font-bold mb-2">
               Welcome back, Client Name
             </h1>

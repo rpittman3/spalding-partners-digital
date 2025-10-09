@@ -55,7 +55,7 @@ const BusinessAdvisory = () => {
       {/* Hero Section */}
       <section className="pt-15 pb-16 md:pb-24 bg-gradient-to-b from-secondary/50 to-background">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center offset-header">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 rounded-full mb-6">
               <Briefcase className="h-5 w-5 text-accent" />
               <span className="text-sm font-semibold text-accent">Business Advisory</span>

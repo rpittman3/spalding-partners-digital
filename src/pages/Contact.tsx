@@ -57,7 +57,7 @@ const Contact = () => {
       {/* Hero Section */}
       <section className="pt-15 pb-16 md:pb-24 bg-gradient-to-b from-secondary/50 to-background">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center offset-header">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Get in Touch
             </h1>

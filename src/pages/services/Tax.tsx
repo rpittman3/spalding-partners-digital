@@ -57,7 +57,7 @@ const Tax = () => {
       <section className="pt-15 pb-16 md:pb-24 bg-gradient-to-b from-secondary/50 to-background">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <div className="offset-header">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 rounded-full mb-6">
                 <FileText className="h-5 w-5 text-accent" />
                 <span className="text-sm font-semibold text-accent">Tax Services</span>
