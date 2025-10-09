@@ -3,10 +3,8 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Shield, Heart, Target, Users, ArrowRight } from "lucide-react";
-
 const About = () => {
-  return (
-    <div className="min-h-screen">
+  return <div className="min-h-screen">
       <Header />
 
       {/* Hero Section */}
@@ -24,7 +22,7 @@ const About = () => {
       </section>
 
       {/* Our Story */}
-      <section className="py-16 md:py-24 bg-background">
+      <section className="py-16 bg-background md:py-0">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Our Story</h2>
@@ -200,8 +198,6 @@ const About = () => {
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default About;
