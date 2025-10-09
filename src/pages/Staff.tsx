@@ -34,7 +34,7 @@ const Staff = () => {
       
       <main className="flex-grow pt-15 pb-[60px]">
         {/* Hero Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 via-background to-accent/5">
+        <section className="pt-28 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-primary/5 via-background to-accent/5">
           <div className="container-custom">
             <div className="text-center max-w-3xl mx-auto">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
