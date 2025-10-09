@@ -39,15 +39,15 @@ const Hero = () => {
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           <div className="text-center">
             <div className="text-4xl font-bold text-accent mb-2">25+</div>
-            <div className="text-sm text-foreground/70">Years of Experience</div>
+            <div className="text-sm text-primary-foreground/80">Years of Experience</div>
           </div>
           <div className="text-center">
             <div className="text-4xl font-bold text-accent mb-2">500+</div>
-            <div className="text-sm text-foreground/70">Satisfied Clients</div>
+            <div className="text-sm text-primary-foreground/80">Satisfied Clients</div>
           </div>
           <div className="text-center">
             <div className="text-4xl font-bold text-accent mb-2">100%</div>
-            <div className="text-sm text-foreground/70">Confidential Service</div>
+            <div className="text-sm text-primary-foreground/80">Confidential Service</div>
           </div>
         </div>
       </div>
