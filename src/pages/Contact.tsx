@@ -263,7 +263,7 @@ const Contact = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 hero-gradient">
+      <section className="py-16 md:py-24" style={{ backgroundColor: '#918a6e' }}>
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
             Prefer to Call or Email?
