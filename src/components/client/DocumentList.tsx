@@ -20,6 +20,7 @@ interface Document {
   file_name: string;
   file_path: string;
   uploaded_at: string;
+  uploaded_by: string;
   file_size: number;
   expires_at: string;
   extension_count: number;
@@ -150,79 +151,108 @@ export default function DocumentList({ refreshTrigger }: { refreshTrigger?: numb
     return <div className="text-center py-8">Loading documents...</div>;
   }
 
-  return (
-    <div className="border rounded-lg">
-      <Table>
-        <TableHeader>
+  const clientDocs = documents.filter(doc => doc.uploaded_by === user?.id);
+  const adminDocs = documents.filter(doc => doc.uploaded_by !== user?.id);
+
+  const renderDocumentTable = (docs: Document[], emptyMessage: string) => (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>File Name</TableHead>
+          <TableHead>Size</TableHead>
+          <TableHead>Uploaded</TableHead>
+          <TableHead>Expires</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {docs.length === 0 ? (
           <TableRow>
-            <TableHead>File Name</TableHead>
-            <TableHead>Size</TableHead>
-            <TableHead>Uploaded</TableHead>
-            <TableHead>Expires</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+              {emptyMessage}
+            </TableCell>
           </TableRow>
-        </TableHeader>
-        <TableBody>
-          {documents.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                No documents uploaded yet
-              </TableCell>
-            </TableRow>
-          ) : (
-            documents.map((doc) => {
-              const status = getExpirationStatus(doc.expires_at);
-              return (
-                <TableRow key={doc.id}>
-                  <TableCell className={!doc.is_seen_by_client ? "font-bold" : "font-medium"}>
-                    {doc.file_name}
-                  </TableCell>
-                  <TableCell>{formatFileSize(doc.file_size)}</TableCell>
-                  <TableCell>
-                    {formatDistanceToNow(new Date(doc.uploaded_at), { addSuffix: true })}
-                  </TableCell>
-                  <TableCell>
-                    {formatDistanceToNow(new Date(doc.expires_at), { addSuffix: true })}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={status.color as any}>{status.label}</Badge>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex gap-2">
-                      <Button 
-                        variant="ghost" 
+        ) : (
+          docs.map((doc) => {
+            const status = getExpirationStatus(doc.expires_at);
+            return (
+              <TableRow key={doc.id}>
+                <TableCell className={!doc.is_seen_by_client ? "font-bold" : "font-medium"}>
+                  {doc.file_name}
+                </TableCell>
+                <TableCell>{formatFileSize(doc.file_size)}</TableCell>
+                <TableCell>
+                  {formatDistanceToNow(new Date(doc.uploaded_at), { addSuffix: true })}
+                </TableCell>
+                <TableCell>
+                  {formatDistanceToNow(new Date(doc.expires_at), { addSuffix: true })}
+                </TableCell>
+                <TableCell>
+                  <Badge variant={status.color as any}>{status.label}</Badge>
+                </TableCell>
+                <TableCell>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => handleDownload(doc.file_path, doc.file_name, doc.id)}
+                    >
+                      <Download className="h-4 w-4" />
+                    </Button>
+                    {!doc.is_seen_by_client && (
+                      <Button
+                        variant="ghost"
                         size="sm"
-                        onClick={() => handleDownload(doc.file_path, doc.file_name, doc.id)}
+                        onClick={() => handleMarkAsSeen(doc.id)}
                       >
-                        <Download className="h-4 w-4" />
+                        <Eye className="h-4 w-4" />
                       </Button>
-                      {!doc.is_seen_by_client && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleMarkAsSeen(doc.id)}
-                        >
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                      )}
-                      {doc.extension_count < 2 && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleExtend(doc.id, doc.extension_count)}
-                        >
-                          <Clock className="h-4 w-4" />
-                        </Button>
-                      )}
-                    </div>
-                  </TableCell>
-                </TableRow>
-              );
-            })
-          )}
-        </TableBody>
-      </Table>
+                    )}
+                    {doc.extension_count < 2 && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleExtend(doc.id, doc.extension_count)}
+                      >
+                        <Clock className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                </TableCell>
+              </TableRow>
+            );
+          })
+        )}
+      </TableBody>
+    </Table>
+  );
+
+  return (
+    <div className="space-y-6">
+      {adminDocs.length > 0 && (
+        <div>
+          <h3 className="font-semibold text-lg mb-3">Documents from Your Accountant</h3>
+          <div className="border rounded-lg">
+            {renderDocumentTable(adminDocs, "No documents from your accountant yet")}
+          </div>
+        </div>
+      )}
+      
+      {clientDocs.length > 0 && (
+        <div>
+          <h3 className="font-semibold text-lg mb-3">Your Uploaded Documents</h3>
+          <div className="border rounded-lg">
+            {renderDocumentTable(clientDocs, "You haven't uploaded any documents yet")}
+          </div>
+        </div>
+      )}
+
+      {documents.length === 0 && (
+        <div className="border rounded-lg p-8 text-center text-muted-foreground">
+          No documents yet
+        </div>
+      )}
     </div>
   );
 }

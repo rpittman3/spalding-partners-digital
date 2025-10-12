@@ -83,10 +83,7 @@ export default function ClientPortal() {
                     onUploadComplete={() => setRefreshDocuments(prev => prev + 1)}
                   />
                   
-                  <div>
-                    <h3 className="font-semibold mb-4">Your Documents</h3>
-                    <DocumentList refreshTrigger={refreshDocuments} />
-                  </div>
+                  <DocumentList refreshTrigger={refreshDocuments} />
                 </CardContent>
               </Card>
             </TabsContent>
