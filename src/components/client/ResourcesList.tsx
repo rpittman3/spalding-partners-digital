@@ -43,13 +43,36 @@ export default function ResourcesList() {
 
     const categoryIds = userCategories?.map((uc) => uc.category_id) || [];
 
+    // Get the "ALL" category ID
+    const { data: allCategory } = await supabase
+      .from('categories')
+      .select('id')
+      .eq('name', 'ALL')
+      .single();
+
+    // Combine user categories with ALL category
+    const allCategoryIds = allCategory ? [...categoryIds, allCategory.id] : categoryIds;
+
+    // If user has no categories and no ALL category exists, show no resources
+    if (allCategoryIds.length === 0) {
+      setResources([]);
+      setLoading(false);
+      return;
+    }
+
     // Get resources for user's categories or ALL category
     const { data: resourceCategories } = await supabase
       .from('resource_categories')
-      .select('resource_id, categories!inner(name)')
-      .or(`category_id.in.(${categoryIds.join(',')}),categories.name.eq.ALL`);
+      .select('resource_id')
+      .in('category_id', allCategoryIds);
 
     const resourceIds = [...new Set(resourceCategories?.map((rc) => rc.resource_id))];
+
+    if (resourceIds.length === 0) {
+      setResources([]);
+      setLoading(false);
+      return;
+    }
 
     const { data } = await supabase
       .from('resources')
