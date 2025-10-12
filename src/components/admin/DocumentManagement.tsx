@@ -11,8 +11,9 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Eye, EyeOff, Download } from 'lucide-react';
+import { Eye, EyeOff, Download, Upload } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
+import SendDocumentDialog from './SendDocumentDialog';
 
 interface Document {
   id: string;
@@ -30,6 +31,7 @@ interface Document {
 export default function DocumentManagement() {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [loading, setLoading] = useState(true);
+  const [sendDialogOpen, setSendDialogOpen] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -88,6 +90,13 @@ export default function DocumentManagement() {
 
   return (
     <div className="space-y-4">
+      <div className="flex justify-end">
+        <Button onClick={() => setSendDialogOpen(true)}>
+          <Upload className="mr-2 h-4 w-4" />
+          Send Document to Client
+        </Button>
+      </div>
+
       {loading ? (
         <div className="text-center py-8">Loading documents...</div>
       ) : (
@@ -154,6 +163,12 @@ export default function DocumentManagement() {
           </Table>
         </div>
       )}
+
+      <SendDocumentDialog
+        open={sendDialogOpen}
+        onOpenChange={setSendDialogOpen}
+        onSuccess={loadDocuments}
+      />
     </div>
   );
 }
