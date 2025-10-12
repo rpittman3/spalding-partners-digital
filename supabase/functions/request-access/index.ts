@@ -18,6 +18,20 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+    // Check if user already has an account
+    const { data: existingUser } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('email', email.toLowerCase())
+      .single();
+
+    if (existingUser) {
+      return new Response(
+        JSON.stringify({ error: 'Account already exists. Please use the login form.' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     // Check if email and last name match in client_imports
     const { data: importedClient, error: importError } = await supabase
       .from('client_imports')
@@ -29,6 +43,31 @@ serve(async (req) => {
     if (importError || !importedClient) {
       return new Response(
         JSON.stringify({ pending: true }),
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Check if there's already a pending request
+    const { data: existingRequest } = await supabase
+      .from('access_requests')
+      .select('*')
+      .eq('email', email.toLowerCase())
+      .eq('status', 'pending')
+      .gt('code_expires_at', new Date().toISOString())
+      .single();
+
+    // If there's a valid pending request, resend the code
+    if (existingRequest) {
+      try {
+        await supabase.functions.invoke('send-access-code', {
+          body: { email: email.toLowerCase(), accessCode: existingRequest.access_code },
+        });
+      } catch (emailError) {
+        console.error('Error resending access code:', emailError);
+      }
+
+      return new Response(
+        JSON.stringify({ success: true, message: 'Access code resent to your email' }),
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
