@@ -39,18 +39,6 @@ serve(async (req) => {
       throw new Error('SMTP_PASSWORD environment variable is not set');
     }
 
-    const smtpClient = new SMTPClient({
-      connection: {
-        hostname: smtpHostname,
-        port: smtpPort,
-        tls: true,
-        auth: {
-          username: smtpUsername,
-          password: smtpPassword,
-        },
-      },
-    });
-
     const emailBody = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #333;">Test Email</h2>
@@ -65,15 +53,56 @@ serve(async (req) => {
       </div>
     `;
 
-    await smtpClient.send({
-      from: Deno.env.get('SMTP_FROM') || 'appsend@rlp-associates.com',
-      to: to,
-      subject: subject,
-      content: body,
-      html: emailBody,
-    });
+    const fromAddress = Deno.env.get('SMTP_FROM') || 'appsend@rlp-associates.com';
 
-    await smtpClient.close();
+    const trySend = async (opts: { hostname: string; port: number; tls: boolean; noStartTLS?: boolean }) => {
+      console.log('Attempting SMTP send with:', opts);
+      const client = new SMTPClient({
+        connection: {
+          hostname: opts.hostname,
+          port: opts.port,
+          tls: opts.tls,
+          auth: {
+            username: smtpUsername,
+            password: smtpPassword,
+          },
+        },
+        debug: {
+          log: true,
+          allowUnsecure: false,
+          noStartTLS: opts.noStartTLS ?? false,
+        },
+      });
+      try {
+        await client.send({
+          from: fromAddress,
+          to,
+          subject,
+          content: body,
+          html: emailBody,
+        });
+      } finally {
+        try { await client.close(); } catch (_) { /* ignore */ }
+      }
+    };
+
+    if (smtpPort === 465) {
+      await trySend({ hostname: smtpHostname, port: smtpPort, tls: true });
+    } else {
+      try {
+        // Try STARTTLS on 587
+        await trySend({ hostname: smtpHostname, port: smtpPort, tls: false, noStartTLS: false });
+      } catch (e1: any) {
+        console.error('STARTTLS attempt failed:', e1?.message || String(e1));
+        // Fallback: implicit TLS on 465
+        try {
+          await trySend({ hostname: smtpHostname, port: 465, tls: true });
+        } catch (e2: any) {
+          console.error('TLS:465 fallback failed:', e2?.message || String(e2));
+          throw e2;
+        }
+      }
+    }
 
     console.log('Test email sent successfully to:', to);
 
