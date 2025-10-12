@@ -12,17 +12,19 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Download, Clock } from 'lucide-react';
+import { Download, Clock, Eye } from 'lucide-react';
 import { formatDistanceToNow, differenceInMonths } from 'date-fns';
 
 interface Document {
   id: string;
   file_name: string;
+  file_path: string;
   uploaded_at: string;
   file_size: number;
   expires_at: string;
   extension_count: number;
   is_expired: boolean;
+  is_seen_by_client: boolean;
 }
 
 export default function DocumentList({ refreshTrigger }: { refreshTrigger?: number }) {
@@ -56,6 +58,45 @@ export default function DocumentList({ refreshTrigger }: { refreshTrigger?: numb
       setDocuments(data || []);
     }
     setLoading(false);
+  };
+
+  const handleDownload = async (filePath: string, fileName: string, docId: string) => {
+    try {
+      const { data, error } = await supabase.storage
+        .from('documents')
+        .download(filePath);
+
+      if (error) throw error;
+
+      const url = URL.createObjectURL(data);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      // Mark as seen after download
+      await handleMarkAsSeen(docId);
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to download document',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleMarkAsSeen = async (docId: string) => {
+    const { error } = await supabase
+      .from('documents')
+      .update({ is_seen_by_client: true })
+      .eq('id', docId);
+
+    if (!error) {
+      loadDocuments();
+    }
   };
 
   const handleExtend = async (docId: string, currentExtensions: number) => {
@@ -147,9 +188,22 @@ export default function DocumentList({ refreshTrigger }: { refreshTrigger?: numb
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-2">
-                      <Button variant="ghost" size="sm">
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => handleDownload(doc.file_path, doc.file_name, doc.id)}
+                      >
                         <Download className="h-4 w-4" />
                       </Button>
+                      {!doc.is_seen_by_client && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleMarkAsSeen(doc.id)}
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      )}
                       {doc.extension_count < 2 && (
                         <Button
                           variant="ghost"
