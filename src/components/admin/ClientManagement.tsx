@@ -22,6 +22,9 @@ interface Client {
   last_name: string;
   company_name: string | null;
   address: string | null;
+  city: string | null;
+  state: string | null;
+  zip: string | null;
   cell_phone: string | null;
   work_phone: string | null;
   created_at: string;

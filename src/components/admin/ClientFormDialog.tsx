@@ -27,6 +27,9 @@ interface ClientFormData {
   last_name: string;
   company_name: string;
   address: string;
+  city: string;
+  state: string;
+  zip: string;
   cell_phone: string;
   work_phone: string;
   category_ids: string[];
@@ -42,6 +45,9 @@ interface ClientFormDialogProps {
     last_name: string;
     company_name: string | null;
     address: string | null;
+    city: string | null;
+    state: string | null;
+    zip: string | null;
     cell_phone: string | null;
     work_phone: string | null;
   };
@@ -63,6 +69,9 @@ export default function ClientFormDialog({
     last_name: '',
     company_name: '',
     address: '',
+    city: '',
+    state: '',
+    zip: '',
     cell_phone: '',
     work_phone: '',
     category_ids: [],
@@ -93,6 +102,19 @@ export default function ClientFormDialog({
     }
   };
 
+  const formatPhoneNumber = (value: string) => {
+    const phoneNumber = value.replace(/\D/g, '');
+    if (phoneNumber.length === 0) return '';
+    if (phoneNumber.length <= 3) return `(${phoneNumber}`;
+    if (phoneNumber.length <= 6) return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+    return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
+  };
+
+  const handlePhoneChange = (field: 'cell_phone' | 'work_phone', value: string) => {
+    const formatted = formatPhoneNumber(value);
+    setFormData(prev => ({ ...prev, [field]: formatted }));
+  };
+
   const loadClientData = async () => {
     if (!client) return;
 
@@ -108,8 +130,11 @@ export default function ClientFormDialog({
       last_name: client.last_name,
       company_name: client.company_name || '',
       address: client.address || '',
-      cell_phone: client.cell_phone || '',
-      work_phone: client.work_phone || '',
+      city: client.city || '',
+      state: client.state || '',
+      zip: client.zip || '',
+      cell_phone: formatPhoneNumber(client.cell_phone || ''),
+      work_phone: formatPhoneNumber(client.work_phone || ''),
       category_ids: userCategories?.map(uc => uc.category_id) || [],
     });
   };
@@ -122,6 +147,9 @@ export default function ClientFormDialog({
       last_name: '',
       company_name: '',
       address: '',
+      city: '',
+      state: '',
+      zip: '',
       cell_phone: '',
       work_phone: '',
       category_ids: [],
@@ -162,6 +190,9 @@ export default function ClientFormDialog({
         last_name: formData.last_name.trim(),
         company_name: formData.company_name.trim() || null,
         address: formData.address.trim() || null,
+        city: formData.city.trim() || null,
+        state: formData.state.trim() || null,
+        zip: formData.zip.trim() || null,
         cell_phone: formData.cell_phone.trim() || null,
         work_phone: formData.work_phone.trim() || null,
         category_ids: formData.category_ids,
@@ -191,6 +222,9 @@ export default function ClientFormDialog({
         last_name: formData.last_name.trim(),
         company_name: formData.company_name.trim() || null,
         address: formData.address.trim() || null,
+        city: formData.city.trim() || null,
+        state: formData.state.trim() || null,
+        zip: formData.zip.trim() || null,
         cell_phone: formData.cell_phone.trim() || null,
         work_phone: formData.work_phone.trim() || null,
       })
@@ -311,7 +345,40 @@ export default function ClientFormDialog({
               id="address"
               value={formData.address}
               onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+              placeholder="123 Main St"
             />
+          </div>
+
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="city">City</Label>
+              <Input
+                id="city"
+                value={formData.city}
+                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                placeholder="City"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="state">State</Label>
+              <Input
+                id="state"
+                value={formData.state}
+                onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                placeholder="State"
+                maxLength={2}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="zip">ZIP Code</Label>
+              <Input
+                id="zip"
+                value={formData.zip}
+                onChange={(e) => setFormData({ ...formData, zip: e.target.value })}
+                placeholder="12345"
+                maxLength={10}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -321,7 +388,9 @@ export default function ClientFormDialog({
                 id="cell_phone"
                 type="tel"
                 value={formData.cell_phone}
-                onChange={(e) => setFormData({ ...formData, cell_phone: e.target.value })}
+                onChange={(e) => handlePhoneChange('cell_phone', e.target.value)}
+                placeholder="(555) 555-5555"
+                maxLength={14}
               />
             </div>
 
@@ -331,7 +400,9 @@ export default function ClientFormDialog({
                 id="work_phone"
                 type="tel"
                 value={formData.work_phone}
-                onChange={(e) => setFormData({ ...formData, work_phone: e.target.value })}
+                onChange={(e) => handlePhoneChange('work_phone', e.target.value)}
+                placeholder="(555) 555-5555"
+                maxLength={14}
               />
             </div>
           </div>

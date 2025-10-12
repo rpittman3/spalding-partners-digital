@@ -576,6 +576,7 @@ export type Database = {
         Row: {
           address: string | null
           cell_phone: string | null
+          city: string | null
           company_name: string | null
           created_at: string | null
           email: string
@@ -584,12 +585,15 @@ export type Database = {
           is_main_user: boolean | null
           last_name: string
           parent_user_id: string | null
+          state: string | null
           updated_at: string | null
           work_phone: string | null
+          zip: string | null
         }
         Insert: {
           address?: string | null
           cell_phone?: string | null
+          city?: string | null
           company_name?: string | null
           created_at?: string | null
           email: string
@@ -598,12 +602,15 @@ export type Database = {
           is_main_user?: boolean | null
           last_name: string
           parent_user_id?: string | null
+          state?: string | null
           updated_at?: string | null
           work_phone?: string | null
+          zip?: string | null
         }
         Update: {
           address?: string | null
           cell_phone?: string | null
+          city?: string | null
           company_name?: string | null
           created_at?: string | null
           email?: string
@@ -612,8 +619,10 @@ export type Database = {
           is_main_user?: boolean | null
           last_name?: string
           parent_user_id?: string | null
+          state?: string | null
           updated_at?: string | null
           work_phone?: string | null
+          zip?: string | null
         }
         Relationships: [
           {

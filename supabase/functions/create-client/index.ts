@@ -12,6 +12,9 @@ interface CreateClientRequest {
   last_name: string
   company_name?: string
   address?: string
+  city?: string
+  state?: string
+  zip?: string
   cell_phone?: string
   work_phone?: string
   category_ids?: string[]
@@ -90,6 +93,9 @@ Deno.serve(async (req) => {
         last_name: body.last_name,
         company_name: body.company_name || null,
         address: body.address || null,
+        city: body.city || null,
+        state: body.state || null,
+        zip: body.zip || null,
         cell_phone: body.cell_phone || null,
         work_phone: body.work_phone || null,
       })
