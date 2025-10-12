@@ -175,7 +175,9 @@ export default function DocumentList({ refreshTrigger }: { refreshTrigger?: numb
               const status = getExpirationStatus(doc.expires_at);
               return (
                 <TableRow key={doc.id}>
-                  <TableCell className="font-medium">{doc.file_name}</TableCell>
+                  <TableCell className={!doc.is_seen_by_client ? "font-bold" : "font-medium"}>
+                    {doc.file_name}
+                  </TableCell>
                   <TableCell>{formatFileSize(doc.file_size)}</TableCell>
                   <TableCell>
                     {formatDistanceToNow(new Date(doc.uploaded_at), { addSuffix: true })}
