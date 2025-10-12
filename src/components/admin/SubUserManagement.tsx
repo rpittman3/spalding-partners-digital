@@ -8,8 +8,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { UserPlus, Users } from 'lucide-react';
+import { UserPlus, Users, Edit } from 'lucide-react';
+import SubUserEditDialog from './SubUserEditDialog';
 
 export default function SubUserManagement() {
   const { toast } = useToast();
@@ -20,6 +22,7 @@ export default function SubUserManagement() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [selectedParentId, setSelectedParentId] = useState('');
+  const [editingSubUser, setEditingSubUser] = useState<any>(null);
 
   // Fetch all main client users
   const { data: mainUsers } = useQuery({
@@ -228,6 +231,8 @@ export default function SubUserManagement() {
                 <TableHead>Email</TableHead>
                 <TableHead>Parent User</TableHead>
                 <TableHead>Company</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -241,6 +246,21 @@ export default function SubUserManagement() {
                       : 'N/A'}
                   </TableCell>
                   <TableCell>{user.company_name || 'N/A'}</TableCell>
+                  <TableCell>
+                    <Badge variant={user.is_active ? 'default' : 'secondary'}>
+                      {user.is_active ? 'Active' : 'Inactive'}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setEditingSubUser(user)}
+                    >
+                      <Edit className="h-4 w-4 mr-2" />
+                      Edit
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -249,6 +269,13 @@ export default function SubUserManagement() {
           <p className="text-muted-foreground">No sub-users found.</p>
         )}
       </CardContent>
+      {editingSubUser && (
+        <SubUserEditDialog
+          subUser={editingSubUser}
+          open={!!editingSubUser}
+          onOpenChange={(open) => !open && setEditingSubUser(null)}
+        />
+      )}
     </Card>
   );
 }

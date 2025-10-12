@@ -582,6 +582,7 @@ export type Database = {
           email: string
           first_name: string
           id: string
+          is_active: boolean
           is_main_user: boolean | null
           last_name: string
           parent_user_id: string | null
@@ -599,6 +600,7 @@ export type Database = {
           email: string
           first_name: string
           id: string
+          is_active?: boolean
           is_main_user?: boolean | null
           last_name: string
           parent_user_id?: string | null
@@ -616,6 +618,7 @@ export type Database = {
           email?: string
           first_name?: string
           id?: string
+          is_active?: boolean
           is_main_user?: boolean | null
           last_name?: string
           parent_user_id?: string | null
