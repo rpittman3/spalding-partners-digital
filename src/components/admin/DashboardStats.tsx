@@ -17,7 +17,7 @@ export default function DashboardStats() {
 
   const loadStats = async () => {
     const [clients, documents, deadlines, meetings] = await Promise.all([
-      supabase.from('profiles').select('id', { count: 'exact', head: true }),
+      supabase.from('user_roles').select('id', { count: 'exact', head: true }).eq('role', 'client'),
       supabase.from('documents').select('id', { count: 'exact', head: true }).eq('is_seen_by_admin', false),
       supabase.from('deadlines').select('id', { count: 'exact', head: true }).gte('due_date', new Date().toISOString().split('T')[0]),
       supabase.from('meeting_requests').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
