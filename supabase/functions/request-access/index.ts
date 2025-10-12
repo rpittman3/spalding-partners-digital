@@ -50,9 +50,22 @@ serve(async (req) => {
       throw new Error('Failed to create access request');
     }
 
-    // TODO: Send email with access code
-    // For now, log it (in production, use email service)
-    console.log(`Access code for ${email}: ${accessCode}`);
+    // Send email with access code
+    try {
+      const emailResponse = await supabase.functions.invoke('send-access-code', {
+        body: { email: email.toLowerCase(), accessCode },
+      });
+
+      if (emailResponse.error) {
+        console.error('Failed to send email:', emailResponse.error);
+        // Don't fail the request if email fails, just log it
+      } else {
+        console.log(`Access code email sent to ${email}`);
+      }
+    } catch (emailError) {
+      console.error('Error sending access code email:', emailError);
+      // Don't fail the request if email fails
+    }
 
     return new Response(
       JSON.stringify({ success: true }),
