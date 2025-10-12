@@ -43,14 +43,24 @@ export default function SendDocumentDialog({ open, onOpenChange, onSuccess }: Se
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  // Fetch clients (main users only)
+  // Fetch clients (main users only, exclude admins)
   const { data: clients = [], isLoading: clientsLoading } = useQuery({
     queryKey: ['clients-for-documents-with-email'],
     queryFn: async () => {
+      // First get all admin user IDs
+      const { data: adminRoles } = await supabase
+        .from('user_roles')
+        .select('user_id')
+        .eq('role', 'admin');
+      
+      const adminIds = adminRoles?.map(r => r.user_id) || [];
+      
+      // Then get all main users excluding admins
       const { data, error } = await supabase
         .from('profiles')
         .select('id, first_name, last_name, company_name, email')
         .eq('is_main_user', true)
+        .not('id', 'in', `(${adminIds.join(',') || 'null'})`)
         .order('last_name');
       
       if (error) throw error;
