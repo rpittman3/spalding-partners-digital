@@ -104,9 +104,12 @@ serve(async (req) => {
           from: fromEmail,
           to: recipientEmail,
           subject: title,
-          content: plainTextBody,
+          content: `You have received an important notification from Spalding & Partners Financial\n\n${plainTextBody}`,
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+              <p style="color: #666; font-size: 16px; margin-bottom: 20px;">
+                <strong>You have received an important notification from Spalding & Partners Financial</strong>
+              </p>
               <h2 style="color: #333;">${title}</h2>
               <div style="margin: 20px 0;">
                 ${body}
