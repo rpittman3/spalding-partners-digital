@@ -8,6 +8,7 @@ import ClientManagement from '@/components/admin/ClientManagement';
 import DocumentManagement from '@/components/admin/DocumentManagement';
 import ResourceManagement from '@/components/admin/ResourceManagement';
 import CategoryManagement from '@/components/admin/CategoryManagement';
+import SubUserManagement from '@/components/admin/SubUserManagement';
 import {
   LayoutDashboard,
   Users,
@@ -36,6 +37,7 @@ export default function Admin() {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'clients', label: 'Clients', icon: Users },
+    { id: 'sub-users', label: 'Sub-Users', icon: Users },
     { id: 'documents', label: 'Documents', icon: FileText },
     { id: 'resources', label: 'Resources', icon: FolderOpen },
     { id: 'notifications', label: 'Notifications', icon: Bell },
@@ -90,6 +92,7 @@ export default function Admin() {
               <CardDescription>
                 {activeSection === 'dashboard' && 'Overview of your admin portal'}
                 {activeSection === 'clients' && 'Manage client accounts and information'}
+                {activeSection === 'sub-users' && 'Manage sub-user accounts for clients'}
                 {activeSection === 'documents' && 'View and manage client documents'}
                 {activeSection === 'resources' && 'Upload and organize resources for clients'}
                 {activeSection === 'notifications' && 'Create and manage notifications'}
@@ -104,6 +107,7 @@ export default function Admin() {
             <CardContent>
               {activeSection === 'dashboard' && <DashboardStats />}
               {activeSection === 'clients' && <ClientManagement />}
+              {activeSection === 'sub-users' && <SubUserManagement />}
               {activeSection === 'documents' && <DocumentManagement />}
               {activeSection === 'resources' && <ResourceManagement />}
               {activeSection === 'categories' && <CategoryManagement />}

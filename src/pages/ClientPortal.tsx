@@ -11,6 +11,7 @@ import DocumentUploader from "@/components/client/DocumentUploader";
 import DocumentList from "@/components/client/DocumentList";
 import DeadlinesList from "@/components/client/DeadlinesList";
 import ResourcesList from "@/components/client/ResourcesList";
+import SubUserManager from "@/components/client/SubUserManager";
 
 export default function ClientPortal() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -43,10 +44,11 @@ export default function ClientPortal() {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-grid">
+            <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
               <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
               <TabsTrigger value="documents">Documents</TabsTrigger>
               <TabsTrigger value="resources">Resources</TabsTrigger>
+              <TabsTrigger value="team">My Team</TabsTrigger>
             </TabsList>
 
             {/* Dashboard Tab */}
@@ -146,6 +148,11 @@ export default function ClientPortal() {
                   <ResourcesList />
                 </CardContent>
               </Card>
+            </TabsContent>
+
+            {/* My Team Tab */}
+            <TabsContent value="team" className="space-y-6">
+              <SubUserManager />
             </TabsContent>
           </Tabs>
         </div>
