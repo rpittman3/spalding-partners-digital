@@ -36,7 +36,11 @@ export default function ClientManagement() {
     setLoading(true);
     const { data, error } = await supabase
       .from('profiles')
-      .select('*')
+      .select(`
+        *,
+        user_roles!inner(role)
+      `)
+      .eq('user_roles.role', 'client')
       .order('created_at', { ascending: false });
 
     if (error) {

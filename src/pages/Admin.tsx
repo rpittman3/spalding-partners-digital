@@ -9,6 +9,10 @@ import DocumentManagement from '@/components/admin/DocumentManagement';
 import ResourceManagement from '@/components/admin/ResourceManagement';
 import CategoryManagement from '@/components/admin/CategoryManagement';
 import SubUserManagement from '@/components/admin/SubUserManagement';
+import ImportClients from '@/components/admin/ImportClients';
+import AuditLogs from '@/components/admin/AuditLogs';
+import MeetingRequests from '@/components/admin/MeetingRequests';
+import Settings from '@/components/admin/Settings';
 import {
   LayoutDashboard,
   Users,
@@ -20,7 +24,7 @@ import {
   Tags,
   Upload,
   History,
-  Settings,
+  Settings as SettingsIcon,
   LogOut,
 } from 'lucide-react';
 
@@ -46,7 +50,7 @@ export default function Admin() {
     { id: 'categories', label: 'Categories', icon: Tags },
     { id: 'import', label: 'Import Clients', icon: Upload },
     { id: 'audit', label: 'Audit Logs', icon: History },
-    { id: 'settings', label: 'Settings', icon: Settings },
+    { id: 'settings', label: 'Settings', icon: SettingsIcon },
   ];
 
   return (
@@ -110,8 +114,12 @@ export default function Admin() {
               {activeSection === 'sub-users' && <SubUserManagement />}
               {activeSection === 'documents' && <DocumentManagement />}
               {activeSection === 'resources' && <ResourceManagement />}
+              {activeSection === 'meetings' && <MeetingRequests />}
               {activeSection === 'categories' && <CategoryManagement />}
-              {['notifications', 'deadlines', 'meetings', 'import', 'audit', 'settings'].includes(activeSection) && (
+              {activeSection === 'import' && <ImportClients />}
+              {activeSection === 'audit' && <AuditLogs />}
+              {activeSection === 'settings' && <Settings />}
+              {['notifications', 'deadlines'].includes(activeSection) && (
                 <div className="py-8 text-center text-muted-foreground">
                   <p className="text-lg mb-4">
                     {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)} section coming soon
