@@ -38,19 +38,26 @@ export default function Auth() {
         variant: 'destructive',
       });
     } else {
-      toast({
-        title: 'Success',
-        description: 'Logged in successfully',
-      });
+      // Wait for the session to be established
+      await new Promise(resolve => setTimeout(resolve, 100));
       
-      // Check role and redirect
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
-        const { data: roleData } = await supabase
+        // Fetch role with explicit ordering to ensure consistency
+        const { data: roleData, error: roleError } = await supabase
           .from('user_roles')
           .select('role')
           .eq('user_id', user.id)
+          .order('created_at', { ascending: true })
+          .limit(1)
           .single();
+        
+        console.log('Login role check:', { userId: user.id, role: roleData?.role, error: roleError });
+        
+        toast({
+          title: 'Success',
+          description: 'Logged in successfully',
+        });
         
         if (roleData?.role === 'admin') {
           navigate('/admin');

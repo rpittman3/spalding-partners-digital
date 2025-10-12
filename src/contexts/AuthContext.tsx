@@ -30,12 +30,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (session?.user) {
           // Fetch user role - deferred with setTimeout to avoid deadlock
           setTimeout(async () => {
-            const { data: roleData } = await supabase
+            const { data: roleData, error: roleError } = await supabase
               .from('user_roles')
               .select('role')
               .eq('user_id', session.user.id)
+              .order('created_at', { ascending: true })
+              .limit(1)
               .single();
             
+            console.log('AuthContext role fetch:', { userId: session.user.id, role: roleData?.role, error: roleError });
             setRole(roleData?.role ?? null);
           }, 0);
         } else {
@@ -51,12 +54,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       if (session?.user) {
         setTimeout(async () => {
-          const { data: roleData } = await supabase
+          const { data: roleData, error: roleError } = await supabase
             .from('user_roles')
             .select('role')
             .eq('user_id', session.user.id)
+            .order('created_at', { ascending: true })
+            .limit(1)
             .single();
           
+          console.log('AuthContext init role fetch:', { userId: session.user.id, role: roleData?.role, error: roleError });
           setRole(roleData?.role ?? null);
           setLoading(false);
         }, 0);
