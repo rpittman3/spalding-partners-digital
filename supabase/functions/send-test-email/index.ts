@@ -24,7 +24,7 @@ serve(async (req) => {
     console.log('Subject:', subject);
     
     const smtpHostname = Deno.env.get('SMTP_HOSTNAME') || 'mail.rlp-associates.com';
-    const smtpPort = parseInt(Deno.env.get('SMTP_PORT') || '587');
+    const smtpPort = parseInt(Deno.env.get('SMTP_PORT') || '465');
     const smtpUsername = Deno.env.get('SMTP_USERNAME') || 'appsend@rlp-associates.com';
     const smtpPassword = Deno.env.get('SMTP_PASSWORD');
     
@@ -43,7 +43,7 @@ serve(async (req) => {
       connection: {
         hostname: smtpHostname,
         port: smtpPort,
-        tls: false,
+        tls: true,
         auth: {
           username: smtpUsername,
           password: smtpPassword,
