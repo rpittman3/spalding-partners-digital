@@ -262,11 +262,15 @@ export default function ResourceManagement() {
                   <TableCell>{resource.description || '-'}</TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
-                      {resource.resource_categories?.map((rc, idx) => (
-                        <Badge key={idx} variant="secondary">
-                          {rc.categories.name}
-                        </Badge>
-                      ))}
+                      {resource.resource_categories?.length > 0 ? (
+                        resource.resource_categories.map((rc, idx) => (
+                          <Badge key={idx} variant="secondary">
+                            {rc.categories.name}
+                          </Badge>
+                        ))
+                      ) : (
+                        <Badge variant="secondary">ALL</Badge>
+                      )}
                     </div>
                   </TableCell>
                   <TableCell>
