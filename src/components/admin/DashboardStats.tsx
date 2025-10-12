@@ -3,7 +3,11 @@ import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, FileText, Calendar, MessageSquare } from 'lucide-react';
 
-export default function DashboardStats() {
+interface DashboardStatsProps {
+  onNavigate?: (section: string) => void;
+}
+
+export default function DashboardStats({ onNavigate }: DashboardStatsProps) {
   const [stats, setStats] = useState({
     totalClients: 0,
     unseenDocuments: 0,
@@ -32,16 +36,20 @@ export default function DashboardStats() {
   };
 
   const statCards = [
-    { title: 'Total Clients', value: stats.totalClients, icon: Users, color: 'text-blue-600' },
-    { title: 'Unseen Documents', value: stats.unseenDocuments, icon: FileText, color: 'text-orange-600' },
-    { title: 'Upcoming Deadlines', value: stats.upcomingDeadlines, icon: Calendar, color: 'text-green-600' },
-    { title: 'Pending Meetings', value: stats.pendingMeetings, icon: MessageSquare, color: 'text-purple-600' },
+    { title: 'Total Clients', value: stats.totalClients, icon: Users, color: 'text-blue-600', section: 'clients' },
+    { title: 'Unseen Documents', value: stats.unseenDocuments, icon: FileText, color: 'text-orange-600', section: 'documents' },
+    { title: 'Upcoming Deadlines', value: stats.upcomingDeadlines, icon: Calendar, color: 'text-green-600', section: 'deadlines' },
+    { title: 'Pending Meetings', value: stats.pendingMeetings, icon: MessageSquare, color: 'text-purple-600', section: 'meetings' },
   ];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {statCards.map((stat) => (
-        <Card key={stat.title}>
+        <Card 
+          key={stat.title}
+          className="cursor-pointer hover:shadow-lg transition-shadow"
+          onClick={() => onNavigate?.(stat.section)}
+        >
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
               {stat.title}

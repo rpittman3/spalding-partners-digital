@@ -109,7 +109,7 @@ export default function Admin() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {activeSection === 'dashboard' && <DashboardStats />}
+              {activeSection === 'dashboard' && <DashboardStats onNavigate={setActiveSection} />}
               {activeSection === 'clients' && <ClientManagement />}
               {activeSection === 'sub-users' && <SubUserManagement />}
               {activeSection === 'documents' && <DocumentManagement />}
