@@ -3,6 +3,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import DashboardStats from '@/components/admin/DashboardStats';
+import ClientManagement from '@/components/admin/ClientManagement';
+import DocumentManagement from '@/components/admin/DocumentManagement';
+import ResourceManagement from '@/components/admin/ResourceManagement';
+import CategoryManagement from '@/components/admin/CategoryManagement';
 import {
   LayoutDashboard,
   Users,
@@ -97,14 +102,21 @@ export default function Admin() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="py-8 text-center text-muted-foreground">
-                <p className="text-lg mb-4">
-                  {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)} section coming soon
-                </p>
-                <p className="text-sm">
-                  This feature is being implemented as part of the comprehensive admin portal.
-                </p>
-              </div>
+              {activeSection === 'dashboard' && <DashboardStats />}
+              {activeSection === 'clients' && <ClientManagement />}
+              {activeSection === 'documents' && <DocumentManagement />}
+              {activeSection === 'resources' && <ResourceManagement />}
+              {activeSection === 'categories' && <CategoryManagement />}
+              {['notifications', 'deadlines', 'meetings', 'import', 'audit', 'settings'].includes(activeSection) && (
+                <div className="py-8 text-center text-muted-foreground">
+                  <p className="text-lg mb-4">
+                    {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)} section coming soon
+                  </p>
+                  <p className="text-sm">
+                    This feature will be implemented next.
+                  </p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
