@@ -34,13 +34,36 @@ export default function ClientManagement() {
 
   const loadClients = async () => {
     setLoading(true);
+    
+    // First get all client role user_ids
+    const { data: clientRoles, error: roleError } = await supabase
+      .from('user_roles')
+      .select('user_id')
+      .eq('role', 'client');
+
+    if (roleError) {
+      toast({
+        title: 'Error',
+        description: 'Failed to load client roles',
+        variant: 'destructive',
+      });
+      setLoading(false);
+      return;
+    }
+
+    const clientIds = clientRoles?.map(r => r.user_id) || [];
+    
+    if (clientIds.length === 0) {
+      setClients([]);
+      setLoading(false);
+      return;
+    }
+
+    // Then get profiles for those user_ids
     const { data, error } = await supabase
       .from('profiles')
-      .select(`
-        *,
-        user_roles!inner(role)
-      `)
-      .eq('user_roles.role', 'client')
+      .select('*')
+      .in('id', clientIds)
       .order('created_at', { ascending: false });
 
     if (error) {
