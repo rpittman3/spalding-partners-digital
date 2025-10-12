@@ -19,6 +19,8 @@ interface Document {
   id: string;
   file_name: string;
   uploaded_at: string;
+  uploaded_by: string;
+  user_id: string;
   file_size: number;
   is_seen_by_admin: boolean;
   profiles: {
@@ -88,6 +90,72 @@ export default function DocumentManagement() {
     return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
   };
 
+  const clientDocs = documents.filter(doc => doc.uploaded_by === doc.user_id);
+  const adminDocs = documents.filter(doc => doc.uploaded_by !== doc.user_id);
+
+  const renderDocumentTable = (docs: Document[], emptyMessage: string) => (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>File Name</TableHead>
+          <TableHead>Client</TableHead>
+          <TableHead>Size</TableHead>
+          <TableHead>Uploaded</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {docs.length === 0 ? (
+          <TableRow>
+            <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+              {emptyMessage}
+            </TableCell>
+          </TableRow>
+        ) : (
+          docs.map((doc) => (
+            <TableRow key={doc.id} className={!doc.is_seen_by_admin ? 'font-bold' : ''}>
+              <TableCell>{doc.file_name}</TableCell>
+              <TableCell>
+                {doc.profiles.company_name || 
+                  `${doc.profiles.first_name} ${doc.profiles.last_name}`}
+              </TableCell>
+              <TableCell>{formatFileSize(doc.file_size)}</TableCell>
+              <TableCell>
+                {formatDistanceToNow(new Date(doc.uploaded_at), { addSuffix: true })}
+              </TableCell>
+              <TableCell>
+                {!doc.is_seen_by_admin ? (
+                  <Badge variant="default">New</Badge>
+                ) : (
+                  <Badge variant="secondary">Seen</Badge>
+                )}
+              </TableCell>
+              <TableCell>
+                <div className="flex gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => toggleSeen(doc.id, doc.is_seen_by_admin)}
+                  >
+                    {doc.is_seen_by_admin ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    <Download className="h-4 w-4" />
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))
+        )}
+      </TableBody>
+    </Table>
+  );
+
   return (
     <div className="space-y-4">
       <div className="flex justify-end">
@@ -100,67 +168,30 @@ export default function DocumentManagement() {
       {loading ? (
         <div className="text-center py-8">Loading documents...</div>
       ) : (
-        <div className="border rounded-lg">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>File Name</TableHead>
-                <TableHead>Client</TableHead>
-                <TableHead>Size</TableHead>
-                <TableHead>Uploaded</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {documents.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                    No documents found
-                  </TableCell>
-                </TableRow>
-              ) : (
-                documents.map((doc) => (
-                  <TableRow key={doc.id} className={!doc.is_seen_by_admin ? 'font-bold' : ''}>
-                    <TableCell>{doc.file_name}</TableCell>
-                    <TableCell>
-                      {doc.profiles.company_name || 
-                        `${doc.profiles.first_name} ${doc.profiles.last_name}`}
-                    </TableCell>
-                    <TableCell>{formatFileSize(doc.file_size)}</TableCell>
-                    <TableCell>
-                      {formatDistanceToNow(new Date(doc.uploaded_at), { addSuffix: true })}
-                    </TableCell>
-                    <TableCell>
-                      {!doc.is_seen_by_admin ? (
-                        <Badge variant="default">New</Badge>
-                      ) : (
-                        <Badge variant="secondary">Seen</Badge>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => toggleSeen(doc.id, doc.is_seen_by_admin)}
-                        >
-                          {doc.is_seen_by_admin ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-                        </Button>
-                        <Button variant="ghost" size="sm">
-                          <Download className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+        <div className="space-y-6">
+          {clientDocs.length > 0 && (
+            <div>
+              <h3 className="font-semibold text-lg mb-3">Documents from Clients</h3>
+              <div className="border rounded-lg">
+                {renderDocumentTable(clientDocs, "No documents from clients yet")}
+              </div>
+            </div>
+          )}
+          
+          {adminDocs.length > 0 && (
+            <div>
+              <h3 className="font-semibold text-lg mb-3">Documents Sent to Clients</h3>
+              <div className="border rounded-lg">
+                {renderDocumentTable(adminDocs, "No documents sent to clients yet")}
+              </div>
+            </div>
+          )}
+
+          {documents.length === 0 && (
+            <div className="border rounded-lg p-8 text-center text-muted-foreground">
+              No documents yet
+            </div>
+          )}
         </div>
       )}
 
