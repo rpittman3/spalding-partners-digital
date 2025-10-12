@@ -45,7 +45,7 @@ export default function SendDocumentDialog({ open, onOpenChange, onSuccess }: Se
 
   // Fetch clients (main users only)
   const { data: clients = [], isLoading: clientsLoading } = useQuery({
-    queryKey: ['clients-for-documents'],
+    queryKey: ['clients-for-documents-with-email'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('profiles')
@@ -56,6 +56,7 @@ export default function SendDocumentDialog({ open, onOpenChange, onSuccess }: Se
       if (error) throw error;
       return data as Client[];
     },
+    staleTime: 0, // Always fetch fresh data
   });
 
   const uploadMutation = useMutation({
