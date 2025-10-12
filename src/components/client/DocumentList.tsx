@@ -202,13 +202,22 @@ export default function DocumentList({ refreshTrigger }: { refreshTrigger?: numb
                       <Download className="h-4 w-4" />
                     </Button>
                     {!doc.is_seen_by_client && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleMarkAsSeen(doc.id)}
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleMarkAsSeen(doc.id)}
+                            >
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Mark this file as seen</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     )}
                     {doc.extension_count < 2 && (
                       <TooltipProvider>
