@@ -30,6 +30,7 @@ export default function NotificationManagement() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isImportant, setIsImportant] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -146,6 +147,7 @@ export default function NotificationManagement() {
       setBody('');
       setSelectedCategories([]);
       setIsImportant(false);
+      setShowForm(false);
       loadNotifications();
     } catch (error: any) {
       console.error('Error creating notification:', error);
@@ -184,8 +186,62 @@ export default function NotificationManagement() {
 
   return (
     <div className="space-y-6">
-      <Card className="p-6">
-        <form onSubmit={handleSubmit} className="space-y-4">
+      {!showForm ? (
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-semibold">All Notifications</h3>
+            <Button onClick={() => setShowForm(true)}>
+              <Send className="h-4 w-4 mr-2" />
+              Add New Notification
+            </Button>
+          </div>
+          
+          {notifications.length === 0 ? (
+            <Card className="p-8 text-center text-muted-foreground">
+              <p>No notifications yet. Create your first notification to get started.</p>
+            </Card>
+          ) : (
+            notifications.map((notification) => (
+              <Card key={notification.id} className="p-4">
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-semibold">{notification.title}</h4>
+                      {notification.is_important && (
+                        <span className="text-xs bg-destructive text-destructive-foreground px-2 py-1 rounded">
+                          Important
+                        </span>
+                      )}
+                    </div>
+                    <div 
+                      className="text-sm text-muted-foreground mt-2"
+                      dangerouslySetInnerHTML={{ __html: notification.body }}
+                    />
+                    <p className="text-xs text-muted-foreground mt-2">
+                      {new Date(notification.created_at).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <Button
+                    variant="destructive"
+                    size="icon"
+                    onClick={() => handleDelete(notification.id)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              </Card>
+            ))
+          )}
+        </div>
+      ) : (
+        <Card className="p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold">Create New Notification</h3>
+            <Button variant="outline" onClick={() => setShowForm(false)}>
+              Cancel
+            </Button>
+          </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label htmlFor="title">Title</Label>
             <Input
@@ -247,40 +303,7 @@ export default function NotificationManagement() {
           </Button>
         </form>
       </Card>
-
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Recent Notifications</h3>
-        {notifications.map((notification) => (
-          <Card key={notification.id} className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <h4 className="font-semibold">{notification.title}</h4>
-                  {notification.is_important && (
-                    <span className="text-xs bg-destructive text-destructive-foreground px-2 py-1 rounded">
-                      Important
-                    </span>
-                  )}
-                </div>
-                <div 
-                  className="text-sm text-muted-foreground mt-2"
-                  dangerouslySetInnerHTML={{ __html: notification.body }}
-                />
-                <p className="text-xs text-muted-foreground mt-2">
-                  {new Date(notification.created_at).toLocaleDateString()}
-                </p>
-              </div>
-              <Button
-                variant="destructive"
-                size="icon"
-                onClick={() => handleDelete(notification.id)}
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </div>
-          </Card>
-        ))}
-      </div>
+      )}
     </div>
   );
 }
