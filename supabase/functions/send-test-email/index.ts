@@ -22,15 +22,31 @@ serve(async (req) => {
 
     console.log('Sending test email to:', to);
     console.log('Subject:', subject);
+    
+    const smtpHostname = Deno.env.get('SMTP_HOSTNAME') || 'mail.rlp-associates.com';
+    const smtpPort = parseInt(Deno.env.get('SMTP_PORT') || '587');
+    const smtpUsername = Deno.env.get('SMTP_USERNAME') || 'appsend@rlp-associates.com';
+    const smtpPassword = Deno.env.get('SMTP_PASSWORD');
+    
+    console.log('SMTP Config:', {
+      hostname: smtpHostname,
+      port: smtpPort,
+      username: smtpUsername,
+      hasPassword: !!smtpPassword
+    });
+
+    if (!smtpPassword) {
+      throw new Error('SMTP_PASSWORD environment variable is not set');
+    }
 
     const smtpClient = new SMTPClient({
       connection: {
-        hostname: Deno.env.get('SMTP_HOSTNAME') || 'mail.rlp-associates.com',
-        port: parseInt(Deno.env.get('SMTP_PORT') || '587'),
-        tls: true,
+        hostname: smtpHostname,
+        port: smtpPort,
+        tls: false,
         auth: {
-          username: Deno.env.get('SMTP_USERNAME') || 'appsend@rlp-associates.com',
-          password: Deno.env.get('SMTP_PASSWORD') || '',
+          username: smtpUsername,
+          password: smtpPassword,
         },
       },
     });
