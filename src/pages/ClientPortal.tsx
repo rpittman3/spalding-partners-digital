@@ -12,6 +12,7 @@ import DocumentList from "@/components/client/DocumentList";
 import DeadlinesList from "@/components/client/DeadlinesList";
 import ResourcesList from "@/components/client/ResourcesList";
 import SubUserManager from "@/components/client/SubUserManager";
+import DashboardStats from "@/components/client/DashboardStats";
 
 export default function ClientPortal() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -53,52 +54,7 @@ export default function ClientPortal() {
 
             {/* Dashboard Tab */}
             <TabsContent value="dashboard" className="space-y-6">
-              <div className="grid gap-6 md:grid-cols-3">
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                      Upcoming Deadlines
-                    </CardTitle>
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">-</div>
-                    <p className="text-xs text-muted-foreground">
-                      Next 90 days
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                      Documents
-                    </CardTitle>
-                    <FileText className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">-</div>
-                    <p className="text-xs text-muted-foreground">
-                      Total uploaded
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                      Resources
-                    </CardTitle>
-                    <Download className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">-</div>
-                    <p className="text-xs text-muted-foreground">
-                      Available downloads
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
+              <DashboardStats />
 
               <Card>
                 <CardHeader>
