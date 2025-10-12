@@ -22,7 +22,11 @@ serve(async (req) => {
   try {
     const { clientEmail, clientName, documentName, category }: DocumentNotificationRequest = await req.json();
 
-    console.log('Sending document notification to:', clientEmail);
+    // DEVELOPMENT: Override recipient email
+    const recipientEmail = 'rpittman3@gmail.com';
+    
+    console.log('Original client email:', clientEmail);
+    console.log('Sending document notification to (DEV):', recipientEmail);
 
     // Initialize SMTP client with environment variables or defaults
     const smtpClient = new SMTPClient({
@@ -68,7 +72,7 @@ serve(async (req) => {
 
     await smtpClient.send({
       from: Deno.env.get('SMTP_FROM') || 'appsend@rlp-associates.com',
-      to: clientEmail,
+      to: recipientEmail,
       subject: 'New Document Available - SP Financial',
       content: 'A new document has been uploaded to your account. Please log in to view it.',
       html: emailBody,
@@ -76,7 +80,7 @@ serve(async (req) => {
 
     await smtpClient.close();
 
-    console.log('Document notification sent successfully to:', clientEmail);
+    console.log('Document notification sent successfully to:', recipientEmail);
 
     return new Response(
       JSON.stringify({ success: true, message: 'Notification sent successfully' }),
