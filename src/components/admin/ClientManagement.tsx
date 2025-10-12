@@ -11,7 +11,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Plus, Search } from 'lucide-react';
+import { Plus, Search, Edit, Key } from 'lucide-react';
+import ClientFormDialog from './ClientFormDialog';
+import PasswordResetDialog from './PasswordResetDialog';
 
 interface Client {
   id: string;
@@ -19,6 +21,9 @@ interface Client {
   first_name: string;
   last_name: string;
   company_name: string | null;
+  address: string | null;
+  cell_phone: string | null;
+  work_phone: string | null;
   created_at: string;
 }
 
@@ -26,6 +31,9 @@ export default function ClientManagement() {
   const [clients, setClients] = useState<Client[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
+  const [formDialogOpen, setFormDialogOpen] = useState(false);
+  const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
+  const [selectedClient, setSelectedClient] = useState<Client | undefined>();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -86,6 +94,21 @@ export default function ClientManagement() {
       client.company_name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleAddClient = () => {
+    setSelectedClient(undefined);
+    setFormDialogOpen(true);
+  };
+
+  const handleEditClient = (client: Client) => {
+    setSelectedClient(client);
+    setFormDialogOpen(true);
+  };
+
+  const handleResetPassword = (client: Client) => {
+    setSelectedClient(client);
+    setPasswordDialogOpen(true);
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -98,7 +121,7 @@ export default function ClientManagement() {
             className="pl-10"
           />
         </div>
-        <Button>
+        <Button onClick={handleAddClient}>
           <Plus className="h-4 w-4 mr-2" />
           Add Client
         </Button>
@@ -137,9 +160,24 @@ export default function ClientManagement() {
                       {new Date(client.created_at).toLocaleDateString()}
                     </TableCell>
                     <TableCell>
-                      <Button variant="ghost" size="sm">
-                        View
-                      </Button>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleEditClient(client)}
+                        >
+                          <Edit className="h-4 w-4 mr-1" />
+                          Edit
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleResetPassword(client)}
+                        >
+                          <Key className="h-4 w-4 mr-1" />
+                          Reset Password
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))
@@ -147,6 +185,22 @@ export default function ClientManagement() {
             </TableBody>
           </Table>
         </div>
+      )}
+
+      <ClientFormDialog
+        open={formDialogOpen}
+        onOpenChange={setFormDialogOpen}
+        client={selectedClient}
+        onSuccess={loadClients}
+      />
+
+      {selectedClient && (
+        <PasswordResetDialog
+          open={passwordDialogOpen}
+          onOpenChange={setPasswordDialogOpen}
+          clientId={selectedClient.id}
+          clientName={`${selectedClient.first_name} ${selectedClient.last_name}`}
+        />
       )}
     </div>
   );
