@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               .eq('user_id', session.user.id)
               .order('created_at', { ascending: true })
               .limit(1)
-              .single();
+              .maybeSingle();
             
             console.log('AuthContext role fetch:', { userId: session.user.id, role: roleData?.role, error: roleError });
             setRole(roleData?.role ?? null);
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             .eq('user_id', session.user.id)
             .order('created_at', { ascending: true })
             .limit(1)
-            .single();
+            .maybeSingle();
           
           console.log('AuthContext init role fetch:', { userId: session.user.id, role: roleData?.role, error: roleError });
           setRole(roleData?.role ?? null);

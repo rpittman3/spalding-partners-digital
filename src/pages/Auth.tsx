@@ -43,27 +43,35 @@ export default function Auth() {
       
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
-        // Fetch role with explicit ordering to ensure consistency
+        // Try direct role row first (may be missing right after account creation)
         const { data: roleData, error: roleError } = await supabase
           .from('user_roles')
           .select('role')
           .eq('user_id', user.id)
           .order('created_at', { ascending: true })
           .limit(1)
-          .single();
-        
+          .maybeSingle();
+
         console.log('Login role check:', { userId: user.id, role: roleData?.role, error: roleError });
-        
+
+        let isAdmin = roleData?.role === 'admin';
+
+        // Fallback to secure server-side role verification
+        if (!isAdmin) {
+          const { data: hasAdmin, error: hasRoleError } = await supabase.rpc('has_role', {
+            _user_id: user.id,
+            _role: 'admin'
+          });
+          console.log('Login has_role check (admin):', { hasAdmin, hasRoleError });
+          isAdmin = !!hasAdmin;
+        }
+
         toast({
           title: 'Success',
           description: 'Logged in successfully',
         });
-        
-        if (roleData?.role === 'admin') {
-          navigate('/admin');
-        } else {
-          navigate('/client-portal');
-        }
+
+        navigate(isAdmin ? '/admin' : '/client-portal');
       }
     }
 
