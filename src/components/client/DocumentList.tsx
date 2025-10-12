@@ -63,7 +63,7 @@ export default function DocumentList({ refreshTrigger }: { refreshTrigger?: numb
   const handleDownload = async (filePath: string, fileName: string, docId: string) => {
     try {
       const { data, error } = await supabase.storage
-        .from('documents')
+        .from('client-documents')
         .download(filePath);
 
       if (error) throw error;
