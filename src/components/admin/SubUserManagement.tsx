@@ -25,14 +25,23 @@ export default function SubUserManagement() {
   const { data: mainUsers } = useQuery({
     queryKey: ['main-users'],
     queryFn: async () => {
+      // First get client user IDs
+      const { data: clientRoles, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('user_id')
+        .eq('role', 'client');
+      
+      if (rolesError) throw rolesError;
+      if (!clientRoles || clientRoles.length === 0) return [];
+      
+      const clientIds = clientRoles.map(r => r.user_id);
+      
+      // Then get their profiles
       const { data, error } = await supabase
         .from('profiles')
-        .select(`
-          *,
-          user_roles!inner(role)
-        `)
+        .select('*')
         .eq('is_main_user', true)
-        .eq('user_roles.role', 'client')
+        .in('id', clientIds)
         .order('last_name');
       
       if (error) throw error;
@@ -44,17 +53,34 @@ export default function SubUserManagement() {
   const { data: subUsers, isLoading } = useQuery({
     queryKey: ['sub-users'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data: subUserData, error } = await supabase
         .from('profiles')
-        .select(`
-          *,
-          parent:profiles!profiles_parent_user_id_fkey(first_name, last_name, company_name)
-        `)
+        .select('*')
         .eq('is_main_user', false)
         .order('last_name');
       
       if (error) throw error;
-      return data;
+      if (!subUserData || subUserData.length === 0) return [];
+      
+      // Fetch parent user data separately
+      const parentIds = [...new Set(subUserData.map(u => u.parent_user_id).filter(Boolean))];
+      
+      if (parentIds.length === 0) return subUserData.map(u => ({ ...u, parent: null }));
+      
+      const { data: parentData, error: parentError } = await supabase
+        .from('profiles')
+        .select('id, first_name, last_name, company_name')
+        .in('id', parentIds);
+      
+      if (parentError) throw parentError;
+      
+      // Combine the data
+      const parentMap = new Map(parentData?.map(p => [p.id, p]) || []);
+      
+      return subUserData.map(u => ({
+        ...u,
+        parent: u.parent_user_id ? parentMap.get(u.parent_user_id) : null
+      }));
     },
   });
 
@@ -210,8 +236,8 @@ export default function SubUserManagement() {
                   <TableCell>{user.first_name} {user.last_name}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
-                    {user.parent && Array.isArray(user.parent) && user.parent[0] 
-                      ? `${user.parent[0].first_name} ${user.parent[0].last_name}` 
+                    {user.parent 
+                      ? `${user.parent.first_name} ${user.parent.last_name}` 
                       : 'N/A'}
                   </TableCell>
                   <TableCell>{user.company_name || 'N/A'}</TableCell>
