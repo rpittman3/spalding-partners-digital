@@ -23,6 +23,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Plus, Upload } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface Resource {
   id: string;
@@ -31,6 +32,11 @@ interface Resource {
   file_size: number;
   is_important: boolean;
   created_at: string;
+  resource_categories: {
+    categories: {
+      name: string;
+    };
+  }[];
 }
 
 interface Category {
@@ -55,7 +61,14 @@ export default function ResourceManagement() {
   const loadResources = async () => {
     const { data } = await supabase
       .from('resources')
-      .select('*')
+      .select(`
+        *,
+        resource_categories (
+          categories (
+            name
+          )
+        )
+      `)
       .order('created_at', { ascending: false });
     setResources(data || []);
   };
@@ -229,6 +242,7 @@ export default function ResourceManagement() {
             <TableRow>
               <TableHead>Title</TableHead>
               <TableHead>Description</TableHead>
+              <TableHead>Categories</TableHead>
               <TableHead>Size</TableHead>
               <TableHead>Important</TableHead>
               <TableHead>Uploaded</TableHead>
@@ -237,7 +251,7 @@ export default function ResourceManagement() {
           <TableBody>
             {resources.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                   No resources uploaded yet
                 </TableCell>
               </TableRow>
@@ -246,6 +260,15 @@ export default function ResourceManagement() {
                 <TableRow key={resource.id}>
                   <TableCell className="font-medium">{resource.title}</TableCell>
                   <TableCell>{resource.description || '-'}</TableCell>
+                  <TableCell>
+                    <div className="flex flex-wrap gap-1">
+                      {resource.resource_categories?.map((rc, idx) => (
+                        <Badge key={idx} variant="secondary">
+                          {rc.categories.name}
+                        </Badge>
+                      ))}
+                    </div>
+                  </TableCell>
                   <TableCell>
                     {(resource.file_size / 1024 / 1024).toFixed(2)} MB
                   </TableCell>
