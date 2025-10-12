@@ -22,11 +22,16 @@ serve(async (req) => {
   try {
     const { clientEmail, clientName, documentName, category }: DocumentNotificationRequest = await req.json();
 
-    // DEVELOPMENT: Override recipient email
-    const recipientEmail = 'rpittman3@gmail.com';
+    // Check if EMAIL_OVERRIDE exists, use it if present, otherwise use the client email
+    const emailOverride = Deno.env.get('EMAIL_OVERRIDE');
+    const recipientEmail = emailOverride || clientEmail;
     
-    console.log('Original client email:', clientEmail);
-    console.log('Sending document notification to (DEV):', recipientEmail);
+    if (emailOverride) {
+      console.log('EMAIL_OVERRIDE active - Original client email:', clientEmail);
+      console.log('Sending document notification to override address:', recipientEmail);
+    } else {
+      console.log('Sending document notification to client email:', recipientEmail);
+    }
 
     // Initialize SMTP client with environment variables or defaults
     const smtpClient = new SMTPClient({
