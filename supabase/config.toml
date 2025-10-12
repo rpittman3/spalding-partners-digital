@@ -6,5 +6,8 @@ verify_jwt = false
 [functions.send-access-code]
 verify_jwt = false
 
+[functions.send-document-notification]
+verify_jwt = true
+
 [functions.reset-subuser-password]
 verify_jwt = true

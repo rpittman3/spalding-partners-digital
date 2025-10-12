@@ -32,6 +32,7 @@ interface Client {
   first_name: string;
   last_name: string;
   company_name: string | null;
+  email: string;
 }
 
 export default function SendDocumentDialog({ open, onOpenChange, onSuccess }: SendDocumentDialogProps) {
@@ -48,7 +49,7 @@ export default function SendDocumentDialog({ open, onOpenChange, onSuccess }: Se
     queryFn: async () => {
       const { data, error } = await supabase
         .from('profiles')
-        .select('id, first_name, last_name, company_name')
+        .select('id, first_name, last_name, company_name, email')
         .eq('is_main_user', true)
         .order('last_name');
       
@@ -94,6 +95,30 @@ export default function SendDocumentDialog({ open, onOpenChange, onSuccess }: Se
         });
 
       if (dbError) throw dbError;
+
+      // Get client details for email
+      const client = clients.find(c => c.id === selectedClient);
+      if (client) {
+        try {
+          // Send notification email
+          const { error: emailError } = await supabase.functions.invoke('send-document-notification', {
+            body: {
+              clientEmail: client.email || '',
+              clientName: client.company_name || `${client.first_name} ${client.last_name}`,
+              documentName: selectedFile.name,
+              category: category || undefined,
+            },
+          });
+
+          if (emailError) {
+            console.error('Email notification failed:', emailError);
+            // Don't throw - document is uploaded, email failure is non-critical
+          }
+        } catch (emailError) {
+          console.error('Email notification error:', emailError);
+          // Don't throw - document is uploaded successfully
+        }
+      }
     },
     onSuccess: () => {
       toast({
