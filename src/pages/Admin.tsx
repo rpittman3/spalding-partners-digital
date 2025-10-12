@@ -13,6 +13,7 @@ import ImportClients from '@/components/admin/ImportClients';
 import AuditLogs from '@/components/admin/AuditLogs';
 import MeetingRequests from '@/components/admin/MeetingRequests';
 import Settings from '@/components/admin/Settings';
+import NotificationManagement from '@/components/admin/NotificationManagement';
 import {
   LayoutDashboard,
   Users,
@@ -119,10 +120,11 @@ export default function Admin() {
               {activeSection === 'import' && <ImportClients />}
               {activeSection === 'audit' && <AuditLogs />}
               {activeSection === 'settings' && <Settings />}
-              {['notifications', 'deadlines'].includes(activeSection) && (
+              {activeSection === 'notifications' && <NotificationManagement />}
+              {activeSection === 'deadlines' && (
                 <div className="py-8 text-center text-muted-foreground">
                   <p className="text-lg mb-4">
-                    {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)} section coming soon
+                    Deadlines section coming soon
                   </p>
                   <p className="text-sm">
                     This feature will be implemented next.
