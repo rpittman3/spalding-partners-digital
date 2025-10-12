@@ -13,6 +13,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Download, Clock, Eye } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { formatDistanceToNow, differenceInMonths } from 'date-fns';
 
 interface Document {
@@ -210,13 +211,22 @@ export default function DocumentList({ refreshTrigger }: { refreshTrigger?: numb
                       </Button>
                     )}
                     {doc.extension_count < 2 && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleExtend(doc.id, doc.extension_count)}
-                      >
-                        <Clock className="h-4 w-4" />
-                      </Button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleExtend(doc.id, doc.extension_count)}
+                            >
+                              <Clock className="h-4 w-4" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Extend the expiration by 6 months. You can only do this twice for each document.</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     )}
                   </div>
                 </TableCell>
