@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LogOut, Clock, FileText, Download } from "lucide-react";
+import { LogOut, Clock, FileText, Download, Bell } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import DocumentUploader from "@/components/client/DocumentUploader";
@@ -13,6 +13,7 @@ import DeadlinesList from "@/components/client/DeadlinesList";
 import ResourcesList from "@/components/client/ResourcesList";
 import SubUserManager from "@/components/client/SubUserManager";
 import DashboardStats from "@/components/client/DashboardStats";
+import NotificationsList from "@/components/client/NotificationsList";
 
 export default function ClientPortal() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -45,8 +46,9 @@ export default function ClientPortal() {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
+            <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-grid">
               <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+              <TabsTrigger value="notifications">Notifications</TabsTrigger>
               <TabsTrigger value="documents">Documents</TabsTrigger>
               <TabsTrigger value="resources">Resources</TabsTrigger>
               <TabsTrigger value="team">My Team</TabsTrigger>
@@ -65,6 +67,24 @@ export default function ClientPortal() {
                 </CardHeader>
                 <CardContent>
                   <DeadlinesList />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Notifications Tab */}
+            <TabsContent value="notifications" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Bell className="h-5 w-5" />
+                    Notifications
+                  </CardTitle>
+                  <CardDescription>
+                    Important updates and announcements from Spalding & Partners Financial
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <NotificationsList />
                 </CardContent>
               </Card>
             </TabsContent>
