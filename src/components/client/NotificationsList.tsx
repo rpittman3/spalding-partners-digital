@@ -38,33 +38,42 @@ export default function NotificationsList() {
     setLoading(true);
 
     try {
-      // Get notifications with optional status (using left join)
-      const { data, error } = await supabase
+      // 1) Get status rows for this user (archived filter applied)
+      const { data: statusRows, error: statusError } = await supabase
+        .from('notification_status')
+        .select('notification_id, is_seen, is_archived')
+        .eq('user_id', user.id)
+        .eq('is_archived', showArchived);
+
+      if (statusError) throw statusError;
+
+      const ids = Array.from(new Set((statusRows || []).map((r: any) => r.notification_id)));
+      if (ids.length === 0) {
+        setNotifications([]);
+        return;
+      }
+
+      // 2) Fetch notifications by those ids
+      const { data: notifs, error: notifError } = await supabase
         .from('notifications')
-        .select(`
-          *,
-          notification_status(is_seen, is_archived, user_id)
-        `)
+        .select('*')
+        .in('id', ids)
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (notifError) throw notifError;
 
-      // Filter notifications to only show those for this user
-      const userNotifications = (data || []).filter(notification => {
-        const statusForUser = notification.notification_status?.find(
-          (status: any) => status.user_id === user.id
-        );
-        
-        // Only show if user has a status entry and it matches the archive filter
-        return statusForUser && statusForUser.is_archived === showArchived;
-      }).map(notification => ({
-        ...notification,
-        notification_status: notification.notification_status?.filter(
-          (status: any) => status.user_id === user.id
-        ) || []
+      // 3) Attach the user's status to each notification for rendering convenience
+      const byId: Record<string, any> = {};
+      (statusRows || []).forEach((s: any) => {
+        byId[s.notification_id] = s;
+      });
+
+      const withStatus = (notifs || []).map((n: any) => ({
+        ...n,
+        notification_status: byId[n.id] ? [byId[n.id]] : [],
       }));
 
-      setNotifications(userNotifications);
+      setNotifications(withStatus);
     } catch (error: any) {
       console.error('Error loading notifications:', error);
       toast({
