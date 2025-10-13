@@ -62,6 +62,29 @@ serve(async (req) => {
     console.log('Found users:', userIds.length);
 
     if (userIds.length === 0) {
+      // Still create empty notification status table entry for tracking
+      console.log('No users found in selected categories');
+    }
+
+    // Create notification status entries for each user (do this before checking for empty userIds)
+    if (userIds.length > 0) {
+      const statusEntries = userIds.map(userId => ({
+        notification_id: notificationId,
+        user_id: userId,
+        is_seen: false,
+        is_archived: false,
+      }));
+
+      const { error: statusError } = await supabase
+        .from('notification_status')
+        .insert(statusEntries);
+
+      if (statusError) {
+        console.error('Error creating notification status:', statusError);
+      }
+    }
+
+    if (userIds.length === 0) {
       return new Response(
         JSON.stringify({ message: 'No users found in selected categories' }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
@@ -78,22 +101,6 @@ serve(async (req) => {
     if (profileError) throw profileError;
 
     console.log('Found active profiles:', profiles?.length);
-
-    // Create notification status entries for each user
-    const statusEntries = userIds.map(userId => ({
-      notification_id: notificationId,
-      user_id: userId,
-      is_seen: false,
-      is_archived: false,
-    }));
-
-    const { error: statusError } = await supabase
-      .from('notification_status')
-      .insert(statusEntries);
-
-    if (statusError) {
-      console.error('Error creating notification status:', statusError);
-    }
 
     // Initialize SMTP client
     const smtpClient = new SMTPClient({
