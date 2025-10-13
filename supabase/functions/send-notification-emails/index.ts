@@ -28,15 +28,37 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Get all users in the selected categories
-    const { data: userCategories, error: userError } = await supabase
-      .from('user_categories')
-      .select('user_id')
-      .in('category_id', categoryIds);
+    // Check if "ALL" category is included
+    const { data: allCategory } = await supabase
+      .from('categories')
+      .select('id')
+      .eq('name', 'ALL')
+      .single();
 
-    if (userError) throw userError;
+    const includesAll = allCategory && categoryIds.includes(allCategory.id);
+    let userIds: string[] = [];
 
-    const userIds = [...new Set(userCategories?.map(uc => uc.user_id) || [])];
+    if (includesAll) {
+      // If ALL category is selected, get all active client users
+      const { data: allProfiles, error: allProfilesError } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('is_active', true)
+        .eq('is_main_user', true);
+
+      if (allProfilesError) throw allProfilesError;
+      userIds = allProfiles?.map(p => p.id) || [];
+    } else {
+      // Get users in the selected categories
+      const { data: userCategories, error: userError } = await supabase
+        .from('user_categories')
+        .select('user_id')
+        .in('category_id', categoryIds);
+
+      if (userError) throw userError;
+      userIds = [...new Set(userCategories?.map(uc => uc.user_id) || [])];
+    }
+
     console.log('Found users:', userIds.length);
 
     if (userIds.length === 0) {

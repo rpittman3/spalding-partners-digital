@@ -38,20 +38,33 @@ export default function NotificationsList() {
     setLoading(true);
 
     try {
-      // Get notifications with status
+      // Get notifications with optional status (using left join)
       const { data, error } = await supabase
         .from('notifications')
         .select(`
           *,
-          notification_status!inner(is_seen, is_archived)
+          notification_status(is_seen, is_archived, user_id)
         `)
-        .eq('notification_status.user_id', user.id)
-        .eq('notification_status.is_archived', showArchived)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
 
-      setNotifications(data || []);
+      // Filter notifications to only show those for this user
+      const userNotifications = (data || []).filter(notification => {
+        const statusForUser = notification.notification_status?.find(
+          (status: any) => status.user_id === user.id
+        );
+        
+        // Only show if user has a status entry and it matches the archive filter
+        return statusForUser && statusForUser.is_archived === showArchived;
+      }).map(notification => ({
+        ...notification,
+        notification_status: notification.notification_status?.filter(
+          (status: any) => status.user_id === user.id
+        ) || []
+      }));
+
+      setNotifications(userNotifications);
     } catch (error: any) {
       console.error('Error loading notifications:', error);
       toast({
