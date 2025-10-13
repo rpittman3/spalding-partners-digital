@@ -29,9 +29,12 @@ export default function DeadlinesList() {
       .from('profiles')
       .select('id')
       .eq('id', user.id)
-      .single();
+      .maybeSingle();
 
-    if (!profile) return;
+    if (!profile) {
+      setLoading(false);
+      return;
+    }
 
     // Get user's categories
     const { data: userCategories } = await supabase
@@ -41,13 +44,38 @@ export default function DeadlinesList() {
 
     const categoryIds = userCategories?.map((uc) => uc.category_id) || [];
 
-    // Get deadlines for user's categories or ALL category
+    // Get the ALL category ID
+    const { data: allCategory } = await supabase
+      .from('categories')
+      .select('id')
+      .eq('name', 'ALL')
+      .maybeSingle();
+
+    // Combine user categories with ALL category
+    const allCategoryIds = [...categoryIds];
+    if (allCategory) {
+      allCategoryIds.push(allCategory.id);
+    }
+
+    if (allCategoryIds.length === 0) {
+      setDeadlines([]);
+      setLoading(false);
+      return;
+    }
+
+    // Get deadlines for these categories
     const { data: deadlineCategories } = await supabase
       .from('deadline_categories')
-      .select('deadline_id, categories!inner(name)')
-      .or(`category_id.in.(${categoryIds.join(',')}),categories.name.eq.ALL`);
+      .select('deadline_id')
+      .in('category_id', allCategoryIds);
 
-    const deadlineIds = [...new Set(deadlineCategories?.map((dc) => dc.deadline_id))];
+    const deadlineIds = [...new Set(deadlineCategories?.map((dc) => dc.deadline_id) || [])];
+
+    if (deadlineIds.length === 0) {
+      setDeadlines([]);
+      setLoading(false);
+      return;
+    }
 
     const { data } = await supabase
       .from('deadlines')
