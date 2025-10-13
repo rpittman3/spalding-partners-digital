@@ -14,6 +14,7 @@ import AuditLogs from '@/components/admin/AuditLogs';
 import MeetingRequests from '@/components/admin/MeetingRequests';
 import Settings from '@/components/admin/Settings';
 import NotificationManagement from '@/components/admin/NotificationManagement';
+import DeadlineManagement from '@/components/admin/DeadlineManagement';
 import {
   LayoutDashboard,
   Users,
@@ -121,16 +122,7 @@ export default function Admin() {
               {activeSection === 'audit' && <AuditLogs />}
               {activeSection === 'settings' && <Settings />}
               {activeSection === 'notifications' && <NotificationManagement />}
-              {activeSection === 'deadlines' && (
-                <div className="py-8 text-center text-muted-foreground">
-                  <p className="text-lg mb-4">
-                    Deadlines section coming soon
-                  </p>
-                  <p className="text-sm">
-                    This feature will be implemented next.
-                  </p>
-                </div>
-              )}
+              {activeSection === 'deadlines' && <DeadlineManagement />}
             </CardContent>
           </Card>
         </div>
