@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Card } from '@/components/ui/card';
-import { Trash2, Send } from 'lucide-react';
+import { Trash2, Send, Edit } from 'lucide-react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -31,6 +31,7 @@ export default function NotificationManagement() {
   const [isImportant, setIsImportant] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -65,6 +66,31 @@ export default function NotificationManagement() {
     );
   };
 
+  const handleEdit = async (notification: Notification) => {
+    setEditingId(notification.id);
+    setTitle(notification.title);
+    setBody(notification.body);
+    setIsImportant(notification.is_important);
+    setShowForm(true);
+
+    // Load categories for this notification
+    const { data: notificationCategories } = await supabase
+      .from('notification_categories')
+      .select('category_id')
+      .eq('notification_id', notification.id);
+
+    setSelectedCategories(notificationCategories?.map(nc => nc.category_id) || []);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setTitle('');
+    setBody('');
+    setSelectedCategories([]);
+    setIsImportant(false);
+    setShowForm(false);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -93,56 +119,94 @@ export default function NotificationManagement() {
       
       if (!user) throw new Error('Not authenticated');
 
-      // Create notification
-      const { data: notification, error: notificationError } = await supabase
-        .from('notifications')
-        .insert({
-          title,
-          body,
-          is_important: isImportant,
-          created_by: user.id,
-        })
-        .select()
-        .single();
+      if (editingId) {
+        // Update existing notification
+        const { error: notificationError } = await supabase
+          .from('notifications')
+          .update({
+            title,
+            body,
+            is_important: isImportant,
+          })
+          .eq('id', editingId);
 
-      if (notificationError) throw notificationError;
+        if (notificationError) throw notificationError;
 
-      // Link notification to categories
-      const categoryLinks = selectedCategories.map(categoryId => ({
-        notification_id: notification.id,
-        category_id: categoryId,
-      }));
+        // Delete old category links
+        await supabase
+          .from('notification_categories')
+          .delete()
+          .eq('notification_id', editingId);
 
-      const { error: categoryError } = await supabase
-        .from('notification_categories')
-        .insert(categoryLinks);
+        // Create new category links
+        const categoryLinks = selectedCategories.map(categoryId => ({
+          notification_id: editingId,
+          category_id: categoryId,
+        }));
 
-      if (categoryError) throw categoryError;
+        const { error: categoryError } = await supabase
+          .from('notification_categories')
+          .insert(categoryLinks);
 
-      // Send emails via edge function
-      const { error: emailError } = await supabase.functions.invoke('send-notification-emails', {
-        body: {
-          notificationId: notification.id,
-          title,
-          body,
-          categoryIds: selectedCategories,
-        },
-      });
+        if (categoryError) throw categoryError;
 
-      if (emailError) {
-        console.error('Email sending error:', emailError);
-        toast({
-          title: 'Notification Created',
-          description: 'Notification created but some emails may have failed to send',
-        });
-      } else {
         toast({
           title: 'Success',
-          description: 'Notification created and emails sent',
+          description: 'Notification updated successfully',
         });
+      } else {
+        // Create new notification
+        const { data: notification, error: notificationError } = await supabase
+          .from('notifications')
+          .insert({
+            title,
+            body,
+            is_important: isImportant,
+            created_by: user.id,
+          })
+          .select()
+          .single();
+
+        if (notificationError) throw notificationError;
+
+        // Link notification to categories
+        const categoryLinks = selectedCategories.map(categoryId => ({
+          notification_id: notification.id,
+          category_id: categoryId,
+        }));
+
+        const { error: categoryError } = await supabase
+          .from('notification_categories')
+          .insert(categoryLinks);
+
+        if (categoryError) throw categoryError;
+
+        // Send emails via edge function
+        const { error: emailError } = await supabase.functions.invoke('send-notification-emails', {
+          body: {
+            notificationId: notification.id,
+            title,
+            body,
+            categoryIds: selectedCategories,
+          },
+        });
+
+        if (emailError) {
+          console.error('Email sending error:', emailError);
+          toast({
+            title: 'Notification Created',
+            description: 'Notification created but some emails may have failed to send',
+          });
+        } else {
+          toast({
+            title: 'Success',
+            description: 'Notification created and emails sent',
+          });
+        }
       }
 
       // Reset form
+      setEditingId(null);
       setTitle('');
       setBody('');
       setSelectedCategories([]);
@@ -221,13 +285,22 @@ export default function NotificationManagement() {
                       {new Date(notification.created_at).toLocaleDateString()}
                     </p>
                   </div>
-                  <Button
-                    variant="destructive"
-                    size="icon"
-                    onClick={() => handleDelete(notification.id)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => handleEdit(notification)}
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      size="icon"
+                      onClick={() => handleDelete(notification.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
               </Card>
             ))
@@ -236,8 +309,10 @@ export default function NotificationManagement() {
       ) : (
         <Card className="p-6">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold">Create New Notification</h3>
-            <Button variant="outline" onClick={() => setShowForm(false)}>
+            <h3 className="text-lg font-semibold">
+              {editingId ? 'Edit Notification' : 'Create New Notification'}
+            </h3>
+            <Button variant="outline" onClick={handleCancelEdit}>
               Cancel
             </Button>
           </div>
@@ -298,8 +373,17 @@ export default function NotificationManagement() {
           </div>
 
           <Button type="submit" disabled={loading} className="w-full">
-            <Send className="h-4 w-4 mr-2" />
-            {loading ? 'Sending...' : 'Send Notification'}
+            {editingId ? (
+              <>
+                <Edit className="h-4 w-4 mr-2" />
+                {loading ? 'Updating...' : 'Update Notification'}
+              </>
+            ) : (
+              <>
+                <Send className="h-4 w-4 mr-2" />
+                {loading ? 'Sending...' : 'Send Notification'}
+              </>
+            )}
           </Button>
         </form>
       </Card>
