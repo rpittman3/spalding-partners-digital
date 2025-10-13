@@ -38,31 +38,29 @@ export default function NotificationsList() {
     setLoading(true);
 
     try {
-      // 1) Get status rows for this user (archived filter applied)
-      const { data: statusRows, error: statusError } = await supabase
-        .from('notification_status')
-        .select('notification_id, is_seen, is_archived')
-        .eq('user_id', user.id)
-        .eq('is_archived', showArchived);
+      // Fetch notifications allowed by RLS (by category/ALL)
+      const { data: notifs, error: notifError } = await supabase
+        .from('notifications')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-      if (statusError) throw statusError;
+      if (notifError) throw notifError;
 
-      const ids = Array.from(new Set((statusRows || []).map((r: any) => r.notification_id)));
+      const ids = (notifs || []).map((n: any) => n.id);
       if (ids.length === 0) {
         setNotifications([]);
         return;
       }
 
-      // 2) Fetch notifications by those ids
-      const { data: notifs, error: notifError } = await supabase
-        .from('notifications')
-        .select('*')
-        .in('id', ids)
-        .order('created_at', { ascending: false });
+      // Fetch status rows for this user for those ids
+      const { data: statusRows, error: statusError } = await supabase
+        .from('notification_status')
+        .select('notification_id, is_seen, is_archived')
+        .eq('user_id', user.id)
+        .in('notification_id', ids);
 
-      if (notifError) throw notifError;
+      if (statusError) throw statusError;
 
-      // 3) Attach the user's status to each notification for rendering convenience
       const byId: Record<string, any> = {};
       (statusRows || []).forEach((s: any) => {
         byId[s.notification_id] = s;
@@ -73,7 +71,14 @@ export default function NotificationsList() {
         notification_status: byId[n.id] ? [byId[n.id]] : [],
       }));
 
-      setNotifications(withStatus);
+      // Apply archive filter (default when no status: not archived)
+      const filtered = withStatus.filter((n: any) => {
+        const s = n.notification_status[0];
+        const archived = s ? s.is_archived : false;
+        return archived === showArchived;
+      });
+
+      setNotifications(filtered);
     } catch (error: any) {
       console.error('Error loading notifications:', error);
       toast({
