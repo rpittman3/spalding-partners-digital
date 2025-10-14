@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Calendar, Clock } from "lucide-react";
+import { fromZonedTime } from "date-fns-tz";
 
 export default function MeetingRequestForm() {
   const { user } = useAuth();
@@ -27,13 +28,18 @@ export default function MeetingRequestForm() {
     mutationFn: async (data: typeof formData) => {
       if (!user) throw new Error("Not authenticated");
 
+      const tz = "America/New_York";
+      const option1Utc = fromZonedTime(data.option1, tz).toISOString();
+      const option2Utc = data.option2 ? fromZonedTime(data.option2, tz).toISOString() : null;
+      const option3Utc = data.option3 ? fromZonedTime(data.option3, tz).toISOString() : null;
+
       const { data: insertData, error } = await supabase
         .from("meeting_requests")
         .insert({
           user_id: user.id,
-          option_1: data.option1,
-          option_2: data.option2,
-          option_3: data.option3,
+          option_1: option1Utc,
+          option_2: option2Utc,
+          option_3: option3Utc,
           subject: data.subject,
           status: "pending"
         })
