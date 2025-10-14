@@ -14,6 +14,7 @@ import ResourcesList from "@/components/client/ResourcesList";
 import SubUserManager from "@/components/client/SubUserManager";
 import DashboardStats from "@/components/client/DashboardStats";
 import NotificationsList from "@/components/client/NotificationsList";
+import MeetingRequestForm from "@/components/client/MeetingRequestForm";
 
 export default function ClientPortal() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -46,11 +47,12 @@ export default function ClientPortal() {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-grid">
+            <TabsList className="grid w-full grid-cols-6 lg:w-auto lg:inline-grid">
               <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
               <TabsTrigger value="notifications">Notifications</TabsTrigger>
               <TabsTrigger value="documents">Documents</TabsTrigger>
               <TabsTrigger value="resources">Resources</TabsTrigger>
+              <TabsTrigger value="meeting">Schedule Meeting</TabsTrigger>
               <TabsTrigger value="team">My Team</TabsTrigger>
             </TabsList>
 
@@ -121,6 +123,11 @@ export default function ClientPortal() {
                   <ResourcesList />
                 </CardContent>
               </Card>
+            </TabsContent>
+
+            {/* Schedule Meeting Tab */}
+            <TabsContent value="meeting" className="space-y-6">
+              <MeetingRequestForm />
             </TabsContent>
 
             {/* My Team Tab */}
