@@ -44,6 +44,8 @@ export default function NotificationsList() {
         .select('*')
         .order('created_at', { ascending: false });
 
+      console.log('Notifications query result:', { notifs, notifError });
+
       if (notifError) throw notifError;
 
       const ids = (notifs || []).map((n: any) => n.id);
