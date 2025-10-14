@@ -107,15 +107,6 @@ const ServicesOverview = () => {
             </div>
           ))}
         </div>
-
-        <div className="text-center">
-          <Button asChild variant="cta" size="lg">
-            <Link to="/contact">
-              Schedule a Consultation Today
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-        </div>
       </div>
     </section>
   );
