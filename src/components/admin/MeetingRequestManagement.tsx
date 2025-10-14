@@ -195,9 +195,9 @@ function MeetingRequestCard({
       <div>
         <p className="text-sm font-medium mb-2">Preferred Times (Eastern Time):</p>
         <div className="space-y-1 text-sm">
-          <p>1. {formatInTimeZone(new Date(request.option_1), "America/New_York", "PPpp")}</p>
-          {request.option_2 && <p>2. {formatInTimeZone(new Date(request.option_2), "America/New_York", "PPpp")}</p>}
-          {request.option_3 && <p>3. {formatInTimeZone(new Date(request.option_3), "America/New_York", "PPpp")}</p>}
+          <p>1. {formatInTimeZone(new Date(request.option_1), "America/New_York", "MMM d, yyyy 'at' h:mm a")}</p>
+          {request.option_2 && <p>2. {formatInTimeZone(new Date(request.option_2), "America/New_York", "MMM d, yyyy 'at' h:mm a")}</p>}
+          {request.option_3 && <p>3. {formatInTimeZone(new Date(request.option_3), "America/New_York", "MMM d, yyyy 'at' h:mm a")}</p>}
         </div>
       </div>
 
