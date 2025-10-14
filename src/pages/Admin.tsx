@@ -11,7 +11,7 @@ import CategoryManagement from '@/components/admin/CategoryManagement';
 import SubUserManagement from '@/components/admin/SubUserManagement';
 import ImportClients from '@/components/admin/ImportClients';
 import AuditLogs from '@/components/admin/AuditLogs';
-import MeetingRequests from '@/components/admin/MeetingRequests';
+import MeetingRequestManagement from '@/components/admin/MeetingRequestManagement';
 import Settings from '@/components/admin/Settings';
 import NotificationManagement from '@/components/admin/NotificationManagement';
 import DeadlineManagement from '@/components/admin/DeadlineManagement';
@@ -116,7 +116,7 @@ export default function Admin() {
               {activeSection === 'sub-users' && <SubUserManagement />}
               {activeSection === 'documents' && <DocumentManagement />}
               {activeSection === 'resources' && <ResourceManagement />}
-              {activeSection === 'meetings' && <MeetingRequests />}
+              {activeSection === 'meetings' && <MeetingRequestManagement />}
               {activeSection === 'categories' && <CategoryManagement />}
               {activeSection === 'import' && <ImportClients />}
               {activeSection === 'audit' && <AuditLogs />}

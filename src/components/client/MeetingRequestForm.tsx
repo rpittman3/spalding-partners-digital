@@ -27,16 +27,32 @@ export default function MeetingRequestForm() {
     mutationFn: async (data: typeof formData) => {
       if (!user) throw new Error("Not authenticated");
 
-      const { error } = await supabase.from("meeting_requests").insert({
-        user_id: user.id,
-        option_1: data.option1,
-        option_2: data.option2,
-        option_3: data.option3,
-        subject: data.subject,
-        status: "pending"
-      });
+      const { data: insertData, error } = await supabase
+        .from("meeting_requests")
+        .insert({
+          user_id: user.id,
+          option_1: data.option1,
+          option_2: data.option2,
+          option_3: data.option3,
+          subject: data.subject,
+          status: "pending"
+        })
+        .select()
+        .single();
 
       if (error) throw error;
+
+      // Send notification email to admin
+      const { error: emailError } = await supabase.functions.invoke("send-meeting-notification", {
+        body: { requestId: insertData.id }
+      });
+
+      if (emailError) {
+        console.error("Failed to send notification email:", emailError);
+        // Don't throw - the request was created successfully
+      }
+
+      return insertData;
     },
     onSuccess: () => {
       setSubmitted(true);

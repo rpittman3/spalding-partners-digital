@@ -394,7 +394,9 @@ export type Database = {
         Row: {
           admin_notes: string | null
           alternate_datetime: string | null
+          appointment_set: boolean | null
           id: string
+          is_archived: boolean | null
           option_1: string
           option_2: string
           option_3: string
@@ -409,7 +411,9 @@ export type Database = {
         Insert: {
           admin_notes?: string | null
           alternate_datetime?: string | null
+          appointment_set?: boolean | null
           id?: string
+          is_archived?: boolean | null
           option_1: string
           option_2: string
           option_3: string
@@ -424,7 +428,9 @@ export type Database = {
         Update: {
           admin_notes?: string | null
           alternate_datetime?: string | null
+          appointment_set?: boolean | null
           id?: string
+          is_archived?: boolean | null
           option_1?: string
           option_2?: string
           option_3?: string
