@@ -49,6 +49,8 @@ export default function NotificationsList() {
       if (notifError) throw notifError;
 
       const ids = (notifs || []).map((n: any) => n.id);
+      console.log('Notification IDs:', ids);
+      
       if (ids.length === 0) {
         setNotifications([]);
         return;
@@ -60,6 +62,8 @@ export default function NotificationsList() {
         .select('notification_id, is_seen, is_archived')
         .eq('user_id', user.id)
         .in('notification_id', ids);
+
+      console.log('Status rows query:', { statusRows, statusError, userId: user.id });
 
       if (statusError) throw statusError;
 
@@ -73,12 +77,18 @@ export default function NotificationsList() {
         notification_status: byId[n.id] ? [byId[n.id]] : [],
       }));
 
+      console.log('Notifications with status:', withStatus);
+
       // Apply archive filter (default when no status: not archived)
       const filtered = withStatus.filter((n: any) => {
         const s = n.notification_status[0];
         const archived = s ? s.is_archived : false;
-        return archived === showArchived;
+        const shouldShow = archived === showArchived;
+        console.log(`Notification ${n.id}: archived=${archived}, showArchived=${showArchived}, shouldShow=${shouldShow}`);
+        return shouldShow;
       });
+
+      console.log('Filtered notifications:', filtered);
 
       setNotifications(filtered);
     } catch (error: any) {
