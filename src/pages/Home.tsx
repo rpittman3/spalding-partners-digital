@@ -78,23 +78,10 @@ const Home = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
             Ready to Take Control of Your Finances?
           </h2>
-          <p className="text-lg md:text-xl text-primary-foreground/90 max-w-3xl mx-auto mb-8">
+          <p className="text-lg md:text-xl text-primary-foreground/90 max-w-3xl mx-auto">
             Let our experienced team help you achieve your financial goals with personalized
             accounting, tax, and advisory services.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild variant="hero" size="xl">
-              <Link to="/contact">
-                Schedule a Free Consultation
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="xl" className="border-2 border-primary-foreground bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-              <Link to="/services/accounting">
-                Explore Our Services
-              </Link>
-            </Button>
-          </div>
         </div>
       </section>
 

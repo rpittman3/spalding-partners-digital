@@ -21,20 +21,6 @@ const Hero = () => {
         
         <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto animate-fade-in text-primary-foreground/90 font-normal">Expert accounting, tax preparation, and financial management services in Connecticut for over 25 years</p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
-          <Button asChild variant="hero" size="xl">
-            <Link to="/contact">
-              Schedule a Consultation
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-          <Button asChild variant="outline" size="xl" className="border-2 border-primary-foreground bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-            <Link to="/services/accounting">
-              Our Services
-            </Link>
-          </Button>
-        </div>
-
         {/* Trust Indicators */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           <div className="text-center">
