@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Calendar, Archive, CheckCircle, XCircle } from "lucide-react";
 import { format } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 
 interface MeetingRequest {
   id: string;
@@ -192,11 +193,11 @@ function MeetingRequestCard({
       </div>
 
       <div>
-        <p className="text-sm font-medium mb-2">Preferred Times:</p>
+        <p className="text-sm font-medium mb-2">Preferred Times (Eastern Time):</p>
         <div className="space-y-1 text-sm">
-          <p>1. {format(new Date(request.option_1), "PPpp")}</p>
-          {request.option_2 && <p>2. {format(new Date(request.option_2), "PPpp")}</p>}
-          {request.option_3 && <p>3. {format(new Date(request.option_3), "PPpp")}</p>}
+          <p>1. {formatInTimeZone(new Date(request.option_1), "America/New_York", "PPpp")}</p>
+          {request.option_2 && <p>2. {formatInTimeZone(new Date(request.option_2), "America/New_York", "PPpp")}</p>}
+          {request.option_3 && <p>3. {formatInTimeZone(new Date(request.option_3), "America/New_York", "PPpp")}</p>}
         </div>
       </div>
 

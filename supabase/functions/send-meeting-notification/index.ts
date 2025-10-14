@@ -49,7 +49,7 @@ serve(async (req) => {
       throw new Error(`Failed to fetch meeting request: ${fetchError?.message}`);
     }
 
-    // Format the meeting times
+    // Format the meeting times in Eastern Time
     const formatDateTime = (dateStr: string) => {
       const date = new Date(dateStr);
       return date.toLocaleString("en-US", {
@@ -59,6 +59,7 @@ serve(async (req) => {
         day: "numeric",
         hour: "numeric",
         minute: "2-digit",
+        timeZone: "America/New_York",
         timeZoneName: "short"
       });
     };
