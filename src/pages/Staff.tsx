@@ -103,20 +103,6 @@ const Staff = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-16 md:py-24" style={{ backgroundColor: '#918a6e' }}>
-          <div className="container-custom text-center">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
-              Ready to Work With Us?
-            </h2>
-            <p className="text-lg md:text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-              Experience the difference of personalized financial services. Let's discuss how we can help you achieve your goals.
-            </p>
-            <Button asChild size="lg" variant="secondary" className="shadow-custom-lg">
-              <Link to="/contact">Schedule a Consultation</Link>
-            </Button>
-          </div>
-        </section>
       </main>
 
       <Footer />

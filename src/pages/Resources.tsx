@@ -198,24 +198,6 @@ const Resources = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 md:py-24" style={{ backgroundColor: '#918a6e' }}>
-        <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
-            Need Personalized Financial Guidance?
-          </h2>
-          <p className="text-lg md:text-xl text-primary-foreground/90 max-w-3xl mx-auto mb-8">
-            While these resources are helpful, nothing beats personalized advice from
-            experienced professionals. Let's discuss your specific situation.
-          </p>
-          <Button asChild variant="hero" size="xl">
-            <Link to="/contact">
-              Schedule a Consultation
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-        </div>
-      </section>
 
       <Footer />
     </div>
