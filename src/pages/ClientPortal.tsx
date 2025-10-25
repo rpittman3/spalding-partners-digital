@@ -58,7 +58,7 @@ export default function ClientPortal() {
 
             {/* Dashboard Tab */}
             <TabsContent value="dashboard" className="space-y-6">
-              <DashboardStats />
+              <DashboardStats onNavigate={setActiveTab} />
 
               <Card>
                 <CardHeader>

@@ -3,7 +3,11 @@ import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Clock, FileText, Download } from 'lucide-react';
 
-export default function DashboardStats() {
+interface DashboardStatsProps {
+  onNavigate: (tab: string) => void;
+}
+
+export default function DashboardStats({ onNavigate }: DashboardStatsProps) {
   const [stats, setStats] = useState({
     unseenDocuments: 0,
     upcomingDeadlines: 0,
@@ -46,26 +50,33 @@ export default function DashboardStats() {
       title: 'Upcoming Deadlines', 
       value: stats.upcomingDeadlines, 
       icon: Clock, 
-      description: 'Next 90 days' 
+      description: 'Next 90 days',
+      tab: null
     },
     { 
       title: 'New Documents', 
       value: stats.unseenDocuments, 
       icon: FileText, 
-      description: 'Unseen documents' 
+      description: 'Unseen documents',
+      tab: 'documents'
     },
     { 
       title: 'Resources', 
       value: stats.availableResources, 
       icon: Download, 
-      description: 'Available downloads' 
+      description: 'Available downloads',
+      tab: 'resources'
     },
   ];
 
   return (
     <div className="grid gap-6 md:grid-cols-3">
       {statCards.map((stat) => (
-        <Card key={stat.title}>
+        <Card 
+          key={stat.title}
+          className={stat.tab ? "cursor-pointer hover:bg-accent/50 transition-colors" : ""}
+          onClick={() => stat.tab && onNavigate(stat.tab)}
+        >
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
               {stat.title}
