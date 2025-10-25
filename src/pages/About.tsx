@@ -8,7 +8,7 @@ const About = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="pt-28 pb-16 md:pb-24 bg-gradient-to-b from-secondary/50 to-background">
+      <section className="pt-28 pb-16 md:pb-24 bg-gradient-to-b from-secondary/50 to-background py-[25px]">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center offset-header">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
@@ -179,7 +179,9 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24" style={{ backgroundColor: '#918a6e' }}>
+      <section className="py-16 md:py-24" style={{
+      backgroundColor: '#918a6e'
+    }}>
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
             Let's Start Your Financial Journey
