@@ -20,7 +20,7 @@ All colors MUST be HSL.
     /* Professional navy blue - trust and stability */
     --primary: 213 94% 20%;
     --primary-foreground: 0 0% 100%;
-    
+
     /* Lighter blue for backgrounds */
     --secondary: 210 40% 96%;
     --secondary-foreground: 213 94% 20%;
@@ -32,7 +32,7 @@ All colors MUST be HSL.
     /* Warm tan-gold for CTAs and highlights */
     --accent: 45 50% 54%;
     --accent-foreground: 0 0% 100%;
-    
+
     /* Warm secondary tones for boutique feel */
     --warm-accent: 28 76% 65%;
     --soft-peach: 20 60% 88%;
@@ -51,18 +51,18 @@ All colors MUST be HSL.
     --header-height: 128px;
     --hero-gradient: linear-gradient(135deg, hsl(213, 94%, 20%) 0%, hsl(213, 80%, 30%) 100%);
     --overlay-gradient: linear-gradient(to bottom, transparent, hsl(213, 94%, 10%) 100%);
-    --section-padding: 5rem;
-    
+    --section-padding: 3rem;
+
     /* Typography */
     --heading-weight: 700;
     --body-weight: 400;
-    
+
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 hsl(213 94% 20% / 0.05);
     --shadow-md: 0 4px 6px -1px hsl(213 94% 20% / 0.1), 0 2px 4px -2px hsl(213 94% 20% / 0.1);
     --shadow-lg: 0 10px 15px -3px hsl(213 94% 20% / 0.1), 0 4px 6px -4px hsl(213 94% 20% / 0.1);
     --shadow-xl: 0 20px 25px -5px hsl(213 94% 20% / 0.1), 0 8px 10px -6px hsl(213 94% 20% / 0.1);
-    
+
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-fast: all 0.15s ease-in-out;
@@ -76,10 +76,19 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+    font-family:
+      "Montserrat",
+      system-ui,
+      -apple-system,
+      sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-bold text-primary;
     font-weight: var(--heading-weight);
   }
@@ -110,7 +119,7 @@ All colors MUST be HSL.
 
   /* Apply default section spacing to all sections except the Notifications toaster container */
   section:not([aria-label^="Notifications" i]) {
-    @apply py-16 md:py-24;
+    @apply py-8 md:py-12;
   }
 
   /* Adjust notifications container spacing to avoid pushing content below the navbar */
