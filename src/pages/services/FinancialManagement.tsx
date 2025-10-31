@@ -40,12 +40,7 @@ const FinancialManagement = () => {
     {
       title: "Strategic Planning",
       description: "Long-term financial planning to support your business growth and success.",
-      features: [
-        "Growth strategy development",
-        "Financial modeling",
-        "Scenario planning",
-        "Investment analysis",
-      ],
+      features: ["Growth strategy development", "Financial modeling", "Scenario planning", "Investment analysis"],
     },
   ];
 
@@ -62,12 +57,10 @@ const FinancialManagement = () => {
                 <TrendingUp className="h-5 w-5 text-accent" />
                 <span className="text-sm font-semibold text-accent">Financial Management</span>
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                Strategic Financial Management
-              </h1>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Strategic Financial Management</h1>
               <p className="text-xl text-muted-foreground mb-8">
-                Drive business success with expert budgeting, cash flow management, CFO services,
-                and strategic financial planning tailored to your goals.
+                Drive business success with expert budgeting, cash flow management, CFO services, and strategic
+                financial planning tailored to your goals.
               </p>
               <Button asChild variant="cta" size="xl">
                 <Link to="/contact">
@@ -91,21 +84,18 @@ const FinancialManagement = () => {
       <section className="py-16 md:py-24 bg-background">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">
-              Financial Leadership for Growth
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-8">Financial Leadership for Growth</h2>
             <div className="prose prose-lg max-w-none space-y-6 text-muted-foreground">
               <p className="text-lg">
-                Effective financial management is essential for business success. Whether you're
-                a growing startup or an established company, having clear financial direction,
-                strong cash flow management, and strategic planning can make the difference between
-                surviving and thriving.
+                Effective financial management is essential for business success. Whether you're a growing startup or an
+                established company, having clear financial direction, strong cash flow management, and strategic
+                planning can make the difference between surviving and thriving.
               </p>
               <p className="text-lg">
-                Our financial management services provide you with the expertise and insights of
-                a seasoned CFO without the cost of a full-time executive. We work closely with you
-                to develop budgets, manage cash flow, track performance, and plan for the future—
-                helping you make informed decisions that drive profitability and growth.
+                Our financial management services provide you with the expertise and insights of a seasoned CFO without
+                the cost of a full-time executive. We work closely with you to develop budgets, manage cash flow, track
+                performance, and plan for the future— helping you make informed decisions that drive profitability and
+                growth.
               </p>
             </div>
           </div>
@@ -115,9 +105,7 @@ const FinancialManagement = () => {
       {/* Services Grid */}
       <section className="py-16 md:py-24 bg-secondary/30">
         <div className="container-custom">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            Our Financial Management Services
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Our Financial Management Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {services.map((service, index) => (
               <div
@@ -149,7 +137,7 @@ const FinancialManagement = () => {
               Benefits of Professional Financial Management
             </h2>
             <div className="space-y-6">
-              <div className="flex gap-4 p-6 bg-secondary/30 rounded-lg">
+              <div className="flex gap-4 p-2 bg-secondary/30 rounded-lg">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
                 <div>
                   <h4 className="text-xl font-semibold mb-2">Improved Cash Flow</h4>
@@ -158,7 +146,7 @@ const FinancialManagement = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-4 p-6 bg-secondary/30 rounded-lg">
+              <div className="flex gap-4 p-2 bg-secondary/30 rounded-lg">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
                 <div>
                   <h4 className="text-xl font-semibold mb-2">Strategic Decision Making</h4>
@@ -167,7 +155,7 @@ const FinancialManagement = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-4 p-6 bg-secondary/30 rounded-lg">
+              <div className="flex gap-4 p-2 bg-secondary/30 rounded-lg">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
                 <div>
                   <h4 className="text-xl font-semibold mb-2">Growth Support</h4>
@@ -176,7 +164,7 @@ const FinancialManagement = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-4 p-6 bg-secondary/30 rounded-lg">
+              <div className="flex gap-4 p-2 bg-secondary/30 rounded-lg">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
                 <div>
                   <h4 className="text-xl font-semibold mb-2">Cost-Effective Expertise</h4>
@@ -189,7 +177,6 @@ const FinancialManagement = () => {
           </div>
         </div>
       </section>
-
 
       <Footer />
     </div>
