@@ -43,7 +43,7 @@ export default function Admin() {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'clients', label: 'Clients', icon: Users },
-    { id: 'sub-users', label: 'Client Team Members', icon: Users },
+    { id: 'sub-users', label: 'Client Members', icon: Users },
     { id: 'documents', label: 'Documents', icon: FileText },
     { id: 'resources', label: 'Resources', icon: FolderOpen },
     { id: 'notifications', label: 'Notifications', icon: Bell },
