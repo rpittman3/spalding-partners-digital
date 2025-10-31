@@ -145,13 +145,13 @@ export default function SubUserManagement() {
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="flex items-center gap-2">
           <Users className="h-5 w-5" />
-          Sub-User Management
+          Client Team Members
         </CardTitle>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button>
               <UserPlus className="mr-2 h-4 w-4" />
-              Create Sub-User
+              Add Team Member
             </Button>
           </DialogTrigger>
           <DialogContent>

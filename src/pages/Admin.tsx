@@ -43,7 +43,7 @@ export default function Admin() {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'clients', label: 'Clients', icon: Users },
-    { id: 'sub-users', label: 'Sub-Users', icon: Users },
+    { id: 'sub-users', label: 'Client Team Members', icon: Users },
     { id: 'documents', label: 'Documents', icon: FileText },
     { id: 'resources', label: 'Resources', icon: FolderOpen },
     { id: 'notifications', label: 'Notifications', icon: Bell },
@@ -98,7 +98,7 @@ export default function Admin() {
               <CardDescription>
                 {activeSection === 'dashboard' && 'Overview of your admin portal'}
                 {activeSection === 'clients' && 'Manage client accounts and information'}
-                {activeSection === 'sub-users' && 'Manage sub-user accounts for clients'}
+                {activeSection === 'sub-users' && 'Manage client team member accounts'}
                 {activeSection === 'documents' && 'View and manage client documents'}
                 {activeSection === 'resources' && 'Upload and organize resources for clients'}
                 {activeSection === 'notifications' && 'Create and manage notifications'}
