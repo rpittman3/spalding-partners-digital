@@ -62,12 +62,10 @@ const Tax = () => {
                 <FileText className="h-5 w-5 text-accent" />
                 <span className="text-sm font-semibold text-accent">Tax Services</span>
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                Expert Tax Preparation & Planning
-              </h1>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Expert Tax Preparation & Planning</h1>
               <p className="text-xl text-muted-foreground mb-8">
-                Maximize your tax savings with comprehensive preparation, strategic planning,
-                and professional IRS representation from experienced tax professionals.
+                Maximize your tax savings with comprehensive preparation, strategic planning, and professional IRS
+                representation from experienced tax professionals.
               </p>
               <Button asChild variant="cta" size="xl">
                 <Link to="/contact">
@@ -77,11 +75,7 @@ const Tax = () => {
               </Button>
             </div>
             <div className="relative">
-              <img
-                src={taxImage}
-                alt="Professional tax services"
-                className="rounded-lg shadow-custom-xl w-full"
-              />
+              <img src={taxImage} alt="Professional tax services" className="rounded-lg shadow-custom-xl w-full" />
             </div>
           </div>
         </div>
@@ -91,20 +85,17 @@ const Tax = () => {
       <section className="py-16 md:py-24 bg-background">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">
-              Navigate Tax Complexity with Confidence
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-8">Navigate Tax Complexity with Confidence</h2>
             <div className="prose prose-lg max-w-none space-y-6 text-muted-foreground">
               <p className="text-lg">
-                Tax laws are complex and constantly changing. Whether you're an individual taxpayer
-                or a business owner, staying compliant while maximizing your tax benefits requires
-                expertise, attention to detail, and strategic planning.
+                Tax laws are complex and constantly changing. Whether you're an individual taxpayer or a business owner,
+                staying compliant while maximizing your tax benefits requires expertise, attention to detail, and
+                strategic planning.
               </p>
               <p className="text-lg">
-                At Spalding & Partners, our experienced tax professionals stay current with the
-                latest tax regulations and strategies to ensure you pay only what you owe—and not
-                a penny more. We provide comprehensive tax services for individuals and businesses
-                throughout Connecticut.
+                At Spalding & Partners, our experienced tax professionals stay current with the latest tax regulations
+                and strategies to ensure you pay only what you owe—and not a penny more. We provide comprehensive tax
+                services for individuals and businesses throughout Connecticut.
               </p>
             </div>
           </div>
@@ -114,9 +105,7 @@ const Tax = () => {
       {/* Services Grid */}
       <section className="py-16 md:py-24 bg-secondary/30">
         <div className="container-custom">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            Our Tax Services
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Our Tax Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {services.map((service, index) => (
               <div
@@ -144,11 +133,9 @@ const Tax = () => {
       <section className="py-16 md:py-24 bg-background">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-              Why Choose Our Tax Services?
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Why Choose Our Tax Services?</h2>
             <div className="space-y-6">
-              <div className="flex gap-4 p-6 bg-secondary/30 rounded-lg">
+              <div className="flex gap-4 p-2 bg-secondary/30 rounded-lg">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
                 <div>
                   <h4 className="text-xl font-semibold mb-2">30+ Years of Experience</h4>
@@ -157,7 +144,7 @@ const Tax = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-4 p-6 bg-secondary/30 rounded-lg">
+              <div className="flex gap-4 p-2 bg-secondary/30 rounded-lg">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
                 <div>
                   <h4 className="text-xl font-semibold mb-2">Proactive Tax Planning</h4>
@@ -166,7 +153,7 @@ const Tax = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-4 p-6 bg-secondary/30 rounded-lg">
+              <div className="flex gap-4 p-2 bg-secondary/30 rounded-lg">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
                 <div>
                   <h4 className="text-xl font-semibold mb-2">IRS Expertise</h4>
@@ -175,7 +162,7 @@ const Tax = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-4 p-6 bg-secondary/30 rounded-lg">
+              <div className="flex gap-4 p-2 bg-secondary/30 rounded-lg">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
                 <div>
                   <h4 className="text-xl font-semibold mb-2">Personalized Service</h4>
@@ -190,7 +177,7 @@ const Tax = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24" style={{ backgroundColor: '#918a6e' }}>
+      <section className="py-16 md:py-24" style={{ backgroundColor: "#918a6e" }}>
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
             Ready to Optimize Your Tax Strategy?
