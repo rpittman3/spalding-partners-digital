@@ -21,7 +21,7 @@ const FAQ = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="pt-15 pb-4 md:pb-6 bg-gradient-to-b from-secondary/50 to-background">
+      <section className="pt-15 pb-2 md:pb-3 bg-gradient-to-b from-secondary/50 to-background">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center offset-header">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Frequently Asked Questions</h1>
@@ -33,7 +33,7 @@ const FAQ = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-8 bg-background md:py-0">
+      <section className="py-4 bg-background md:py-0">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
             {isLoading ? (
