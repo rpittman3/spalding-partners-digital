@@ -29,12 +29,7 @@ const BusinessAdvisory = () => {
     {
       title: "Growth Strategies",
       description: "Strategic planning and advice to support your business expansion goals.",
-      features: [
-        "Market expansion planning",
-        "Acquisition evaluation",
-        "Financing strategy",
-        "Scalability assessment",
-      ],
+      features: ["Market expansion planning", "Acquisition evaluation", "Financing strategy", "Scalability assessment"],
     },
     {
       title: "Exit Planning",
@@ -60,12 +55,10 @@ const BusinessAdvisory = () => {
               <Briefcase className="h-5 w-5 text-accent" />
               <span className="text-sm font-semibold text-accent">Business Advisory</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Strategic Business Advisory Services
-            </h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Strategic Business Advisory Services</h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Navigate business challenges and capitalize on opportunities with expert
-              guidance on entity selection, strategic planning, and growth strategies.
+              Navigate business challenges and capitalize on opportunities with expert guidance on entity selection,
+              strategic planning, and growth strategies.
             </p>
             <Button asChild variant="cta" size="xl">
               <Link to="/contact">
@@ -81,21 +74,17 @@ const BusinessAdvisory = () => {
       <section className="py-16 md:py-24 bg-background">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">
-              Your Trusted Business Advisor
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-8">Your Trusted Business Advisor</h2>
             <div className="prose prose-lg max-w-none space-y-6 text-muted-foreground">
               <p className="text-lg">
-                Running a successful business requires more than just day-to-day management—it
-                requires strategic thinking, careful planning, and expert guidance. Whether you're
-                starting a new venture, growing an existing business, or planning your exit, the
-                right advisory support can make all the difference.
+                Running a successful business requires more than just day-to-day management—it requires strategic
+                thinking, careful planning, and expert guidance. Whether you're starting a new venture, growing an
+                existing business, or planning your exit, the right advisory support can make all the difference.
               </p>
               <p className="text-lg">
-                Our business advisory services combine financial expertise with strategic business
-                acumen to help you make informed decisions at every stage of your business journey.
-                From entity selection and formation to growth strategies and exit planning, we're
-                here to guide you toward success.
+                Our business advisory services combine financial expertise with strategic business acumen to help you
+                make informed decisions at every stage of your business journey. From entity selection and formation to
+                growth strategies and exit planning, we're here to guide you toward success.
               </p>
             </div>
           </div>
@@ -105,9 +94,7 @@ const BusinessAdvisory = () => {
       {/* Services Grid */}
       <section className="py-16 md:py-24 bg-secondary/30">
         <div className="container-custom">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            Our Business Advisory Services
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Our Business Advisory Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {services.map((service, index) => (
               <div
@@ -135,11 +122,9 @@ const BusinessAdvisory = () => {
       <section className="py-16 md:py-24 bg-background">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-              Why Business Advisory Matters
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Why Business Advisory Matters</h2>
             <div className="space-y-6">
-              <div className="flex gap-4 p-6 bg-secondary/30 rounded-lg">
+              <div className="flex gap-4 p-2 bg-secondary/30 rounded-lg">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
                 <div>
                   <h4 className="text-xl font-semibold mb-2">Make Informed Decisions</h4>
@@ -148,7 +133,7 @@ const BusinessAdvisory = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-4 p-6 bg-secondary/30 rounded-lg">
+              <div className="flex gap-4 p-2 bg-secondary/30 rounded-lg">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
                 <div>
                   <h4 className="text-xl font-semibold mb-2">Avoid Costly Mistakes</h4>
@@ -157,7 +142,7 @@ const BusinessAdvisory = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-4 p-6 bg-secondary/30 rounded-lg">
+              <div className="flex gap-4 p-2 bg-secondary/30 rounded-lg">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
                 <div>
                   <h4 className="text-xl font-semibold mb-2">Plan for Growth</h4>
@@ -166,7 +151,7 @@ const BusinessAdvisory = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-4 p-6 bg-secondary/30 rounded-lg">
+              <div className="flex gap-4 p-2 bg-secondary/30 rounded-lg">
                 <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
                 <div>
                   <h4 className="text-xl font-semibold mb-2">Maximize Value</h4>
@@ -181,7 +166,7 @@ const BusinessAdvisory = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24" style={{ backgroundColor: '#918a6e' }}>
+      <section className="py-16 md:py-24" style={{ backgroundColor: "#918a6e" }}>
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
             Ready to Take Your Business to the Next Level?
