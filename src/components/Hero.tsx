@@ -19,7 +19,7 @@ const Hero = () => {
           <span className="text-accent">to Successful People</span>
         </h1>
         
-        <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto animate-fade-in text-primary-foreground/90 font-normal">Expert accounting, tax preparation, and financial management services in Connecticut for over 25 years</p>
+        <p className="text-lg md:text-xl lg:text-2xl mb-8 max-w-3xl mx-auto animate-fade-in text-primary-foreground/90 font-normal">Expert accounting, tax preparation, and financial management services for over 25 years</p>
 
         {/* Trust Indicators */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
