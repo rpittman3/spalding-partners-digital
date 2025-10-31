@@ -55,7 +55,7 @@ export type Database = {
           entity_id: string | null
           entity_type: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           user_id: string | null
         }
         Insert: {
@@ -65,7 +65,7 @@ export type Database = {
           entity_id?: string | null
           entity_type?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_id?: string | null
         }
         Update: {
@@ -75,7 +75,7 @@ export type Database = {
           entity_id?: string | null
           entity_type?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_id?: string | null
         }
         Relationships: [
@@ -96,7 +96,7 @@ export type Database = {
           entity_id: string | null
           entity_type: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           user_id: string | null
         }
         Insert: {
@@ -106,7 +106,7 @@ export type Database = {
           entity_id?: string | null
           entity_type?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_id?: string | null
         }
         Update: {
@@ -116,7 +116,7 @@ export type Database = {
           entity_id?: string | null
           entity_type?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_id?: string | null
         }
         Relationships: []
@@ -389,6 +389,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      faqs: {
+        Row: {
+          answer: string
+          created_at: string | null
+          created_by: string
+          display_order: number
+          id: string
+          is_active: boolean
+          question: string
+          updated_at: string | null
+        }
+        Insert: {
+          answer: string
+          created_at?: string | null
+          created_by: string
+          display_order?: number
+          id?: string
+          is_active?: boolean
+          question: string
+          updated_at?: string | null
+        }
+        Update: {
+          answer?: string
+          created_at?: string | null
+          created_by?: string
+          display_order?: number
+          id?: string
+          is_active?: boolean
+          question?: string
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       meeting_requests: {
         Row: {

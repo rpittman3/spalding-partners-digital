@@ -15,6 +15,7 @@ import MeetingRequestManagement from '@/components/admin/MeetingRequestManagemen
 import Settings from '@/components/admin/Settings';
 import NotificationManagement from '@/components/admin/NotificationManagement';
 import DeadlineManagement from '@/components/admin/DeadlineManagement';
+import FAQManagement from '@/components/admin/FAQManagement';
 import {
   LayoutDashboard,
   Users,
@@ -28,6 +29,7 @@ import {
   History,
   Settings as SettingsIcon,
   LogOut,
+  HelpCircle,
 } from 'lucide-react';
 
 export default function Admin() {
@@ -50,6 +52,7 @@ export default function Admin() {
     { id: 'deadlines', label: 'Deadlines', icon: Calendar },
     { id: 'meetings', label: 'Meeting Requests', icon: MessageSquare },
     { id: 'categories', label: 'Categories', icon: Tags },
+    { id: 'faqs', label: 'FAQs', icon: HelpCircle },
     { id: 'import', label: 'Import Clients', icon: Upload },
     { id: 'audit', label: 'Audit Logs', icon: History },
     { id: 'settings', label: 'Settings', icon: SettingsIcon },
@@ -105,6 +108,7 @@ export default function Admin() {
                 {activeSection === 'deadlines' && 'Manage tax and financial deadlines'}
                 {activeSection === 'meetings' && 'Review and respond to meeting requests'}
                 {activeSection === 'categories' && 'Manage client categories'}
+                {activeSection === 'faqs' && 'Manage frequently asked questions'}
                 {activeSection === 'import' && 'Import clients from CSV'}
                 {activeSection === 'audit' && 'View system audit logs'}
                 {activeSection === 'settings' && 'Configure system settings'}
@@ -118,6 +122,7 @@ export default function Admin() {
               {activeSection === 'resources' && <ResourceManagement />}
               {activeSection === 'meetings' && <MeetingRequestManagement />}
               {activeSection === 'categories' && <CategoryManagement />}
+              {activeSection === 'faqs' && <FAQManagement />}
               {activeSection === 'import' && <ImportClients />}
               {activeSection === 'audit' && <AuditLogs />}
               {activeSection === 'settings' && <Settings />}
