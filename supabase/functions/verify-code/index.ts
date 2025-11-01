@@ -1,10 +1,18 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// Input validation schema
+const VerifyCodeSchema = z.object({
+  email: z.string().trim().email('Invalid email format').max(255, 'Email too long'),
+  code: z.string().trim().length(6, 'Code must be 6 characters'),
+  password: z.string().min(8, 'Password must be at least 8 characters').max(128, 'Password too long'),
+});
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -12,7 +20,22 @@ serve(async (req) => {
   }
 
   try {
-    const { email, code, password } = await req.json();
+    // Parse and validate request body
+    let body: z.infer<typeof VerifyCodeSchema>;
+    try {
+      body = VerifyCodeSchema.parse(await req.json());
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.error('Validation error:', error.errors);
+        return new Response(
+          JSON.stringify({ error: 'Invalid request data' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      throw error;
+    }
+    
+    const { email, code, password } = body;
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -29,8 +52,9 @@ serve(async (req) => {
       .single();
 
     if (requestError || !accessRequest) {
+      console.error('Access request validation failed:', { email, hasRequest: !!accessRequest, error: requestError });
       return new Response(
-        JSON.stringify({ error: 'Invalid or expired code' }),
+        JSON.stringify({ error: 'Invalid or expired verification code' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -43,8 +67,9 @@ serve(async (req) => {
       .single();
 
     if (!importedClient) {
+      console.error('Client import lookup failed for email');
       return new Response(
-        JSON.stringify({ error: 'Client data not found' }),
+        JSON.stringify({ error: 'Invalid verification request' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -57,7 +82,8 @@ serve(async (req) => {
     });
 
     if (authError || !authData.user) {
-      throw new Error('Failed to create user account');
+      console.error('Auth user creation failed:', authError);
+      throw new Error('Account creation failed');
     }
 
     // Create profile
@@ -114,9 +140,8 @@ serve(async (req) => {
     );
   } catch (error) {
     console.error('Error in verify-code:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
-      JSON.stringify({ error: errorMessage }),
+      JSON.stringify({ error: 'An error occurred while processing your request' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

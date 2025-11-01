@@ -1,10 +1,20 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// Input validation schema
+const CreateSubUserSchema = z.object({
+  email: z.string().trim().email('Invalid email format').max(255, 'Email too long'),
+  password: z.string().min(8, 'Password must be at least 8 characters').max(128, 'Password too long'),
+  firstName: z.string().trim().min(1, 'First name required').max(100, 'First name too long'),
+  lastName: z.string().trim().min(1, 'Last name required').max(100, 'Last name too long'),
+  parentUserId: z.string().uuid('Invalid parent user ID'),
+});
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -12,7 +22,22 @@ serve(async (req) => {
   }
 
   try {
-    const { email, password, firstName, lastName, parentUserId } = await req.json();
+    // Parse and validate request body
+    let body: z.infer<typeof CreateSubUserSchema>;
+    try {
+      body = CreateSubUserSchema.parse(await req.json());
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.error('Validation error:', error.errors);
+        return new Response(
+          JSON.stringify({ error: 'Invalid input data provided' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      throw error;
+    }
+    
+    const { email, password, firstName, lastName, parentUserId } = body;
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;

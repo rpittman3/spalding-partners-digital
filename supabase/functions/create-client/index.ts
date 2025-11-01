@@ -1,9 +1,26 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.75.0'
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
+
+// Input validation schema
+const CreateClientSchema = z.object({
+  email: z.string().trim().email('Invalid email format').max(255, 'Email too long'),
+  password: z.string().min(8, 'Password must be at least 8 characters').max(128, 'Password too long'),
+  first_name: z.string().trim().min(1, 'First name required').max(100, 'First name too long'),
+  last_name: z.string().trim().min(1, 'Last name required').max(100, 'Last name too long'),
+  company_name: z.string().trim().max(255, 'Company name too long').optional(),
+  address: z.string().trim().max(500, 'Address too long').optional(),
+  city: z.string().trim().max(100, 'City too long').optional(),
+  state: z.string().trim().max(100, 'State too long').optional(),
+  zip: z.string().trim().max(20, 'ZIP code too long').optional(),
+  work_phone: z.string().trim().max(20, 'Work phone too long').optional(),
+  cell_phone: z.string().trim().max(20, 'Cell phone too long').optional(),
+  category_ids: z.array(z.string().uuid('Invalid category ID')).optional(),
+})
 
 interface CreateClientRequest {
   email: string
@@ -55,16 +72,22 @@ Deno.serve(async (req) => {
       throw new Error('Admin access required')
     }
 
-    const body: CreateClientRequest = await req.json()
-    console.log('Creating client:', { email: body.email, first_name: body.first_name, last_name: body.last_name })
-
-    // Validate required fields
-    if (!body.email || !body.password || !body.first_name || !body.last_name) {
-      return new Response(
-        JSON.stringify({ error: 'Email, password, first name, and last name are required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
+    // Parse and validate request body
+    let body: CreateClientRequest
+    try {
+      body = CreateClientSchema.parse(await req.json())
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.error('Validation error:', error.errors)
+        return new Response(
+          JSON.stringify({ error: 'Invalid input data provided' }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+        )
+      }
+      throw error
     }
+
+    console.log('Creating client:', { email: body.email, first_name: body.first_name, last_name: body.last_name })
 
     // Create auth user with auto-confirm
     const { data: newUser, error: createUserError } = await supabaseAdmin.auth.admin.createUser({
@@ -76,7 +99,7 @@ Deno.serve(async (req) => {
     if (createUserError) {
       console.error('Error creating user:', createUserError)
       return new Response(
-        JSON.stringify({ error: createUserError.message }),
+        JSON.stringify({ error: 'Failed to create user account' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
@@ -172,7 +195,7 @@ Deno.serve(async (req) => {
   } catch (error: any) {
     console.error('Error in create-client:', error)
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: 'An error occurred while creating the client' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   }

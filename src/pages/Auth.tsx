@@ -43,7 +43,6 @@ export default function Auth() {
       
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
-        // Try direct role row first (may be missing right after account creation)
         const { data: roleData, error: roleError } = await supabase
           .from('user_roles')
           .select('role')

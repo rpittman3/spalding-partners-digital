@@ -1,10 +1,17 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// Input validation schema
+const RequestAccessSchema = z.object({
+  email: z.string().trim().email('Invalid email format').max(255, 'Email too long'),
+  lastName: z.string().trim().min(1, 'Last name required').max(100, 'Last name too long'),
+});
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -12,7 +19,22 @@ serve(async (req) => {
   }
 
   try {
-    const { email, lastName } = await req.json();
+    // Parse and validate request body
+    let body: z.infer<typeof RequestAccessSchema>;
+    try {
+      body = RequestAccessSchema.parse(await req.json());
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.error('Validation error:', error.errors);
+        return new Response(
+          JSON.stringify({ error: 'Invalid request data' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      throw error;
+    }
+    
+    const { email, lastName } = body;
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -26,8 +48,9 @@ serve(async (req) => {
       .single();
 
     if (existingUser) {
+      console.log('Account already exists for email');
       return new Response(
-        JSON.stringify({ error: 'Account already exists. Please use the login form.' }),
+        JSON.stringify({ error: 'An account already exists for this email' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -41,6 +64,7 @@ serve(async (req) => {
       .single();
 
     if (importError || !importedClient) {
+      console.log('Client lookup failed or no match found');
       return new Response(
         JSON.stringify({ pending: true }),
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
