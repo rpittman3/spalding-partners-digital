@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Bell, Archive, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import DOMPurify from 'dompurify';
 
 interface Notification {
   id: string;
@@ -195,7 +196,12 @@ export default function NotificationsList() {
                   </div>
                   <div
                     className="text-sm text-muted-foreground mb-2"
-                    dangerouslySetInnerHTML={{ __html: notification.body }}
+                    dangerouslySetInnerHTML={{ 
+                      __html: DOMPurify.sanitize(notification.body, {
+                        ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'a', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre'],
+                        ALLOWED_ATTR: ['href', 'target', 'rel']
+                      })
+                    }}
                   />
                   <p className="text-xs text-muted-foreground">
                     {new Date(notification.created_at).toLocaleDateString('en-US', {

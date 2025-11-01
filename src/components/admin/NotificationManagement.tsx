@@ -8,6 +8,7 @@ import { Card } from '@/components/ui/card';
 import { Trash2, Send, Edit } from 'lucide-react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import DOMPurify from 'dompurify';
 
 interface Category {
   id: string;
@@ -279,7 +280,12 @@ export default function NotificationManagement() {
                     </div>
                     <div 
                       className="text-sm text-muted-foreground mt-2"
-                      dangerouslySetInnerHTML={{ __html: notification.body }}
+                      dangerouslySetInnerHTML={{ 
+                        __html: DOMPurify.sanitize(notification.body, {
+                          ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'a', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre'],
+                          ALLOWED_ATTR: ['href', 'target', 'rel']
+                        })
+                      }}
                     />
                     <p className="text-xs text-muted-foreground mt-2">
                       {new Date(notification.created_at).toLocaleDateString()}

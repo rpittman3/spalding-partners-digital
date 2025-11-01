@@ -41,6 +41,33 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+    // Get client IP address for rate limiting
+    const clientIP = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 
+                     req.headers.get('x-real-ip') || 
+                     'unknown';
+
+    // Check rate limit: 10 attempts per 15 minutes (more lenient for code verification)
+    const { data: rateLimitCheck, error: rateLimitError } = await supabase
+      .rpc('check_rate_limit', {
+        _ip_address: clientIP,
+        _max_requests: 10,
+        _window_minutes: 15
+      });
+
+    if (rateLimitError) {
+      console.error('Rate limit check error:', rateLimitError);
+    } else if (rateLimitCheck && rateLimitCheck.length > 0 && !rateLimitCheck[0].allowed) {
+      return new Response(
+        JSON.stringify({ 
+          error: 'Too many verification attempts. Please try again in a few minutes.' 
+        }),
+        { 
+          status: 429, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+
     // Verify access code
     const { data: accessRequest, error: requestError } = await supabase
       .from('access_requests')
