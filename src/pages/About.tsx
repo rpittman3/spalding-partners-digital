@@ -132,15 +132,9 @@ const About = () => {
               technical excellence and a human touch to every engagement. We understand small
               business intricacies, tax complexities, and financial strategy—but more importantly,
               we understand you. If you're looking for a firm that prioritizes relationships over
-              transactions and quality over quantity, you've found your financial partner.
-            </p>
-            <Button asChild variant="cta" size="xl">
-              <Link to="/contact">
-                Partner With Us Today
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </div>
+            transactions and quality over quantity, you've found your financial partner.
+          </p>
+        </div>
         </div>
       </section>
 
