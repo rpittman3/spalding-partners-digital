@@ -10,7 +10,7 @@ const corsHeaders = {
 const CreateClientSchema = z.object({
   email: z.string().trim().email('Invalid email format').max(255, 'Email too long'),
   password: z.string().min(8, 'Password must be at least 8 characters').max(128, 'Password too long'),
-  first_name: z.string().trim().min(1, 'First name required').max(100, 'First name too long'),
+  first_name: z.string().trim().max(100, 'First name too long').optional(),
   last_name: z.string().trim().min(1, 'Last name required').max(100, 'Last name too long'),
   company_name: z.string().trim().max(255, 'Company name too long').optional(),
   address: z.string().trim().max(500, 'Address too long').optional(),
@@ -25,7 +25,7 @@ const CreateClientSchema = z.object({
 interface CreateClientRequest {
   email: string
   password: string
-  first_name: string
+  first_name?: string
   last_name: string
   company_name?: string
   address?: string
@@ -112,7 +112,7 @@ Deno.serve(async (req) => {
       .insert({
         id: newUser.user.id,
         email: body.email,
-        first_name: body.first_name,
+        first_name: body.first_name || '',
         last_name: body.last_name,
         company_name: body.company_name || null,
         address: body.address || null,
