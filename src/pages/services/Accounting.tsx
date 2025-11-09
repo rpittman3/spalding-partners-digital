@@ -153,7 +153,9 @@ const Accounting = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24" style={{ backgroundColor: '#918a6e' }}>
+      <section className="py-16 md:py-24" style={{
+      backgroundColor: '#918a6e'
+    }}>
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
             Ready to Streamline Your Accounting?
@@ -162,10 +164,7 @@ const Accounting = () => {
             Let our experienced team handle your accounting needs so you can focus on what matters most.
           </p>
           <Button asChild variant="hero" size="xl">
-            <Link to="/contact">
-              Schedule a Free Consultation
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
+            
           </Button>
         </div>
       </section>
