@@ -10,30 +10,30 @@ const corsHeaders = {
 const CreateClientSchema = z.object({
   email: z.string().trim().email('Invalid email format').max(255, 'Email too long'),
   password: z.string().min(8, 'Password must be at least 8 characters').max(128, 'Password too long'),
-  first_name: z.string().trim().max(100, 'First name too long').optional(),
+  first_name: z.string().trim().max(100, 'First name too long').nullable().optional(),
   last_name: z.string().trim().min(1, 'Last name required').max(100, 'Last name too long'),
-  company_name: z.string().trim().max(255, 'Company name too long').optional(),
-  address: z.string().trim().max(500, 'Address too long').optional(),
-  city: z.string().trim().max(100, 'City too long').optional(),
-  state: z.string().trim().max(100, 'State too long').optional(),
-  zip: z.string().trim().max(20, 'ZIP code too long').optional(),
-  work_phone: z.string().trim().max(20, 'Work phone too long').optional(),
-  cell_phone: z.string().trim().max(20, 'Cell phone too long').optional(),
+  company_name: z.string().trim().max(255, 'Company name too long').nullable().optional(),
+  address: z.string().trim().max(500, 'Address too long').nullable().optional(),
+  city: z.string().trim().max(100, 'City too long').nullable().optional(),
+  state: z.string().trim().max(100, 'State too long').nullable().optional(),
+  zip: z.string().trim().max(20, 'ZIP code too long').nullable().optional(),
+  work_phone: z.string().trim().max(20, 'Work phone too long').nullable().optional(),
+  cell_phone: z.string().trim().max(20, 'Cell phone too long').nullable().optional(),
   category_ids: z.array(z.string().uuid('Invalid category ID')).optional(),
 })
 
 interface CreateClientRequest {
   email: string
   password: string
-  first_name?: string
+  first_name?: string | null
   last_name: string
-  company_name?: string
-  address?: string
-  city?: string
-  state?: string
-  zip?: string
-  cell_phone?: string
-  work_phone?: string
+  company_name?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  zip?: string | null
+  cell_phone?: string | null
+  work_phone?: string | null
   category_ids?: string[]
 }
 
