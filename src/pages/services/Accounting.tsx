@@ -7,7 +7,7 @@ import accountingImage from "@/assets/services-accounting.jpg";
 const Accounting = () => {
   const services = [{
     title: "Bookkeeping Services",
-    description: "Accurate, timely recording of all financial transactions to maintain clear financial records.",
+    description: "Professional bookkeeping, financial statements, and payroll support for businesses of all sizes.",
     features: ["Daily transaction recording", "Bank reconciliation", "Accounts payable and receivable", "General ledger maintenance"]
   }, {
     title: "Financial Statements",
