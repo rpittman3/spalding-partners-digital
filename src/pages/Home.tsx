@@ -30,11 +30,11 @@ const Home = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-6 w-6 text-accent flex-shrink-0" />
-                  <span className="text-muted-foreground">Boutique, relationship-focused approach—we know who you are</span>
+                  <span className="text-muted-foreground">Relationship-focused approach</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="h-6 w-6 text-accent flex-shrink-0" />
-                  <span className="text-muted-foreground">Tailored solutions for niche clientele, not cookie-cutter services</span>
+                  <span className="text-muted-foreground">Tailored solutions for diverse clientele base</span>
                 </div>
               </div>
               <Button asChild variant="cta" size="lg">
