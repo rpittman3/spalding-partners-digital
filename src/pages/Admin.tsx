@@ -16,10 +16,12 @@ import Settings from '@/components/admin/Settings';
 import NotificationManagement from '@/components/admin/NotificationManagement';
 import DeadlineManagement from '@/components/admin/DeadlineManagement';
 import FAQManagement from '@/components/admin/FAQManagement';
+import StaffManagement from '@/components/admin/StaffManagement';
 import {
   LayoutDashboard,
   Users,
   FileText,
+  UserCircle,
   FolderOpen,
   Bell,
   Calendar,
@@ -46,6 +48,7 @@ export default function Admin() {
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'clients', label: 'Clients', icon: Users },
     { id: 'sub-users', label: 'Client Members', icon: Users },
+    { id: 'staff', label: 'Staff', icon: UserCircle },
     { id: 'documents', label: 'Documents', icon: FileText },
     { id: 'resources', label: 'Resources', icon: FolderOpen },
     { id: 'notifications', label: 'Notifications', icon: Bell },
@@ -102,6 +105,7 @@ export default function Admin() {
                 {activeSection === 'dashboard' && 'Overview of your admin portal'}
                 {activeSection === 'clients' && 'Manage client accounts and information'}
                 {activeSection === 'sub-users' && 'Manage client team member accounts'}
+                {activeSection === 'staff' && 'Manage staff members'}
                 {activeSection === 'documents' && 'View and manage client documents'}
                 {activeSection === 'resources' && 'Upload and organize resources for clients'}
                 {activeSection === 'notifications' && 'Create and manage notifications'}
@@ -118,6 +122,7 @@ export default function Admin() {
               {activeSection === 'dashboard' && <DashboardStats onNavigate={setActiveSection} />}
               {activeSection === 'clients' && <ClientManagement />}
               {activeSection === 'sub-users' && <SubUserManagement />}
+              {activeSection === 'staff' && <StaffManagement />}
               {activeSection === 'documents' && <DocumentManagement />}
               {activeSection === 'resources' && <ResourceManagement />}
               {activeSection === 'meetings' && <MeetingRequestManagement />}

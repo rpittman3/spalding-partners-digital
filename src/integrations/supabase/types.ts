@@ -816,6 +816,42 @@ export type Database = {
           },
         ]
       }
+      staff: {
+        Row: {
+          created_at: string
+          display_order: number
+          email: string
+          id: string
+          is_active: boolean
+          name: string
+          photo_path: string | null
+          position: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          email: string
+          id?: string
+          is_active?: boolean
+          name: string
+          photo_path?: string | null
+          position: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          email?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          photo_path?: string | null
+          position?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_categories: {
         Row: {
           category_id: string
