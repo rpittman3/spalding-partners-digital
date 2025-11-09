@@ -36,16 +36,6 @@ const Header = () => {
       href: "/services/tax",
       description: "Individual & business tax preparation and IRS representation",
     },
-    {
-      title: "Financial Management",
-      href: "/services/financial-management",
-      description: "Budgeting, cash flow, and strategic planning",
-    },
-    {
-      title: "Business Advisory",
-      href: "/services/business-advisory",
-      description: "Entity selection and growth strategies",
-    },
   ];
 
   const isActive = (path: string) => location.pathname === path;
