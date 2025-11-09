@@ -1,34 +1,40 @@
-import { Mail, Phone, ArrowRight } from "lucide-react";
+import { Mail } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-const staffMembers = [{
-  name: "Sarah Spalding",
-  title: "Managing Partner, CPA",
-  email: "sarah@sp-financial.com",
-  phone: "(860) 456-1661 ext. 101",
-  bio: "Sarah founded Spalding & Partners with a vision to create a boutique accounting firm that truly knows its clients. With over 25 years of experience in public accounting, she specializes in tax planning and small business advisory. Sarah is dedicated to building long-term relationships with clients and providing personalized financial guidance tailored to each client's unique situation."
-}, {
-  name: "Jennifer Martinez",
-  title: "Senior Accountant",
-  email: "jennifer@sp-financial.com",
-  phone: "(860) 456-1661 ext. 102",
-  bio: "Jennifer brings 15 years of accounting expertise to our team, specializing in financial statement preparation and bookkeeping services. Her attention to detail and commitment to accuracy ensure that our clients' financial records are always in perfect order. Jennifer takes pride in helping small businesses navigate complex accounting requirements with ease and confidence."
-}, {
-  name: "Michael Chen",
-  title: "Tax Specialist, EA",
-  email: "michael@sp-financial.com",
-  phone: "(860) 456-1661 ext. 103",
-  bio: "As an Enrolled Agent with 12 years of experience, Michael specializes in tax preparation, planning, and IRS representation. He stays current with the latest tax law changes to ensure our clients benefit from every available deduction and credit. Michael's approachable style makes complex tax matters easy to understand, and he's passionate about helping clients achieve their financial goals."
-}, {
-  name: "Emily Thompson",
-  title: "Business Advisor",
-  email: "emily@sp-financial.com",
-  phone: "(860) 456-1661 ext. 104",
-  bio: "Emily combines her background in business management with financial expertise to help clients make strategic decisions for growth. With 10 years of experience advising small to medium-sized businesses, she specializes in financial management, budgeting, and cash flow optimization. Emily believes that strong financial planning is the foundation for business success and works closely with clients to develop customized strategies."
-}];
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+
+interface StaffMember {
+  id: string;
+  name: string;
+  position: string;
+  email: string;
+  photo_path: string | null;
+  display_order: number;
+}
 const Staff = () => {
+  const { data: staffMembers, isLoading } = useQuery({
+    queryKey: ['staff'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('staff')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+      
+      if (error) throw error;
+      return data as StaffMember[];
+    }
+  });
+
+  const getPhotoUrl = (photoPath: string | null) => {
+    if (!photoPath) return null;
+    if (photoPath.startsWith('http')) return photoPath;
+    const { data } = supabase.storage.from('team-photos').getPublicUrl(photoPath);
+    return data.publicUrl;
+  };
+
   return <div className="min-h-screen flex flex-col">
       <Header />
       
@@ -50,56 +56,35 @@ const Staff = () => {
         {/* Team Members Grid */}
         <section className="py-16 md:py-24">
           <div className="container-custom">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
-              {staffMembers.map((member, index) => <div key={member.email} className="group perspective-1000 h-[450px]" style={{
-              animationDelay: `${index * 100}ms`
-            }}>
-                  <div className="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
-                    {/* Front of card */}
-                    <div className="absolute inset-0 backface-hidden">
-                      <div className="relative h-full rounded-lg overflow-hidden shadow-custom-lg border-2 border-border bg-gradient-to-br from-primary/10 to-accent/10">
-                        <div className="flex flex-col items-center justify-center h-full p-8">
-                          <div className="w-40 h-40 rounded-full bg-primary/20 flex items-center justify-center mb-6 shadow-custom-md">
-                            <span className="text-6xl font-bold text-primary">
-                              {member.name.split(" ").map(n => n[0]).join("")}
-                            </span>
-                          </div>
-                          <h3 className="text-2xl font-bold text-primary mb-2 text-center">
-                            {member.name}
-                          </h3>
-                          <p className="text-lg text-accent font-semibold text-center">
-                            {member.title}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Back of card */}
-                    <div className="absolute inset-0 backface-hidden rotate-y-180">
-                      <div className="h-full rounded-lg bg-card border-2 border-accent shadow-custom-xl p-6 flex flex-col justify-between overflow-y-auto">
-                        <div>
-                          <h3 className="text-xl font-bold text-primary mb-3">
-                            {member.name}
-                          </h3>
-                          <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                            {member.bio}
-                          </p>
-                        </div>
-                        <div className="space-y-2 pt-4 border-t border-border">
-                          <a href={`mailto:${member.email}`} className="flex items-center gap-2 text-sm text-primary hover:text-accent transition-fast">
-                            <Mail className="h-4 w-4" />
-                            {member.email}
-                          </a>
-                          <a href={`tel:${member.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-sm text-primary hover:text-accent transition-fast">
-                            <Phone className="h-4 w-4" />
-                            {member.phone}
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+            {isLoading ? (
+              <div className="text-center">Loading team members...</div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                {staffMembers?.map((member) => (
+                  <div key={member.id} className="flex flex-col items-center text-center">
+                    <Avatar className="w-48 h-48 mb-4 border-4 border-primary/10">
+                      <AvatarImage src={getPhotoUrl(member.photo_path) || undefined} alt={member.name} />
+                      <AvatarFallback className="text-3xl bg-primary/10 text-primary">
+                        {member.name.split(" ").map(n => n[0]).join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <h3 className="text-xl font-bold text-primary mb-1">
+                      {member.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      {member.position}
+                    </p>
+                    <a 
+                      href={`mailto:${member.email}`} 
+                      className="flex items-center gap-2 text-sm text-primary hover:text-accent transition-colors"
+                    >
+                      <Mail className="h-4 w-4" />
+                      {member.email}
+                    </a>
                   </div>
-                </div>)}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
