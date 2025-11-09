@@ -4,53 +4,25 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { CheckCircle2, ArrowRight, FileText } from "lucide-react";
 import taxImage from "@/assets/services-tax.jpg";
-
 const Tax = () => {
-  const services = [
-    {
-      title: "Individual Tax Preparation",
-      description: "Comprehensive tax preparation for individuals to maximize deductions and minimize liability.",
-      features: [
-        "Federal and state tax returns",
-        "Itemized deduction analysis",
-        "Investment income reporting",
-        "Self-employment tax preparation",
-      ],
-    },
-    {
-      title: "Business Tax Preparation",
-      description: "Expert tax preparation for all business entity types, ensuring compliance and optimization.",
-      features: [
-        "Corporate tax returns",
-        "Partnership and LLC returns",
-        "S-Corporation returns",
-        "Multi-state tax filings",
-      ],
-    },
-    {
-      title: "Tax Planning & Strategy",
-      description: "Proactive tax planning to minimize your tax burden and maximize savings throughout the year.",
-      features: [
-        "Year-round tax planning",
-        "Estimated tax calculations",
-        "Tax-saving strategies",
-        "Retirement planning coordination",
-      ],
-    },
-    {
-      title: "IRS Representation",
-      description: "Professional representation and support for IRS audits, notices, and disputes.",
-      features: [
-        "IRS audit representation",
-        "Notice response and resolution",
-        "Payment plan negotiations",
-        "Tax dispute mediation",
-      ],
-    },
-  ];
-
-  return (
-    <div className="min-h-screen">
+  const services = [{
+    title: "Individual Tax Preparation",
+    description: "Comprehensive tax preparation for individuals to maximize deductions and minimize liability.",
+    features: ["Federal and state tax returns", "Itemized deduction analysis", "Investment income reporting", "Self-employment tax preparation"]
+  }, {
+    title: "Business Tax Preparation",
+    description: "Expert tax preparation for all business entity types, ensuring compliance and optimization.",
+    features: ["Corporate tax returns", "Partnership and LLC returns", "S-Corporation returns", "Multi-state tax filings"]
+  }, {
+    title: "Tax Planning & Strategy",
+    description: "Proactive tax planning to minimize your tax burden and maximize savings throughout the year.",
+    features: ["Year-round tax planning", "Estimated tax calculations", "Tax-saving strategies", "Retirement planning coordination"]
+  }, {
+    title: "IRS Representation",
+    description: "Professional representation and support for IRS audits, notices, and disputes.",
+    features: ["IRS audit representation", "Notice response and resolution", "Payment plan negotiations", "Tax dispute mediation"]
+  }];
+  return <div className="min-h-screen">
       <Header />
 
       {/* Hero Section */}
@@ -107,24 +79,18 @@ const Tax = () => {
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Our Tax Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {services.map((service, index) => (
-              <div
-                key={service.title}
-                className="bg-card p-8 rounded-lg shadow-custom-md hover:shadow-custom-lg transition-smooth"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
+            {services.map((service, index) => <div key={service.title} className="bg-card p-8 rounded-lg shadow-custom-md hover:shadow-custom-lg transition-smooth" style={{
+            animationDelay: `${index * 100}ms`
+          }}>
                 <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
                 <p className="text-muted-foreground mb-6">{service.description}</p>
                 <ul className="space-y-3">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3">
+                  {service.features.map(feature => <li key={feature} className="flex items-start gap-3">
                       <CheckCircle2 className="h-6 w-6 text-accent flex-shrink-0 mt-0.5" />
                       <span className="text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
+                    </li>)}
                 </ul>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -177,7 +143,9 @@ const Tax = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24" style={{ backgroundColor: "#918a6e" }}>
+      <section className="py-16 md:py-24" style={{
+      backgroundColor: "#918a6e"
+    }}>
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
             Ready to Optimize Your Tax Strategy?
@@ -186,17 +154,12 @@ const Tax = () => {
             Let our tax experts help you navigate complexity and maximize your tax savings.
           </p>
           <Button asChild variant="hero" size="xl">
-            <Link to="/contact">
-              Schedule a Tax Consultation
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
+            
           </Button>
         </div>
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Tax;
