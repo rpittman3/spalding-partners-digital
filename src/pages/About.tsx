@@ -25,13 +25,7 @@ const About = () => {
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Our Story</h2>
             <div className="prose prose-lg max-w-none space-y-6 text-muted-foreground">
-              <p className="text-lg">
-                Founded in 2000, Spalding & Partners Financial Services, LLC was born from a
-                simple but powerful vision: to create a boutique accounting firm where clients
-                aren't just account numbers—they're valued partners in a lasting relationship.
-                For over 25 years, we've remained true to that vision, building a practice that
-                prioritizes personal connection, deep expertise, and genuinely customized service.
-              </p>
+              
               <p className="text-lg">We are woman-owned and operated, bringing a unique perspective to financial management, tax strategy, and CFO consulting. Unlike traditional accounting firms or large corporate practices, we take an "I know who you are" approach. We remember your goals, understand your challenges, and celebrate your wins. This isn't about volume—it's about building meaningful, long-term partnerships with diverse clientele who value expertise paired with personal detailed attention.</p>
               <p className="text-lg">With over 25 years of specialized experience, we've refined our processes and deepened our expertise while staying small by design. Our boutique model allows us to maintain the highest standards of confidentiality, deliver exceptional quality, and ensure that every client receives the dedicated, hands-on service they deserve. You'll work directly with experienced professionals who truly know your business and your story.</p>
             </div>
