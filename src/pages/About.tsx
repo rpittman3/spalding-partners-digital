@@ -14,9 +14,7 @@ const About = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               About Spalding & Partners
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground">
-              A boutique firm where you're more than a client number—you're a valued partner we know by name
-            </p>
+            <p className="text-xl md:text-2xl text-muted-foreground">Financial & Tax Advisors to Successful People</p>
           </div>
         </div>
       </section>
@@ -34,22 +32,8 @@ const About = () => {
                 For over 25 years, we've remained true to that vision, building a practice that
                 prioritizes personal connection, deep expertise, and genuinely customized service.
               </p>
-              <p className="text-lg">
-                We're woman-owned and operated, bringing a unique perspective to financial
-                management, tax strategy, and CFO consulting. Unlike traditional bookkeeping
-                firms or large corporate practices, we take an "I know who you are" approach.
-                We remember your goals, understand your challenges, and celebrate your wins.
-                This isn't about volume—it's about building meaningful, long-term partnerships
-                with niche clientele who value expertise paired with genuine personal attention.
-              </p>
-              <p className="text-lg">
-                With over 25 years of specialized experience, we've refined our processes and
-                deepened our expertise while staying small by design. Our boutique model allows
-                us to maintain the highest standards of confidentiality, deliver exceptional
-                quality, and ensure that every client receives the dedicated, hands-on service
-                they deserve. You'll work directly with experienced professionals who truly
-                know your business and your story.
-              </p>
+              <p className="text-lg">We are woman-owned and operated, bringing a unique perspective to financial management, tax strategy, and CFO consulting. Unlike traditional accounting firms or large corporate practices, we take an "I know who you are" approach. We remember your goals, understand your challenges, and celebrate your wins. This isn't about volume—it's about building meaningful, long-term partnerships with diverse clientele who value expertise paired with personal detailed attention.</p>
+              <p className="text-lg">With over 25 years of specialized experience, we've refined our processes and deepened our expertise while staying small by design. Our boutique model allows us to maintain the highest standards of confidentiality, deliver exceptional quality, and ensure that every client receives the dedicated, hands-on service they deserve. You'll work directly with experienced professionals who truly know your business and your story.</p>
             </div>
           </div>
         </div>
