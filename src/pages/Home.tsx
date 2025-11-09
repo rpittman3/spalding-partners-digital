@@ -56,11 +56,7 @@ const Home = () => {
               </Button>
             </div>
             <div className="relative">
-              <img
-                src={handshakeImage}
-                alt="Building trust and lasting relationships with our clients through personalized financial guidance"
-                className="w-full h-auto rounded-lg shadow-custom-xl"
-              />
+              <img src={handshakeImage} className="w-full h-auto rounded-lg shadow-custom-xl" />
             </div>
           </div>
         </div>
