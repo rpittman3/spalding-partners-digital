@@ -14,21 +14,36 @@ serve(async (req) => {
   try {
     const { email, accessCode } = await req.json();
 
+    // Use EMAIL_OVERRIDE for development/testing
+    const recipientEmail = Deno.env.get('EMAIL_OVERRIDE') || email;
+    
+    console.log(`Sending access code to ${recipientEmail} (original: ${email})`);
+
+    const smtpHostname = Deno.env.get('SMTP_HOSTNAME');
+    const smtpUsername = Deno.env.get('SMTP_USERNAME');
+    const smtpPassword = Deno.env.get('SMTP_PASSWORD');
+    const smtpPort = parseInt(Deno.env.get('SMTP_PORT') || '587');
+    const smtpFrom = Deno.env.get('SMTP_FROM');
+
+    if (!smtpHostname || !smtpUsername || !smtpPassword || !smtpFrom) {
+      throw new Error('SMTP configuration missing');
+    }
+
     const smtpClient = new SMTPClient({
       connection: {
-        hostname: Deno.env.get('SMTP_SERVER') || 'mail.rlp-associates.com',
-        port: 587,
+        hostname: smtpHostname,
+        port: smtpPort,
         tls: true,
         auth: {
-          username: Deno.env.get('SMTP_USER') || 'appsend@rlp-associates.com',
-          password: Deno.env.get('SMTP_PASSWORD') || '9hyStS%tXPO4',
+          username: smtpUsername,
+          password: smtpPassword,
         },
       },
     });
 
     await smtpClient.send({
-      from: Deno.env.get('SMTP_USER') || 'appsend@rlp-associates.com',
-      to: email,
+      from: smtpFrom,
+      to: recipientEmail,
       subject: 'Your Access Code - SP Financial',
       html: `
         <html>
