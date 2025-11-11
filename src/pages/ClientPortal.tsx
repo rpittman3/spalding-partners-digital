@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -19,8 +20,30 @@ import MeetingRequestForm from "@/components/client/MeetingRequestForm";
 export default function ClientPortal() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [refreshDocuments, setRefreshDocuments] = useState(0);
+  const [userName, setUserName] = useState("");
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (!user) return;
+      
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('first_name, last_name')
+        .eq('id', user.id)
+        .single();
+      
+      if (profile) {
+        const fullName = [profile.first_name, profile.last_name]
+          .filter(Boolean)
+          .join(' ');
+        setUserName(fullName || user.email || '');
+      }
+    };
+    
+    fetchUserProfile();
+  }, [user]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -37,7 +60,7 @@ export default function ClientPortal() {
             <div>
               <h1 className="text-3xl font-bold mb-2">Client Portal</h1>
               <p className="text-muted-foreground">
-                Welcome back, {user?.email}! Access your documents, deadlines, and more.
+                Welcome back, {userName}! Access your documents, deadlines, and more.
               </p>
             </div>
             <Button variant="outline" onClick={handleSignOut}>
