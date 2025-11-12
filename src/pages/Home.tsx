@@ -8,8 +8,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import handshakeImage from "@/assets/handshake-trust.jpg";
 const Home = () => {
-  return (
-    <div className="min-h-screen">
+  return <div className="min-h-screen">
       <Header />
 
       <Hero />
@@ -22,13 +21,7 @@ const Home = () => {
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
                 Your Boutique Financial Partner Since 2000
               </h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                Spalding & Partners Financial Services, LLC is an accounting firm that takes a different approach. We're
-                not a traditional bookkeeping service—we're your dedicated financial partner who knows you, your
-                business, and your unique goals. Since 2000, we've specialized in providing personalized financial
-                management, tax expertise, and CFO consulting to select clients who value a hands-on, relationship-based
-                approach.
-              </p>
+              <p className="text-lg text-muted-foreground mb-6">Spalding & Partners Financial Services, LLC is an accounting firm that takes a different approach. We're not a traditional accounting and tax advisory service - we're your dedicated financial partner who knows you, your business, and your unique goals. Since 2000, we've specialized in providing personalized financial management, tax expertise, and CFO consulting to select clients who value a hands-on, relationship-based approach.</p>
               <p className="text-lg text-muted-foreground mb-8">
                 Unlike large corporate firms where you're just a number, our boutique model means you work directly with
                 experienced professionals who understand your story. We know who you are, and we're invested in your
@@ -67,12 +60,9 @@ const Home = () => {
       <WhyChooseUs />
 
       {/* CTA Section */}
-      <section
-        className="py-16 md:py-24"
-        style={{
-          backgroundColor: "#918a6e",
-        }}
-      >
+      <section className="py-16 md:py-24" style={{
+      backgroundColor: "#918a6e"
+    }}>
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
             Ready to Take Control of Your Finances?
@@ -85,7 +75,6 @@ const Home = () => {
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
 export default Home;
