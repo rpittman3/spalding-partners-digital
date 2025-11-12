@@ -22,6 +22,20 @@ const services = [
     href: "/services/tax",
     features: ["Tax Preparation", "Tax Planning", "IRS Representation"],
   },
+  {
+    title: "Financial Management",
+    description: "Strategic financial planning, budgeting, and cash flow management to drive business growth.",
+    image: serviceFinancial,
+    href: "/services/financial-management",
+    features: ["Budgeting & Forecasting", "Cash Flow Management", "CFO Services"],
+  },
+  {
+    title: "Business Advisory",
+    description: "Expert guidance on business strategy, growth planning, and operational improvement.",
+    image: serviceAdvisory,
+    href: "/services/business-advisory",
+    features: ["Strategic Planning", "Growth Strategies", "Risk Management"],
+  },
 ];
 
 const ServicesOverview = () => {
