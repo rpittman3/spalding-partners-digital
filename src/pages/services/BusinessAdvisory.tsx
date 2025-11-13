@@ -141,15 +141,9 @@ const BusinessAdvisory = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
             Ready to Take Your Business to the Next Level?
           </h2>
-          <p className="text-lg md:text-xl text-primary-foreground/90 max-w-3xl mx-auto mb-8">
+          <p className="text-lg md:text-xl text-primary-foreground/90 max-w-3xl mx-auto">
             Let our business advisory experts help you navigate challenges and seize opportunities.
           </p>
-          <Button asChild variant="hero" size="xl">
-            <Link to="/contact">
-              Schedule a Strategy Session
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
         </div>
       </section>
 
