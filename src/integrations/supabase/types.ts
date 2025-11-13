@@ -818,34 +818,40 @@ export type Database = {
       }
       staff: {
         Row: {
+          bio: string | null
           created_at: string
           display_order: number
           email: string
           id: string
           is_active: boolean
           name: string
+          phone: string | null
           photo_path: string | null
           position: string
           updated_at: string
         }
         Insert: {
+          bio?: string | null
           created_at?: string
           display_order?: number
           email: string
           id?: string
           is_active?: boolean
           name: string
+          phone?: string | null
           photo_path?: string | null
           position: string
           updated_at?: string
         }
         Update: {
+          bio?: string | null
           created_at?: string
           display_order?: number
           email?: string
           id?: string
           is_active?: boolean
           name?: string
+          phone?: string | null
           photo_path?: string | null
           position?: string
           updated_at?: string

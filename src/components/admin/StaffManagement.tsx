@@ -10,12 +10,16 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useToast } from '@/hooks/use-toast';
 import { Plus, Pencil, Trash2, Upload } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 interface Staff {
   id: string;
   name: string;
   position: string;
   email: string;
+  phone: string | null;
+  bio: string | null;
   photo_path: string | null;
   display_order: number;
   is_active: boolean;
@@ -30,6 +34,8 @@ export default function StaffManagement() {
     name: '',
     position: '',
     email: '',
+    phone: '',
+    bio: '',
     display_order: 0
   });
   const [photoFile, setPhotoFile] = useState<File | null>(null);
@@ -143,7 +149,7 @@ export default function StaffManagement() {
   };
 
   const resetForm = () => {
-    setFormData({ name: '', position: '', email: '', display_order: 0 });
+    setFormData({ name: '', position: '', email: '', phone: '', bio: '', display_order: 0 });
     setPhotoFile(null);
     setEditingStaff(null);
     setIsDialogOpen(false);
@@ -155,6 +161,8 @@ export default function StaffManagement() {
       name: member.name,
       position: member.position,
       email: member.email,
+      phone: member.phone || '',
+      bio: member.bio || '',
       display_order: member.display_order
     });
     setIsDialogOpen(true);
@@ -210,6 +218,24 @@ export default function StaffManagement() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="bio">Bio</Label>
+                  <ReactQuill
+                    theme="snow"
+                    value={formData.bio}
+                    onChange={(value) => setFormData({ ...formData, bio: value })}
+                    className="bg-background"
                   />
                 </div>
                 <div>
