@@ -3,48 +3,25 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { CheckCircle2, ArrowRight, Briefcase } from "lucide-react";
-
 const BusinessAdvisory = () => {
-  const services = [
-    {
-      title: "Entity Selection & Formation",
-      description: "Expert guidance on choosing the right business structure for your needs.",
-      features: [
-        "LLC, Corporation, or Partnership analysis",
-        "Tax implications evaluation",
-        "Liability protection assessment",
-        "Formation document preparation",
-      ],
-    },
-    {
-      title: "Business Consulting",
-      description: "Strategic business guidance to help you navigate challenges and opportunities.",
-      features: [
-        "Business process optimization",
-        "Financial systems improvement",
-        "Risk management strategies",
-        "Operational efficiency analysis",
-      ],
-    },
-    {
-      title: "Growth Strategies",
-      description: "Strategic planning and advice to support your business expansion goals.",
-      features: ["Market expansion planning", "Acquisition evaluation", "Financing strategy", "Scalability assessment"],
-    },
-    {
-      title: "Exit Planning",
-      description: "Comprehensive planning for business succession or sale.",
-      features: [
-        "Business valuation",
-        "Succession planning",
-        "Exit strategy development",
-        "Tax minimization strategies",
-      ],
-    },
-  ];
-
-  return (
-    <div className="min-h-screen">
+  const services = [{
+    title: "Entity Selection & Formation",
+    description: "Expert guidance on choosing the right business structure for your needs.",
+    features: ["LLC, Corporation, or Partnership analysis", "Tax implications evaluation", "Liability protection assessment", "Formation document preparation"]
+  }, {
+    title: "Business Consulting",
+    description: "Strategic business guidance to help you navigate challenges and opportunities.",
+    features: ["Business process optimization", "Financial systems improvement", "Risk management strategies", "Operational efficiency analysis"]
+  }, {
+    title: "Growth Strategies",
+    description: "Strategic planning and advice to support your business expansion goals.",
+    features: ["Market expansion planning", "Acquisition evaluation", "Financing strategy", "Scalability assessment"]
+  }, {
+    title: "Exit Planning",
+    description: "Comprehensive planning for business succession or sale.",
+    features: ["Business valuation", "Succession planning", "Exit strategy development", "Tax minimization strategies"]
+  }];
+  return <div className="min-h-screen">
       <Header />
 
       {/* Hero Section */}
@@ -61,10 +38,7 @@ const BusinessAdvisory = () => {
               strategic planning, and growth strategies.
             </p>
             <Button asChild variant="cta" size="xl">
-              <Link to="/contact">
-                Get Started Today
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+              
             </Button>
           </div>
         </div>
@@ -96,24 +70,18 @@ const BusinessAdvisory = () => {
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Our Business Advisory Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {services.map((service, index) => (
-              <div
-                key={service.title}
-                className="bg-card p-8 rounded-lg shadow-custom-md hover:shadow-custom-lg transition-smooth"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
+            {services.map((service, index) => <div key={service.title} className="bg-card p-8 rounded-lg shadow-custom-md hover:shadow-custom-lg transition-smooth" style={{
+            animationDelay: `${index * 100}ms`
+          }}>
                 <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
                 <p className="text-muted-foreground mb-6">{service.description}</p>
                 <ul className="space-y-3">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3">
+                  {service.features.map(feature => <li key={feature} className="flex items-start gap-3">
                       <CheckCircle2 className="h-6 w-6 text-accent flex-shrink-0 mt-0.5" />
                       <span className="text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
+                    </li>)}
                 </ul>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -166,7 +134,9 @@ const BusinessAdvisory = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24" style={{ backgroundColor: "#918a6e" }}>
+      <section className="py-16 md:py-24" style={{
+      backgroundColor: "#918a6e"
+    }}>
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
             Ready to Take Your Business to the Next Level?
@@ -184,8 +154,6 @@ const BusinessAdvisory = () => {
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default BusinessAdvisory;
