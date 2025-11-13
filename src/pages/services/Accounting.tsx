@@ -42,10 +42,7 @@ const Accounting = () => {
                 bookkeeping, financial statement preparation, and payroll support services.
               </p>
               <Button asChild variant="cta" size="xl">
-                <Link to="/contact">
-                  Get Started Today
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
+                
               </Button>
             </div>
             <div className="relative">
