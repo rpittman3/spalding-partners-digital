@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import DashboardStats from '@/components/admin/DashboardStats';
@@ -32,6 +32,7 @@ import {
   Settings as SettingsIcon,
   LogOut,
   HelpCircle,
+  Home,
 } from 'lucide-react';
 
 export default function Admin() {
@@ -83,6 +84,13 @@ export default function Admin() {
               <span>{item.label}</span>
             </button>
           ))}
+          <Link
+            to="/"
+            className="w-full flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-muted"
+          >
+            <Home className="h-5 w-5" />
+            <span>Home Page</span>
+          </Link>
           <button
             onClick={handleSignOut}
             className="w-full flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-destructive/10 text-destructive"
