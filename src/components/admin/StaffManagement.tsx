@@ -231,12 +231,14 @@ export default function StaffManagement() {
                 </div>
                 <div>
                   <Label htmlFor="bio">Bio</Label>
-                  <ReactQuill
-                    theme="snow"
-                    value={formData.bio}
-                    onChange={(value) => setFormData({ ...formData, bio: value })}
-                    className="bg-background"
-                  />
+                  <div className="[&_.ql-editor]:min-h-[120px]">
+                    <ReactQuill
+                      theme="snow"
+                      value={formData.bio}
+                      onChange={(value) => setFormData({ ...formData, bio: value })}
+                      className="bg-background"
+                    />
+                  </div>
                 </div>
                 <div>
                   <Label htmlFor="display_order">Display Order</Label>
