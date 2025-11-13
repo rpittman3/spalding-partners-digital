@@ -4,48 +4,25 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { CheckCircle2, ArrowRight, TrendingUp } from "lucide-react";
 import financialImage from "@/assets/services-financial.jpg";
-
 const FinancialManagement = () => {
-  const services = [
-    {
-      title: "Budgeting & Forecasting",
-      description: "Strategic budget development and financial forecasting to guide your business decisions.",
-      features: [
-        "Annual budget creation",
-        "Multi-year financial projections",
-        "Variance analysis",
-        "Performance tracking",
-      ],
-    },
-    {
-      title: "Cash Flow Management",
-      description: "Optimize your cash flow to ensure liquidity and financial stability.",
-      features: [
-        "Cash flow analysis and reporting",
-        "Working capital optimization",
-        "Payment cycle management",
-        "Seasonal planning",
-      ],
-    },
-    {
-      title: "CFO Services",
-      description: "Part-time CFO consulting to provide strategic financial leadership without full-time costs.",
-      features: [
-        "Financial strategy development",
-        "KPI development and monitoring",
-        "Board presentation support",
-        "Financial systems optimization",
-      ],
-    },
-    {
-      title: "Strategic Planning",
-      description: "Long-term financial planning to support your business growth and success.",
-      features: ["Growth strategy development", "Financial modeling", "Scenario planning", "Investment analysis"],
-    },
-  ];
-
-  return (
-    <div className="min-h-screen">
+  const services = [{
+    title: "Budgeting & Forecasting",
+    description: "Strategic budget development and financial forecasting to guide your business decisions.",
+    features: ["Annual budget creation", "Multi-year financial projections", "Variance analysis", "Performance tracking"]
+  }, {
+    title: "Cash Flow Management",
+    description: "Optimize your cash flow to ensure liquidity and financial stability.",
+    features: ["Cash flow analysis and reporting", "Working capital optimization", "Payment cycle management", "Seasonal planning"]
+  }, {
+    title: "CFO Services",
+    description: "Part-time CFO consulting to provide strategic financial leadership without full-time costs.",
+    features: ["Financial strategy development", "KPI development and monitoring", "Board presentation support", "Financial systems optimization"]
+  }, {
+    title: "Strategic Planning",
+    description: "Long-term financial planning to support your business growth and success.",
+    features: ["Growth strategy development", "Financial modeling", "Scenario planning", "Investment analysis"]
+  }];
+  return <div className="min-h-screen">
       <Header />
 
       {/* Hero Section */}
@@ -63,18 +40,11 @@ const FinancialManagement = () => {
                 financial planning tailored to your goals.
               </p>
               <Button asChild variant="cta" size="xl">
-                <Link to="/contact">
-                  Get Started Today
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
+                
               </Button>
             </div>
             <div className="relative">
-              <img
-                src={financialImage}
-                alt="Financial management services"
-                className="rounded-lg shadow-custom-xl w-full"
-              />
+              <img src={financialImage} alt="Financial management services" className="rounded-lg shadow-custom-xl w-full" />
             </div>
           </div>
         </div>
@@ -107,24 +77,18 @@ const FinancialManagement = () => {
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Our Financial Management Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {services.map((service, index) => (
-              <div
-                key={service.title}
-                className="bg-card p-8 rounded-lg shadow-custom-md hover:shadow-custom-lg transition-smooth"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
+            {services.map((service, index) => <div key={service.title} className="bg-card p-8 rounded-lg shadow-custom-md hover:shadow-custom-lg transition-smooth" style={{
+            animationDelay: `${index * 100}ms`
+          }}>
                 <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
                 <p className="text-muted-foreground mb-6">{service.description}</p>
                 <ul className="space-y-3">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3">
+                  {service.features.map(feature => <li key={feature} className="flex items-start gap-3">
                       <CheckCircle2 className="h-6 w-6 text-accent flex-shrink-0 mt-0.5" />
                       <span className="text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
+                    </li>)}
                 </ul>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -179,8 +143,6 @@ const FinancialManagement = () => {
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default FinancialManagement;
