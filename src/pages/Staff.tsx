@@ -64,12 +64,8 @@ const Staff = () => {
         {/* Description Section */}
         <section className="pb-16">
           <div className="container-custom max-w-4xl text-center">
-            <p className="text-lg leading-relaxed text-foreground mb-4">
-              "Caring, Understanding, and Customized" is more than a slogan to us. The entire team at Reservoir Financial truly cares about each other, about you and about your financial well-being. We want you to feel comfortable during every consultation and comfortable asking us any financial question.
-            </p>
-            <p className="text-lg leading-relaxed text-foreground">
-              We believe that your interests come first. We are committed to offering a caring and personalized approach to financial planning. We want you to clearly understand and share in the journey of exploring your unique path to achieving your financial life goals.
-            </p>
+            <p className="text-lg leading-relaxed text-foreground mb-4">Dedicated professionals committed to your financial success. We believe in the power of personal relationships and providing boutique service that makes a difference.</p>
+            
           </div>
         </section>
 
