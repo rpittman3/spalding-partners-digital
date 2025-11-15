@@ -73,35 +73,50 @@ const Staff = () => {
         <section className="pb-16">
           <div className="container-custom">
             {isLoading ? <div className="text-center">Loading team members...</div> : <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
-                {staffMembers?.map(member => <div key={member.id} className="flex flex-col items-center">
-                    <Avatar className="w-56 h-56 mb-6">
-                      <AvatarImage src={getPhotoUrl(member.photo_path) || undefined} alt={member.name} />
-                      <AvatarFallback className="text-4xl bg-primary/10 text-primary">
-                        {member.name.split(" ").map(n => n[0]).join("")}
-                      </AvatarFallback>
-                    </Avatar>
-                    <h3 className="text-2xl font-bold text-primary mb-2 text-center">
-                      {member.name}
-                    </h3>
-                    <p className="text-base text-muted-foreground mb-4 text-center">
-                      {member.position}
-                    </p>
-                    
-                    <div className="space-y-2 w-full">
-                      <a href={`mailto:${member.email}`} className="flex items-center justify-center gap-2 text-sm text-primary hover:text-accent transition-colors">
-                        <Mail className="h-4 w-4" />
-                        {member.email}
-                      </a>
-                      
-                      {member.phone && <a href={`tel:${member.phone}`} className="flex items-center justify-center gap-2 text-sm text-primary hover:text-accent transition-colors">
-                          <Phone className="h-4 w-4" />
-                          {member.phone}
-                        </a>}
-                    </div>
+                {staffMembers?.map(member => <div key={member.id} className="perspective-1000 h-[500px]">
+                    <div className="relative w-full h-full transition-transform duration-700 transform-style-3d hover:rotate-y-180 group cursor-pointer">
+                      {/* Front of card */}
+                      <div className="absolute inset-0 backface-hidden flex flex-col items-center p-6 bg-card rounded-lg border shadow-sm">
+                        <Avatar className="w-56 h-56 mb-6">
+                          <AvatarImage src={getPhotoUrl(member.photo_path) || undefined} alt={member.name} />
+                          <AvatarFallback className="text-4xl bg-primary/10 text-primary">
+                            {member.name.split(" ").map(n => n[0]).join("")}
+                          </AvatarFallback>
+                        </Avatar>
+                        <h3 className="text-2xl font-bold text-primary mb-2 text-center">
+                          {member.name}
+                        </h3>
+                        <p className="text-base text-muted-foreground mb-4 text-center">
+                          {member.position}
+                        </p>
+                        
+                        <div className="space-y-2 w-full">
+                          <a href={`mailto:${member.email}`} onClick={(e) => e.stopPropagation()} className="flex items-center justify-center gap-2 text-sm text-primary hover:text-accent transition-colors">
+                            <Mail className="h-4 w-4" />
+                            {member.email}
+                          </a>
+                          
+                          {member.phone && <a href={`tel:${member.phone}`} onClick={(e) => e.stopPropagation()} className="flex items-center justify-center gap-2 text-sm text-primary hover:text-accent transition-colors">
+                              <Phone className="h-4 w-4" />
+                              {member.phone}
+                            </a>}
+                        </div>
+                      </div>
 
-                    {member.bio && <div className="mt-4 text-sm text-muted-foreground text-center prose prose-sm max-w-none" dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(member.bio)
-              }} />}
+                      {/* Back of card */}
+                      <div className="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center p-6 bg-card rounded-lg border shadow-sm overflow-y-auto">
+                        <h3 className="text-xl font-bold text-primary mb-4 text-center">
+                          {member.name}
+                        </h3>
+                        {member.bio ? (
+                          <div className="text-sm text-muted-foreground text-center prose prose-sm max-w-none" dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(member.bio)
+                          }} />
+                        ) : (
+                          <p className="text-sm text-muted-foreground text-center">No bio available</p>
+                        )}
+                      </div>
+                    </div>
                   </div>)}
               </div>}
           </div>
