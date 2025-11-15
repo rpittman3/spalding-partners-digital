@@ -1,9 +1,11 @@
-import { Mail } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import teamPlaceholder from "@/assets/team-placeholder.jpg";
+import DOMPurify from 'dompurify';
 
 interface StaffMember {
   id: string;
@@ -11,6 +13,8 @@ interface StaffMember {
   position: string;
   email: string;
   photo_path: string | null;
+  phone: string | null;
+  bio: string | null;
   display_order: number;
 }
 const Staff = () => {
@@ -35,62 +39,103 @@ const Staff = () => {
     return data.publicUrl;
   };
 
-  return <div className="min-h-screen flex flex-col">
+  return (
+    <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-grow pt-15 pb-[60px]">
-        {/* Hero Section */}
-        <section className="pt-28 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-primary/5 via-background to-accent/5">
+      <main className="flex-grow pt-20 pb-16">
+        {/* Title Section */}
+        <section className="pt-16 pb-8">
           <div className="container-custom">
-            <div className="text-center max-w-3xl mx-auto offset-header">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-                Meet Our Team
-              </h1>
-              <p className="text-lg md:text-xl text-muted-foreground">
-                Dedicated professionals committed to your financial success. We believe in the power of personal relationships and providing boutique service that makes a difference.
-              </p>
-            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-primary text-center">
+              Who We Are
+            </h1>
           </div>
         </section>
 
-        {/* Team Members Grid */}
-        <section className="py-16 md:py-24">
+        {/* Team Photo Section */}
+        <section className="pb-12">
+          <div className="container-custom max-w-4xl">
+            <img 
+              src={teamPlaceholder} 
+              alt="Our Team" 
+              className="w-full h-auto rounded-lg shadow-lg"
+            />
+          </div>
+        </section>
+
+        {/* Description Section */}
+        <section className="pb-16">
+          <div className="container-custom max-w-4xl text-center">
+            <p className="text-lg leading-relaxed text-foreground mb-4">
+              "Caring, Understanding, and Customized" is more than a slogan to us. The entire team at Reservoir Financial truly cares about each other, about you and about your financial well-being. We want you to feel comfortable during every consultation and comfortable asking us any financial question.
+            </p>
+            <p className="text-lg leading-relaxed text-foreground">
+              We believe that your interests come first. We are committed to offering a caring and personalized approach to financial planning. We want you to clearly understand and share in the journey of exploring your unique path to achieving your financial life goals.
+            </p>
+          </div>
+        </section>
+
+        {/* Team Members Section */}
+        <section className="pb-16">
           <div className="container-custom">
             {isLoading ? (
               <div className="text-center">Loading team members...</div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
                 {staffMembers?.map((member) => (
-                  <div key={member.id} className="flex flex-col items-center text-center">
-                    <Avatar className="w-48 h-48 mb-4 border-4 border-primary/10">
+                  <div key={member.id} className="flex flex-col items-center">
+                    <Avatar className="w-56 h-56 mb-6">
                       <AvatarImage src={getPhotoUrl(member.photo_path) || undefined} alt={member.name} />
-                      <AvatarFallback className="text-3xl bg-primary/10 text-primary">
+                      <AvatarFallback className="text-4xl bg-primary/10 text-primary">
                         {member.name.split(" ").map(n => n[0]).join("")}
                       </AvatarFallback>
                     </Avatar>
-                    <h3 className="text-xl font-bold text-primary mb-1">
+                    <h3 className="text-2xl font-bold text-primary mb-2 text-center">
                       {member.name}
                     </h3>
-                    <p className="text-sm text-muted-foreground mb-3">
+                    <p className="text-base text-muted-foreground mb-4 text-center">
                       {member.position}
                     </p>
-                    <a 
-                      href={`mailto:${member.email}`} 
-                      className="flex items-center gap-2 text-sm text-primary hover:text-accent transition-colors"
-                    >
-                      <Mail className="h-4 w-4" />
-                      {member.email}
-                    </a>
+                    
+                    <div className="space-y-2 w-full">
+                      <a 
+                        href={`mailto:${member.email}`} 
+                        className="flex items-center justify-center gap-2 text-sm text-primary hover:text-accent transition-colors"
+                      >
+                        <Mail className="h-4 w-4" />
+                        {member.email}
+                      </a>
+                      
+                      {member.phone && (
+                        <a 
+                          href={`tel:${member.phone}`} 
+                          className="flex items-center justify-center gap-2 text-sm text-primary hover:text-accent transition-colors"
+                        >
+                          <Phone className="h-4 w-4" />
+                          {member.phone}
+                        </a>
+                      )}
+                    </div>
+
+                    {member.bio && (
+                      <div 
+                        className="mt-4 text-sm text-muted-foreground text-center prose prose-sm max-w-none"
+                        dangerouslySetInnerHTML={{ 
+                          __html: DOMPurify.sanitize(member.bio) 
+                        }}
+                      />
+                    )}
                   </div>
                 ))}
               </div>
             )}
           </div>
         </section>
-
       </main>
 
       <Footer />
-    </div>;
+    </div>
+  );
 };
 export default Staff;
