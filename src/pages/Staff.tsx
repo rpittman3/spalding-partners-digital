@@ -64,7 +64,7 @@ const Staff = () => {
         {/* Description Section */}
         <section className="pb-16">
           <div className="container-custom max-w-4xl text-center">
-            <p className="text-lg leading-relaxed text-foreground mb-4">Dedicated professionals committed to your financial success. We believe in the power of personal relationships and providing boutique service that makes a difference.</p>
+            <p className="leading-relaxed text-foreground mb-4 text-3xl">Dedicated professionals committed to your financial success. We believe in the power of personal relationships and providing boutique service that makes a difference.</p>
             
           </div>
         </section>
