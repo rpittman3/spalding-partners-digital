@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import teamPlaceholder from "@/assets/team-placeholder.jpg";
+import teamPhoto from "@/assets/team-photo.jpg";
 import DOMPurify from 'dompurify';
 
 interface StaffMember {
@@ -57,7 +57,7 @@ const Staff = () => {
         <section className="pb-12">
           <div className="container-custom max-w-4xl">
             <img 
-              src={teamPlaceholder} 
+              src={teamPhoto} 
               alt="Our Team" 
               className="w-full h-auto rounded-lg shadow-lg"
             />
