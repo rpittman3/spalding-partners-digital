@@ -102,7 +102,9 @@ const Contact = () => {
                 </div>
                 <h3 className="font-semibold mb-2">Hours</h3>
                 <p className="text-muted-foreground text-sm">
-                  Mon-Fri: 9:00 AM - 5:00 PM<br />
+                  Office Hours By Appointment
+Mon-Fri: 9:00 AM - 5:00 PM
+Sat: During Tax Season                       <br />
                   Sat-Sun: By Appointment
                 </p>
               </CardContent>
