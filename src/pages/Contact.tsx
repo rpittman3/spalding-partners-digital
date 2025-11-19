@@ -8,18 +8,18 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-
 const Contact = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     service: "",
-    message: "",
+    message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -28,44 +28,30 @@ const Contact = () => {
     setTimeout(() => {
       toast({
         title: "Message Sent!",
-        description: "Thank you for contacting us. We'll respond within 1 business day.",
+        description: "Thank you for contacting us. We'll respond within 1 business day."
       });
       setFormData({
         name: "",
         email: "",
         phone: "",
         service: "",
-        message: "",
+        message: ""
       });
       setIsSubmitting(false);
     }, 1000);
   };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
-
-  return (
-    <div className="min-h-screen">
+  return <div className="min-h-screen">
       <Header />
 
       {/* Hero Section */}
       <section className="pt-15 pb-16 md:pb-24 bg-gradient-to-b from-secondary/50 to-background">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center offset-header">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Get in Touch
-            </h1>
-            <p className="text-xl text-muted-foreground">
-              Ready to take control of your finances? Contact us today to schedule a consultation
-            </p>
-          </div>
-        </div>
+        
       </section>
 
       {/* Contact Information Cards */}
@@ -78,10 +64,7 @@ const Contact = () => {
                   <Phone className="h-7 w-7 text-accent" />
                 </div>
                 <h3 className="font-semibold mb-2">Phone</h3>
-                <a
-                  href="tel:(860)456-1661"
-                  className="text-muted-foreground hover:text-accent transition-colors"
-                >
+                <a href="tel:(860)456-1661" className="text-muted-foreground hover:text-accent transition-colors">
                   (860) 456-1661
                 </a>
               </CardContent>
@@ -93,10 +76,7 @@ const Contact = () => {
                   <Mail className="h-7 w-7 text-accent" />
                 </div>
                 <h3 className="font-semibold mb-2">Email</h3>
-                <a
-                  href="mailto:info@sp-financial.com"
-                  className="text-muted-foreground hover:text-accent transition-colors"
-                >
+                <a href="mailto:info@sp-financial.com" className="text-muted-foreground hover:text-accent transition-colors">
                   info@sp-financial.com
                 </a>
               </CardContent>
@@ -142,56 +122,24 @@ const Contact = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="name">Full Name *</Label>
-                      <Input
-                        id="name"
-                        name="name"
-                        type="text"
-                        placeholder="John Doe"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        className="h-12"
-                      />
+                      <Input id="name" name="name" type="text" placeholder="John Doe" value={formData.name} onChange={handleChange} required className="h-12" />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="email">Email Address *</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="john@example.com"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="h-12"
-                      />
+                      <Input id="email" name="email" type="email" placeholder="john@example.com" value={formData.email} onChange={handleChange} required className="h-12" />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number</Label>
-                      <Input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        placeholder="(860) 456-1661"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="h-12"
-                      />
+                      <Input id="phone" name="phone" type="tel" placeholder="(860) 456-1661" value={formData.phone} onChange={handleChange} className="h-12" />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="service">Service Interested In</Label>
-                      <select
-                        id="service"
-                        name="service"
-                        value={formData.service}
-                        onChange={handleChange}
-                        className="flex h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                      >
+                      <select id="service" name="service" value={formData.service} onChange={handleChange} className="flex h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                         <option value="">Select a service</option>
                         <option value="accounting">Accounting Services</option>
                         <option value="tax">Tax Services</option>
@@ -205,24 +153,10 @@ const Contact = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="message">Message *</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      placeholder="Tell us about your needs and how we can help..."
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      className="min-h-[150px] resize-none"
-                    />
+                    <Textarea id="message" name="message" placeholder="Tell us about your needs and how we can help..." value={formData.message} onChange={handleChange} required className="min-h-[150px] resize-none" />
                   </div>
 
-                  <Button
-                    type="submit"
-                    variant="cta"
-                    size="xl"
-                    className="w-full"
-                    disabled={isSubmitting}
-                  >
+                  <Button type="submit" variant="cta" size="xl" className="w-full" disabled={isSubmitting}>
                     {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
 
@@ -247,23 +181,18 @@ const Contact = () => {
               </p>
             </div>
             <div className="aspect-video rounded-lg overflow-hidden shadow-custom-xl bg-muted">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2971.234567890!2d-72.2077778!3d41.7104567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDQyJzM3LjYiTiA3MsKwMTInMjguMCJX!5e0!3m2!1sen!2sus!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Office Location"
-              />
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2971.234567890!2d-72.2077778!3d41.7104567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDQyJzM3LjYiTiA3MsKwMTInMjguMCJX!5e0!3m2!1sen!2sus!4v1234567890" width="100%" height="100%" style={{
+              border: 0
+            }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Office Location" />
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24" style={{ backgroundColor: '#918a6e' }}>
+      <section className="py-16 md:py-24" style={{
+      backgroundColor: '#918a6e'
+    }}>
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
             Prefer to Call or Email?
@@ -276,12 +205,7 @@ const Contact = () => {
             <Button asChild variant="hero" size="xl">
               <a href="tel:(860)456-1661">Call Us: (860) 456-1661</a>
             </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="xl"
-              className="border-2 border-primary-foreground bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-            >
+            <Button asChild variant="outline" size="xl" className="border-2 border-primary-foreground bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary">
               <a href="mailto:info@sp-financial.com">Email Us</a>
             </Button>
           </div>
@@ -289,8 +213,6 @@ const Contact = () => {
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Contact;
