@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
-
 const Footer = () => {
-  return (
-    <footer className="bg-primary text-primary-foreground">
+  return <footer className="bg-primary text-primary-foreground">
       <div className="container-custom py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {/* Company Info */}
@@ -15,7 +13,7 @@ const Footer = () => {
               Financial Services, LLC
             </p>
             <p className="text-sm text-primary-foreground/70">
-              A boutique accounting firm offering personalized financial solutions for niche clientele since 2000.
+              Financial & Tax Advisors to Successful People
             </p>
           </div>
 
@@ -73,17 +71,11 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold text-primary-foreground">Contact Us</h4>
             <div className="space-y-3">
-              <a
-                href="tel:(860)456-1661"
-                className="flex items-start gap-3 text-sm text-primary-foreground/70 hover:text-accent transition-fast group"
-              >
+              <a href="tel:(860)456-1661" className="flex items-start gap-3 text-sm text-primary-foreground/70 hover:text-accent transition-fast group">
                 <Phone className="h-5 w-5 mt-0.5 group-hover:text-accent" />
                 <span>(860) 456-1661</span>
               </a>
-              <a
-                href="mailto:info@sp-financial.com"
-                className="flex items-start gap-3 text-sm text-primary-foreground/70 hover:text-accent transition-fast group"
-              >
+              <a href="mailto:info@sp-financial.com" className="flex items-start gap-3 text-sm text-primary-foreground/70 hover:text-accent transition-fast group">
                 <Mail className="h-5 w-5 mt-0.5 group-hover:text-accent" />
                 <span>info@sp-financial.com</span>
               </a>
@@ -114,8 +106,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
