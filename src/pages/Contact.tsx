@@ -195,11 +195,10 @@ const Contact = () => {
     }}>
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary-foreground">
-            Prefer to Call or Email?
+            Need to Book Your Appointment?
           </h2>
           <p className="text-lg md:text-xl text-primary-foreground/90 max-w-3xl mx-auto mb-8">
-            We're here to help! Reach out by phone or email and we'll respond promptly
-            to answer your questions and schedule a consultation.
+            Call the office or email us for an appointment.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild variant="hero" size="xl">
