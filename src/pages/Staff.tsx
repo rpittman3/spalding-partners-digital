@@ -56,8 +56,8 @@ const Staff = () => {
 
         {/* Team Photo Section */}
         <section className="pb-12">
-          <div className="container-custom max-w-xl">
-            <img src={teamPhoto} alt="Our Team" className="w-full h-auto rounded-lg shadow-lg" />
+          <div className="container-custom">
+            <img src={teamPhoto} alt="Our Team" className="w-3/5 mx-auto h-auto rounded-lg shadow-lg" />
           </div>
         </section>
 
