@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { FileText, Calculator, BookOpen, Download, ExternalLink, ArrowRight } from "lucide-react";
+import { FileText, BookOpen, Download, ExternalLink, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Resources = () => {
@@ -27,23 +27,6 @@ const Resources = () => {
     },
   ];
 
-  const calculators = [
-    {
-      title: "Tax Estimator",
-      description: "Estimate your federal tax liability",
-      icon: Calculator,
-    },
-    {
-      title: "Retirement Calculator",
-      description: "Calculate retirement savings needs",
-      icon: Calculator,
-    },
-    {
-      title: "Business Loan Calculator",
-      description: "Evaluate business financing options",
-      icon: Calculator,
-    },
-  ];
 
   const guides = [
     {
@@ -118,36 +101,6 @@ const Resources = () => {
         </div>
       </section>
 
-      {/* Financial Calculators */}
-      <section className="py-16 md:py-24 bg-secondary/30">
-        <div className="container-custom">
-          <div className="flex items-center gap-3 mb-12">
-            <Calculator className="h-8 w-8 text-accent" />
-            <h2 className="text-3xl md:text-4xl font-bold">Financial Calculators</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {calculators.map((calculator) => {
-              const Icon = calculator.icon;
-              return (
-                <Card key={calculator.title} className="hover:shadow-custom-lg transition-smooth">
-                  <CardHeader>
-                    <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
-                      <Icon className="h-6 w-6 text-accent" />
-                    </div>
-                    <CardTitle>{calculator.title}</CardTitle>
-                    <CardDescription>{calculator.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button variant="outline" size="sm" className="w-full">
-                      Use Calculator
-                    </Button>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
       {/* Guides & Articles */}
       <section className="py-16 md:py-24 bg-background">
