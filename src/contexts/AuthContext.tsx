@@ -34,8 +34,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Also check URL search params (some redirects use query params)
     const searchParams = new URLSearchParams(window.location.search);
     const searchType = searchParams.get('type');
-    console.log('AuthProvider init - URL search type:', searchType);
-    if (searchType === 'recovery') {
+    const recoveryParam = searchParams.get('recovery');
+    console.log('AuthProvider init - URL search type:', searchType, 'recovery:', recoveryParam);
+    if (searchType === 'recovery' || recoveryParam === 'true') {
       return true;
     }
     return false;
