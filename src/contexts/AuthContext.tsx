@@ -20,19 +20,52 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [role, setRole] = useState<'admin' | 'client' | 'sub_user' | null>(null);
   const [loading, setLoading] = useState(true);
-  const [isRecoveryMode, setIsRecoveryMode] = useState(false);
+  const [isRecoveryMode, setIsRecoveryMode] = useState(() => {
+    // Check URL hash for recovery type on initial load BEFORE Supabase processes it
+    const hash = window.location.hash;
+    if (hash) {
+      const hashParams = new URLSearchParams(hash.substring(1));
+      const type = hashParams.get('type');
+      console.log('AuthProvider init - URL hash type:', type, 'full hash:', hash);
+      if (type === 'recovery') {
+        return true;
+      }
+    }
+    // Also check URL search params (some redirects use query params)
+    const searchParams = new URLSearchParams(window.location.search);
+    const searchType = searchParams.get('type');
+    console.log('AuthProvider init - URL search type:', searchType);
+    if (searchType === 'recovery') {
+      return true;
+    }
+    return false;
+  });
   const { toast } = useToast();
 
   useEffect(() => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('AuthContext onAuthStateChange:', event);
+        console.log('AuthContext onAuthStateChange:', event, 'session AMR:', session?.user?.app_metadata);
         
         // Detect password recovery event
         if (event === 'PASSWORD_RECOVERY') {
           console.log('PASSWORD_RECOVERY event detected in AuthContext');
           setIsRecoveryMode(true);
+        }
+        
+        // Also check if this is a recovery session by looking at AMR
+        // Recovery sessions have 'recovery' in their amr claim
+        if (event === 'SIGNED_IN' && session?.user) {
+          const amr = session.user.app_metadata?.amr;
+          console.log('Checking AMR for recovery:', amr);
+          if (Array.isArray(amr)) {
+            const hasRecovery = amr.some((entry: { method?: string }) => entry.method === 'recovery');
+            if (hasRecovery) {
+              console.log('Recovery method detected in AMR');
+              setIsRecoveryMode(true);
+            }
+          }
         }
         
         setSession(session);
