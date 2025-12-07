@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -15,40 +16,9 @@ export default function Auth() {
   const [accessRequested, setAccessRequested] = useState(false);
   const [accessCode, setAccessCode] = useState('');
   const [requestedEmail, setRequestedEmail] = useState('');
-  const [isRecoveryMode, setIsRecoveryMode] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
-
-  // Listen for password recovery event
-  useEffect(() => {
-    // Log the current URL to debug redirect issues
-    console.log('Auth page loaded, URL hash:', window.location.hash);
-    
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('Auth state change event:', event, session);
-      
-      if (event === 'PASSWORD_RECOVERY') {
-        console.log('PASSWORD_RECOVERY event detected');
-        setIsRecoveryMode(true);
-        toast({
-          title: 'Password Reset',
-          description: 'Please enter your new password below.',
-        });
-      }
-    });
-
-    // Also check URL for recovery token on initial load
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const type = hashParams.get('type');
-    console.log('URL type parameter:', type);
-    
-    if (type === 'recovery') {
-      console.log('Recovery type detected in URL');
-      setIsRecoveryMode(true);
-    }
-
-    return () => subscription.unsubscribe();
-  }, [toast]);
+  const { isRecoveryMode, clearRecoveryMode } = useAuth();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -253,7 +223,7 @@ export default function Auth() {
         title: 'Success',
         description: 'Password updated successfully. Redirecting...',
       });
-      setIsRecoveryMode(false);
+      clearRecoveryMode();
       
       // Check user role and redirect
       const { data: { user } } = await supabase.auth.getUser();
