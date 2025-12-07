@@ -172,8 +172,14 @@ export default function Auth() {
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email') as string;
 
+    // Store the email and timestamp in sessionStorage to detect recovery on return
+    sessionStorage.setItem('pendingPasswordReset', JSON.stringify({
+      email: email.toLowerCase(),
+      timestamp: Date.now()
+    }));
+
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth?recovery=true`,
+      redirectTo: `${window.location.origin}/auth`,
     });
 
     if (error) {
@@ -182,6 +188,7 @@ export default function Auth() {
         description: error.message,
         variant: 'destructive',
       });
+      sessionStorage.removeItem('pendingPasswordReset');
     } else {
       toast({
         title: 'Success',
@@ -223,6 +230,7 @@ export default function Auth() {
         title: 'Success',
         description: 'Password updated successfully. Redirecting...',
       });
+      sessionStorage.removeItem('pendingPasswordReset');
       clearRecoveryMode();
       
       // Check user role and redirect
