@@ -172,8 +172,8 @@ export default function Auth() {
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email') as string;
 
-    // Store the email and timestamp in sessionStorage to detect recovery on return
-    sessionStorage.setItem('pendingPasswordReset', JSON.stringify({
+    // Store the email and timestamp in localStorage to detect recovery on return (localStorage works across tabs)
+    localStorage.setItem('pendingPasswordReset', JSON.stringify({
       email: email.toLowerCase(),
       timestamp: Date.now()
     }));
@@ -188,7 +188,7 @@ export default function Auth() {
         description: error.message,
         variant: 'destructive',
       });
-      sessionStorage.removeItem('pendingPasswordReset');
+      localStorage.removeItem('pendingPasswordReset');
     } else {
       toast({
         title: 'Success',
@@ -230,7 +230,7 @@ export default function Auth() {
         title: 'Success',
         description: 'Password updated successfully. Redirecting...',
       });
-      sessionStorage.removeItem('pendingPasswordReset');
+      localStorage.removeItem('pendingPasswordReset');
       clearRecoveryMode();
       
       // Check user role and redirect
