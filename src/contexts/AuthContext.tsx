@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('AuthContext onAuthStateChange:', event, 'session AMR:', session?.user?.app_metadata);
+        console.log('AuthContext onAuthStateChange:', event);
         
         // Detect password recovery event
         if (event === 'PASSWORD_RECOVERY') {
@@ -55,9 +55,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setIsRecoveryMode(true);
         }
         
-        // Also check if this is a recovery session by looking at AMR
-        // Recovery sessions have 'recovery' in their amr claim
+        // Check for pending password reset from sessionStorage
         if (event === 'SIGNED_IN' && session?.user) {
+          const pendingReset = sessionStorage.getItem('pendingPasswordReset');
+          if (pendingReset) {
+            try {
+              const { email, timestamp } = JSON.parse(pendingReset);
+              const fiveMinutesAgo = Date.now() - (5 * 60 * 1000);
+              
+              // Check if the pending reset is recent (within 5 minutes) and matches the user
+              if (timestamp > fiveMinutesAgo && session.user.email?.toLowerCase() === email) {
+                console.log('Pending password reset detected for user:', email);
+                setIsRecoveryMode(true);
+                // Clear it so it doesn't trigger again
+                sessionStorage.removeItem('pendingPasswordReset');
+              }
+            } catch (e) {
+              console.error('Error parsing pending reset:', e);
+            }
+          }
+          
+          // Also check if this is a recovery session by looking at AMR
           const amr = session.user.app_metadata?.amr;
           console.log('Checking AMR for recovery:', amr);
           if (Array.isArray(amr)) {
