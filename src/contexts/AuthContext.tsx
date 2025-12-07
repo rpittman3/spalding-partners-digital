@@ -55,9 +55,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setIsRecoveryMode(true);
         }
         
-        // Check for pending password reset from sessionStorage
+        // Check for pending password reset from localStorage (works across tabs)
         if (event === 'SIGNED_IN' && session?.user) {
-          const pendingReset = sessionStorage.getItem('pendingPasswordReset');
+          const pendingReset = localStorage.getItem('pendingPasswordReset');
+          console.log('Checking pending reset:', pendingReset, 'user email:', session.user.email);
           if (pendingReset) {
             try {
               const { email, timestamp } = JSON.parse(pendingReset);
@@ -68,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 console.log('Pending password reset detected for user:', email);
                 setIsRecoveryMode(true);
                 // Clear it so it doesn't trigger again
-                sessionStorage.removeItem('pendingPasswordReset');
+                localStorage.removeItem('pendingPasswordReset');
               }
             } catch (e) {
               console.error('Error parsing pending reset:', e);
