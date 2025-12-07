@@ -21,8 +21,14 @@ export default function Auth() {
 
   // Listen for password recovery event
   useEffect(() => {
+    // Log the current URL to debug redirect issues
+    console.log('Auth page loaded, URL hash:', window.location.hash);
+    
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state change event:', event, session);
+      
       if (event === 'PASSWORD_RECOVERY') {
+        console.log('PASSWORD_RECOVERY event detected');
         setIsRecoveryMode(true);
         toast({
           title: 'Password Reset',
@@ -30,6 +36,16 @@ export default function Auth() {
         });
       }
     });
+
+    // Also check URL for recovery token on initial load
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const type = hashParams.get('type');
+    console.log('URL type parameter:', type);
+    
+    if (type === 'recovery') {
+      console.log('Recovery type detected in URL');
+      setIsRecoveryMode(true);
+    }
 
     return () => subscription.unsubscribe();
   }, [toast]);
