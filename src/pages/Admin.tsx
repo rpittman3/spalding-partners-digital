@@ -17,6 +17,7 @@ import NotificationManagement from '@/components/admin/NotificationManagement';
 import DeadlineManagement from '@/components/admin/DeadlineManagement';
 import FAQManagement from '@/components/admin/FAQManagement';
 import StaffManagement from '@/components/admin/StaffManagement';
+import PublicResourceManagement from '@/components/admin/PublicResourceManagement';
 import {
   LayoutDashboard,
   Users,
@@ -27,6 +28,7 @@ import {
   Calendar,
   MessageSquare,
   Tags,
+  Globe,
   Upload,
   History,
   Settings as SettingsIcon,
@@ -51,7 +53,8 @@ export default function Admin() {
     { id: 'sub-users', label: 'Client Members', icon: Users },
     { id: 'staff', label: 'Staff', icon: UserCircle },
     { id: 'documents', label: 'Documents', icon: FileText },
-    { id: 'resources', label: 'Resources', icon: FolderOpen },
+    { id: 'resources', label: 'Client Resources', icon: FolderOpen },
+    { id: 'public-resources', label: 'Public Resources', icon: Globe },
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'deadlines', label: 'Deadlines', icon: Calendar },
     { id: 'meetings', label: 'Meeting Requests', icon: MessageSquare },
@@ -116,6 +119,7 @@ export default function Admin() {
                 {activeSection === 'staff' && 'Manage staff members'}
                 {activeSection === 'documents' && 'View and manage client documents'}
                 {activeSection === 'resources' && 'Upload and organize resources for clients'}
+                {activeSection === 'public-resources' && 'Manage resources on the public Resources page'}
                 {activeSection === 'notifications' && 'Create and manage notifications'}
                 {activeSection === 'deadlines' && 'Manage tax and financial deadlines'}
                 {activeSection === 'meetings' && 'Review and respond to meeting requests'}
@@ -133,6 +137,7 @@ export default function Admin() {
               {activeSection === 'staff' && <StaffManagement />}
               {activeSection === 'documents' && <DocumentManagement />}
               {activeSection === 'resources' && <ResourceManagement />}
+              {activeSection === 'public-resources' && <PublicResourceManagement />}
               {activeSection === 'meetings' && <MeetingRequestManagement />}
               {activeSection === 'categories' && <CategoryManagement />}
               {activeSection === 'faqs' && <FAQManagement />}

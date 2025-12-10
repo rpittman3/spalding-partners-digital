@@ -676,6 +676,54 @@ export type Database = {
           },
         ]
       }
+      public_resources: {
+        Row: {
+          category: Database["public"]["Enums"]["public_resource_category"]
+          created_at: string
+          created_by: string
+          description: string
+          display_order: number
+          file_name: string | null
+          file_path: string | null
+          id: string
+          is_active: boolean
+          resource_type: Database["public"]["Enums"]["public_resource_type"]
+          title: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["public_resource_category"]
+          created_at?: string
+          created_by: string
+          description: string
+          display_order?: number
+          file_name?: string | null
+          file_path?: string | null
+          id?: string
+          is_active?: boolean
+          resource_type: Database["public"]["Enums"]["public_resource_type"]
+          title: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["public_resource_category"]
+          created_at?: string
+          created_by?: string
+          description?: string
+          display_order?: number
+          file_name?: string | null
+          file_path?: string | null
+          id?: string
+          is_active?: boolean
+          resource_type?: Database["public"]["Enums"]["public_resource_type"]
+          title?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       rate_limits: {
         Row: {
           created_at: string
@@ -985,6 +1033,8 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "client" | "sub_user"
+      public_resource_category: "tax_resources" | "guides_articles"
+      public_resource_type: "url" | "pdf"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1113,6 +1163,8 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "client", "sub_user"],
+      public_resource_category: ["tax_resources", "guides_articles"],
+      public_resource_type: ["url", "pdf"],
     },
   },
 } as const
