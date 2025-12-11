@@ -7,7 +7,7 @@ verify_jwt = false
 verify_jwt = true
 
 [functions.send-test-email]
-verify_jwt = true
+verify_jwt = false
 
 [functions.reset-subuser-password]
 verify_jwt = true
