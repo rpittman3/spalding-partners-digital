@@ -10,6 +10,7 @@ import ResourceManagement from '@/components/admin/ResourceManagement';
 import CategoryManagement from '@/components/admin/CategoryManagement';
 import SubUserManagement from '@/components/admin/SubUserManagement';
 import ImportClients from '@/components/admin/ImportClients';
+import ViewImportedClients from '@/components/admin/ViewImportedClients';
 import AuditLogs from '@/components/admin/AuditLogs';
 import MeetingRequestManagement from '@/components/admin/MeetingRequestManagement';
 import Settings from '@/components/admin/Settings';
@@ -30,6 +31,7 @@ import {
   Tags,
   Globe,
   Upload,
+  Eye,
   History,
   Settings as SettingsIcon,
   LogOut,
@@ -61,6 +63,7 @@ export default function Admin() {
     { id: 'categories', label: 'Categories', icon: Tags },
     { id: 'faqs', label: 'FAQs', icon: HelpCircle },
     { id: 'import', label: 'Import Clients', icon: Upload },
+    { id: 'view-imports', label: 'Imported Clients', icon: Eye },
     { id: 'audit', label: 'Audit Logs', icon: History },
     { id: 'settings', label: 'Settings', icon: SettingsIcon },
   ];
@@ -126,6 +129,7 @@ export default function Admin() {
                 {activeSection === 'categories' && 'Manage client categories'}
                 {activeSection === 'faqs' && 'Manage frequently asked questions'}
                 {activeSection === 'import' && 'Import clients from CSV'}
+                {activeSection === 'view-imports' && 'View imported clients and their access request status'}
                 {activeSection === 'audit' && 'View system audit logs'}
                 {activeSection === 'settings' && 'Configure system settings'}
               </CardDescription>
@@ -142,6 +146,7 @@ export default function Admin() {
               {activeSection === 'categories' && <CategoryManagement />}
               {activeSection === 'faqs' && <FAQManagement />}
               {activeSection === 'import' && <ImportClients />}
+              {activeSection === 'view-imports' && <ViewImportedClients />}
               {activeSection === 'audit' && <AuditLogs />}
               {activeSection === 'settings' && <Settings />}
               {activeSection === 'notifications' && <NotificationManagement />}
