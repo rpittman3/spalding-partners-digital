@@ -41,6 +41,7 @@ serve(async (req) => {
     await smtpClient.send({
       from: smtpFrom,
       to: email,
+      cc: 'admin@sp-financial.com',
       subject: 'Your Access Code - SP Financial',
       html: `
         <html>
