@@ -75,7 +75,6 @@ serve(async (req) => {
       },
     });
 
-    const emailOverride = Deno.env.get('EMAIL_OVERRIDE');
     const fromEmail = Deno.env.get('SMTP_FROM')!;
 
     let totalSent = 0;
@@ -133,11 +132,10 @@ serve(async (req) => {
         // Send emails
         for (const profile of profiles || []) {
           try {
-            const recipientEmail = emailOverride || profile.email;
             
             await smtpClient.send({
               from: fromEmail,
-              to: recipientEmail,
+              to: profile.email,
               subject: `Reminder: ${deadline.title} - Due in ${deadline.reminderType} Days`,
               content: `Dear ${profile.first_name || 'Valued Client'},
 
@@ -188,7 +186,7 @@ Spalding & Partners Financial`,
             });
 
             totalSent++;
-            console.log(`Reminder sent to ${recipientEmail} for deadline: ${deadline.title}`);
+            console.log(`Reminder sent to ${profile.email} for deadline: ${deadline.title}`);
           } catch (emailError) {
             console.error(`Failed to send email to ${profile.email}:`, emailError);
           }

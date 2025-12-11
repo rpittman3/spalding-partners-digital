@@ -22,16 +22,7 @@ serve(async (req) => {
   try {
     const { clientEmail, clientName, documentName, category }: DocumentNotificationRequest = await req.json();
 
-    // Check if EMAIL_OVERRIDE exists, use it if present, otherwise use the client email
-    const emailOverride = Deno.env.get('EMAIL_OVERRIDE');
-    const recipientEmail = emailOverride || clientEmail;
-    
-    if (emailOverride) {
-      console.log('EMAIL_OVERRIDE active - Original client email:', clientEmail);
-      console.log('Sending document notification to override address:', recipientEmail);
-    } else {
-      console.log('Sending document notification to client email:', recipientEmail);
-    }
+    console.log('Sending document notification to:', clientEmail);
 
     // Initialize SMTP client with environment variables or defaults
     const smtpClient = new SMTPClient({
@@ -77,7 +68,7 @@ serve(async (req) => {
 
     await smtpClient.send({
       from: Deno.env.get('SMTP_FROM') || 'appsend@rlp-associates.com',
-      to: recipientEmail,
+      to: clientEmail,
       subject: 'New Document Available - SP Financial',
       content: 'A new document has been uploaded to your account. Please log in to view it.',
       html: emailBody,
@@ -85,7 +76,7 @@ serve(async (req) => {
 
     await smtpClient.close();
 
-    console.log('Document notification sent successfully to:', recipientEmail);
+    console.log('Document notification sent successfully to:', clientEmail);
 
     return new Response(
       JSON.stringify({ success: true, message: 'Notification sent successfully' }),

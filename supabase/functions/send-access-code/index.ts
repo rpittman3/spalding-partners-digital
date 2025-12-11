@@ -13,11 +13,8 @@ serve(async (req) => {
 
   try {
     const { email, accessCode } = await req.json();
-
-    // Use EMAIL_OVERRIDE for development/testing
-    const recipientEmail = Deno.env.get('EMAIL_OVERRIDE') || email;
     
-    console.log(`Sending access code to ${recipientEmail} (original: ${email})`);
+    console.log(`Sending access code to ${email}`);
 
     const smtpHostname = Deno.env.get('SMTP_HOSTNAME');
     const smtpUsername = Deno.env.get('SMTP_USERNAME');
@@ -43,7 +40,7 @@ serve(async (req) => {
 
     await smtpClient.send({
       from: smtpFrom,
-      to: recipientEmail,
+      to: email,
       subject: 'Your Access Code - SP Financial',
       html: `
         <html>

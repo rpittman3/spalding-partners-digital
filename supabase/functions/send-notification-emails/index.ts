@@ -115,7 +115,6 @@ serve(async (req) => {
       },
     });
 
-    const emailOverride = Deno.env.get('EMAIL_OVERRIDE');
     const fromEmail = Deno.env.get('SMTP_FROM')!;
 
     // Send emails
@@ -124,14 +123,13 @@ serve(async (req) => {
 
     for (const profile of profiles || []) {
       try {
-        const recipientEmail = emailOverride || profile.email;
         
         // Strip HTML tags for plain text version
         const plainTextBody = body.replace(/<[^>]*>/g, '');
 
         await smtpClient.send({
           from: fromEmail,
-          to: recipientEmail,
+          to: profile.email,
           subject: title,
           content: `You have received an important notification from Spalding & Partners Financial\n\n${plainTextBody}`,
           html: `
@@ -155,7 +153,7 @@ serve(async (req) => {
         });
 
         successCount++;
-        console.log(`Email sent to ${recipientEmail}`);
+        console.log(`Email sent to ${profile.email}`);
       } catch (emailError) {
         failCount++;
         console.error(`Failed to send email to ${profile.email}:`, emailError);
