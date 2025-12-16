@@ -88,7 +88,7 @@ export default function DocumentManagement() {
   const handleDownload = async (filePath: string, fileName: string) => {
     try {
       const { data, error } = await supabase.storage
-        .from('documents')
+        .from('client-documents')
         .download(filePath);
 
       if (error) throw error;
