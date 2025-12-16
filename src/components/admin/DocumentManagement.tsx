@@ -96,14 +96,20 @@ export default function DocumentManagement() {
         throw error;
       }
 
-      // Open in new tab to download
-      const a = document.createElement('a');
-      a.href = data.signedUrl;
-      a.download = fileName;
-      a.target = '_blank';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      const baseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+      const signedUrl = data?.signedUrl;
+      if (!signedUrl) throw new Error('Missing signed URL');
+
+      // Supabase may return a relative path like "/object/sign/..."; make it absolute.
+      const absoluteUrl = signedUrl.startsWith('http')
+        ? signedUrl
+        : `${baseUrl}/storage/v1${signedUrl}`;
+
+      // Ensure spaces and other characters in filenames don’t get blocked by the browser.
+      const safeUrl = encodeURI(absoluteUrl);
+
+      // Navigate in the same tab (avoids popup/download blockers).
+      window.location.assign(safeUrl);
     } catch (error) {
       console.error('Download error:', error);
       toast({
