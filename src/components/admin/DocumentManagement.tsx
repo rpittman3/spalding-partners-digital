@@ -89,18 +89,21 @@ export default function DocumentManagement() {
     try {
       const { data, error } = await supabase.storage
         .from('client-documents')
-        .download(filePath);
+        .createSignedUrl(filePath, 60);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Signed URL error:', error);
+        throw error;
+      }
 
-      const url = URL.createObjectURL(data);
+      // Open in new tab to download
       const a = document.createElement('a');
-      a.href = url;
+      a.href = data.signedUrl;
       a.download = fileName;
+      a.target = '_blank';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Download error:', error);
       toast({
