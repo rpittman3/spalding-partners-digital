@@ -18,6 +18,7 @@ import SendDocumentDialog from './SendDocumentDialog';
 interface Document {
   id: string;
   file_name: string;
+  file_path: string;
   uploaded_at: string;
   uploaded_by: string;
   user_id: string;
@@ -84,6 +85,32 @@ export default function DocumentManagement() {
     }
   };
 
+  const handleDownload = async (filePath: string, fileName: string) => {
+    try {
+      const { data, error } = await supabase.storage
+        .from('documents')
+        .download(filePath);
+
+      if (error) throw error;
+
+      const url = URL.createObjectURL(data);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Download error:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to download document',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
@@ -144,7 +171,11 @@ export default function DocumentManagement() {
                       <Eye className="h-4 w-4" />
                     )}
                   </Button>
-                  <Button variant="ghost" size="sm">
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={() => handleDownload(doc.file_path, doc.file_name)}
+                  >
                     <Download className="h-4 w-4" />
                   </Button>
                 </div>
