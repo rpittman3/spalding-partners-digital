@@ -87,26 +87,40 @@ export default function DocumentManagement() {
 
   const handleDownload = async (filePath: string, fileName: string) => {
     try {
+      // Prefer direct download (avoids popup/download blockers)
+      const { data: fileBlob, error: downloadError } = await supabase.storage
+        .from('client-documents')
+        .download(filePath);
+
+      if (!downloadError && fileBlob) {
+        const url = URL.createObjectURL(fileBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        return;
+      }
+
+      // Fallback: signed URL navigation
+      console.warn('Direct download failed, falling back to signed URL:', downloadError);
       const { data, error } = await supabase.storage
         .from('client-documents')
         .createSignedUrl(filePath, 60);
 
-      if (error) {
-        console.error('Signed URL error:', error);
-        throw error;
-      }
+      if (error) throw error;
 
       const signedUrl = data?.signedUrl;
       if (!signedUrl) throw new Error('Missing signed URL');
 
-      // Supabase returns relative path; make it absolute
       const baseUrl = import.meta.env.VITE_SUPABASE_URL as string;
       const absoluteUrl = signedUrl.startsWith('http')
         ? signedUrl
         : `${baseUrl}/storage/v1${signedUrl}`;
 
-      // Open in new tab - don't encode as it breaks the signature
-      window.open(absoluteUrl, '_blank');
+      window.location.assign(absoluteUrl);
     } catch (error) {
       console.error('Download error:', error);
       toast({
