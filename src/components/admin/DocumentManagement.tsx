@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -47,7 +47,7 @@ export default function DocumentManagement() {
       .from('documents')
       .select(`
         *,
-        profiles:user_id (
+        profiles!documents_user_id_fkey (
           first_name,
           last_name,
           company_name
