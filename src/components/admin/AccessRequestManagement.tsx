@@ -24,7 +24,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { format } from 'date-fns';
-import { Check, X, Search, Mail, Loader2 } from 'lucide-react';
+import { Check, X, Search, Mail, Loader2, RefreshCw } from 'lucide-react';
 
 interface AccessRequest {
   id: string;
@@ -126,6 +126,51 @@ export default function AccessRequestManagement() {
       toast({
         title: 'Error',
         description: error instanceof Error ? error.message : 'Failed to deny request',
+        variant: 'destructive',
+      });
+    },
+  });
+
+  const resendMutation = useMutation({
+    mutationFn: async (request: AccessRequest) => {
+      // Generate new access code
+      const accessCode = Math.floor(100000 + Math.random() * 900000).toString();
+      const codeExpiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString();
+
+      // Update the request with the new code
+      const { error: updateError } = await supabase
+        .from('access_requests')
+        .update({
+          access_code: accessCode,
+          code_expires_at: codeExpiresAt,
+        })
+        .eq('id', request.id);
+
+      if (updateError) throw updateError;
+
+      // Send access code email
+      const { error: emailError } = await supabase.functions.invoke('send-access-code', {
+        body: { email: request.email, accessCode },
+      });
+
+      if (emailError) {
+        console.error('Failed to send email:', emailError);
+        throw new Error('Failed to send access code email');
+      }
+
+      return { accessCode };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['access-requests'] });
+      toast({
+        title: 'Email Resent',
+        description: 'A new access code has been sent to the client.',
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to resend email',
         variant: 'destructive',
       });
     },
@@ -263,6 +308,7 @@ export default function AccessRequestManagement() {
                 <TableHead>Requested</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Expires</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -278,6 +324,25 @@ export default function AccessRequestManagement() {
                   <TableCell>{getStatusBadge(request.status)}</TableCell>
                   <TableCell>
                     {format(new Date(request.code_expires_at), 'MMM d, yyyy h:mm a')}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    {(request.status === 'pending' || request.status === 'approved') && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => resendMutation.mutate(request)}
+                        disabled={resendMutation.isPending}
+                      >
+                        {resendMutation.isPending ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <>
+                            <RefreshCw className="h-4 w-4 mr-1" />
+                            Resend
+                          </>
+                        )}
+                      </Button>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
