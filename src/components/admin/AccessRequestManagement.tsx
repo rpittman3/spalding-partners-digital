@@ -108,7 +108,7 @@ export default function AccessRequestManagement() {
     mutationFn: async (request: AccessRequest) => {
       const { error } = await supabase
         .from('access_requests')
-        .update({ status: 'denied' })
+        .delete()
         .eq('id', request.id);
 
       if (error) throw error;
@@ -116,8 +116,8 @@ export default function AccessRequestManagement() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['access-requests'] });
       toast({
-        title: 'Request Denied',
-        description: 'The access request has been denied.',
+        title: 'Request Deleted',
+        description: 'The access request has been deleted.',
       });
       setSelectedRequest(null);
       setActionType(null);
@@ -125,7 +125,7 @@ export default function AccessRequestManagement() {
     onError: (error) => {
       toast({
         title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to deny request',
+        description: error instanceof Error ? error.message : 'Failed to delete request',
         variant: 'destructive',
       });
     },
@@ -367,15 +367,15 @@ export default function AccessRequestManagement() {
               {actionType === 'approve' ? 'Approve Access Request' : 'Deny Access Request'}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              {actionType === 'approve' ? (
+            {actionType === 'approve' ? (
                 <>
                   This will generate an access code and send it to <strong>{selectedRequest?.email}</strong>.
                   They will be able to create an account using this code.
                 </>
               ) : (
                 <>
-                  This will deny the access request from <strong>{selectedRequest?.email}</strong>.
-                  They will not be notified automatically.
+                  This will permanently delete the access request from <strong>{selectedRequest?.email}</strong>.
+                  They will not be notified.
                 </>
               )}
             </AlertDialogDescription>
@@ -390,7 +390,7 @@ export default function AccessRequestManagement() {
               {(approveMutation.isPending || denyMutation.isPending) && (
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
               )}
-              {actionType === 'approve' ? 'Approve & Send Code' : 'Deny Request'}
+              {actionType === 'approve' ? 'Approve & Send Code' : 'Delete Request'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
