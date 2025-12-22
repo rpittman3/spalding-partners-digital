@@ -21,11 +21,7 @@ serve(async (req) => {
     const smtpPassword = Deno.env.get('SMTP_PASSWORD');
     const smtpPort = parseInt(Deno.env.get('SMTP_PORT') || '587');
     const smtpFrom = Deno.env.get('SMTP_FROM');
-    const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
-    
-    // Get the site URL from Supabase URL (extract project ref)
-    const projectRef = supabaseUrl.match(/https:\/\/([^.]+)/)?.[1] || '';
-    const siteUrl = `https://${projectRef}.lovableproject.com`;
+    const siteUrl = Deno.env.get('SITE_URL') || '';
 
     if (!smtpHostname || !smtpUsername || !smtpPassword || !smtpFrom) {
       throw new Error('SMTP configuration missing');
