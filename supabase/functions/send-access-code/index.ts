@@ -21,6 +21,11 @@ serve(async (req) => {
     const smtpPassword = Deno.env.get('SMTP_PASSWORD');
     const smtpPort = parseInt(Deno.env.get('SMTP_PORT') || '587');
     const smtpFrom = Deno.env.get('SMTP_FROM');
+    const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
+    
+    // Get the site URL from Supabase URL (extract project ref)
+    const projectRef = supabaseUrl.match(/https:\/\/([^.]+)/)?.[1] || '';
+    const siteUrl = `https://${projectRef}.lovableproject.com`;
 
     if (!smtpHostname || !smtpUsername || !smtpPassword || !smtpFrom) {
       throw new Error('SMTP configuration missing');
@@ -38,6 +43,9 @@ serve(async (req) => {
       },
     });
 
+    // Create direct link to auth page with code entry mode
+    const authLink = `${siteUrl}/auth?mode=code&email=${encodeURIComponent(email)}`;
+
     await smtpClient.send({
       from: smtpFrom,
       to: email,
@@ -53,7 +61,14 @@ serve(async (req) => {
               ${accessCode}
             </div>
             <p>This code will expire in 30 minutes.</p>
-            <p>Please enter this code on the access request page to set up your account.</p>
+            <p style="text-align: center; margin: 25px 0;">
+              <a href="${authLink}" style="background-color: #1a365d; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                Enter Your Code
+              </a>
+            </p>
+            <p style="color: #666; font-size: 12px;">
+              Or copy this link: <a href="${authLink}">${authLink}</a>
+            </p>
             <p style="color: #666; font-size: 12px; margin-top: 30px;">
               If you didn't request this code, please ignore this email.
             </p>
