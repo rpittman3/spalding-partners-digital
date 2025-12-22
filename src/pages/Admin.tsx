@@ -3,6 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import DashboardStats from '@/components/admin/DashboardStats';
 import ClientManagement from '@/components/admin/ClientManagement';
 import DocumentManagement from '@/components/admin/DocumentManagement';
@@ -38,37 +39,69 @@ import {
   LogOut,
   HelpCircle,
   Home,
+  ChevronDown,
 } from 'lucide-react';
 
 export default function Admin() {
   const { signOut } = useAuth();
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('dashboard');
+  const [clientsOpen, setClientsOpen] = useState(true);
+  const [siteUpdatesOpen, setSiteUpdatesOpen] = useState(true);
 
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
   };
 
-  const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'clients', label: 'Clients', icon: Users },
+  const clientMenuItems = [
+    { id: 'clients', label: 'Current Clients', icon: Users },
     { id: 'sub-users', label: 'Client Members', icon: Users },
-    { id: 'staff', label: 'Staff', icon: UserCircle },
-    { id: 'documents', label: 'Documents', icon: FileText },
-    { id: 'resources', label: 'Client Resources', icon: FolderOpen },
-    { id: 'public-resources', label: 'Public Resources', icon: Globe },
-    { id: 'notifications', label: 'Notifications', icon: Bell },
-    { id: 'deadlines', label: 'Deadlines', icon: Calendar },
+    { id: 'documents', label: 'Client Documents', icon: FileText },
     { id: 'meetings', label: 'Meeting Requests', icon: MessageSquare },
-    { id: 'categories', label: 'Categories', icon: Tags },
-    { id: 'faqs', label: 'FAQs', icon: HelpCircle },
-    { id: 'import', label: 'Import Clients', icon: Upload },
     { id: 'view-imports', label: 'Imported Clients', icon: Eye },
     { id: 'access-requests', label: 'Access Requests', icon: UserCircle },
+    { id: 'categories', label: 'Client Categories', icon: Tags },
+  ];
+
+  const siteUpdatesMenuItems = [
+    { id: 'resources', label: 'Client Resources', icon: FolderOpen },
+    { id: 'public-resources', label: 'Public Resources', icon: Globe },
+    { id: 'deadlines', label: 'Deadlines', icon: Calendar },
+    { id: 'notifications', label: 'Notifications', icon: Bell },
+    { id: 'staff', label: 'Staff', icon: UserCircle },
+    { id: 'faqs', label: 'FAQs', icon: HelpCircle },
+  ];
+
+  const topLevelItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  ];
+
+  const bottomItems = [
+    { id: 'import', label: 'Import Clients', icon: Upload },
     { id: 'audit', label: 'Audit Logs', icon: History },
     { id: 'settings', label: 'Settings', icon: SettingsIcon },
   ];
+
+  const isClientSection = clientMenuItems.some(item => item.id === activeSection);
+  const isSiteUpdatesSection = siteUpdatesMenuItems.some(item => item.id === activeSection);
+
+  const renderMenuItem = (item: { id: string; label: string; icon: React.ElementType }, indent = false) => (
+    <button
+      key={item.id}
+      onClick={() => setActiveSection(item.id)}
+      className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-colors ${
+        indent ? 'pl-8' : ''
+      } ${
+        activeSection === item.id
+          ? 'bg-primary text-primary-foreground'
+          : 'hover:bg-muted'
+      }`}
+    >
+      <item.icon className="h-5 w-5" />
+      <span>{item.label}</span>
+    </button>
+  );
 
   return (
     <div className="min-h-screen flex">
@@ -78,20 +111,40 @@ export default function Admin() {
           <h1 className="text-2xl font-bold text-primary">Admin Portal</h1>
         </div>
         <nav className="p-4 space-y-2">
-          {menuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveSection(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-colors ${
-                activeSection === item.id
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-muted'
-              }`}
-            >
-              <item.icon className="h-5 w-5" />
-              <span>{item.label}</span>
-            </button>
-          ))}
+          {/* Dashboard */}
+          {topLevelItems.map((item) => renderMenuItem(item))}
+
+          {/* Clients Group */}
+          <Collapsible open={clientsOpen} onOpenChange={setClientsOpen}>
+            <CollapsibleTrigger className={`w-full flex items-center justify-between px-4 py-2 rounded-lg transition-colors hover:bg-muted ${isClientSection ? 'text-primary font-medium' : ''}`}>
+              <div className="flex items-center gap-3">
+                <Users className="h-5 w-5" />
+                <span>Clients</span>
+              </div>
+              <ChevronDown className={`h-4 w-4 transition-transform ${clientsOpen ? 'rotate-180' : ''}`} />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="space-y-1 mt-1">
+              {clientMenuItems.map((item) => renderMenuItem(item, true))}
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Site Updates Group */}
+          <Collapsible open={siteUpdatesOpen} onOpenChange={setSiteUpdatesOpen}>
+            <CollapsibleTrigger className={`w-full flex items-center justify-between px-4 py-2 rounded-lg transition-colors hover:bg-muted ${isSiteUpdatesSection ? 'text-primary font-medium' : ''}`}>
+              <div className="flex items-center gap-3">
+                <Globe className="h-5 w-5" />
+                <span>Site Updates</span>
+              </div>
+              <ChevronDown className={`h-4 w-4 transition-transform ${siteUpdatesOpen ? 'rotate-180' : ''}`} />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="space-y-1 mt-1">
+              {siteUpdatesMenuItems.map((item) => renderMenuItem(item, true))}
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Bottom Items */}
+          {bottomItems.map((item) => renderMenuItem(item))}
+
           <Link
             to="/"
             className="w-full flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-muted"
@@ -115,7 +168,7 @@ export default function Admin() {
           <Card>
             <CardHeader>
               <CardTitle>
-                {menuItems.find((item) => item.id === activeSection)?.label || 'Dashboard'}
+                {[...topLevelItems, ...clientMenuItems, ...siteUpdatesMenuItems, ...bottomItems].find((item) => item.id === activeSection)?.label || 'Dashboard'}
               </CardTitle>
               <CardDescription>
                 {activeSection === 'dashboard' && 'Overview of your admin portal'}
