@@ -106,7 +106,7 @@ export default function Admin() {
   return (
     <div className="min-h-screen flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-card border-r">
+      <aside className="w-72 bg-card border-r">
         <div className="p-6 border-b">
           <h1 className="text-2xl font-bold text-primary">Admin Portal</h1>
         </div>
