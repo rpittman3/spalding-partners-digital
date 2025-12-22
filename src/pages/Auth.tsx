@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,13 +12,27 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function Auth() {
+  const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [accessRequested, setAccessRequested] = useState(false);
   const [accessCode, setAccessCode] = useState('');
   const [requestedEmail, setRequestedEmail] = useState('');
+  const [activeTab, setActiveTab] = useState('login');
   const navigate = useNavigate();
   const { toast } = useToast();
   const { isRecoveryMode, clearRecoveryMode } = useAuth();
+
+  // Handle URL parameters for code entry mode
+  useEffect(() => {
+    const mode = searchParams.get('mode');
+    const email = searchParams.get('email');
+    
+    if (mode === 'code' && email) {
+      setRequestedEmail(decodeURIComponent(email));
+      setAccessRequested(true);
+      setActiveTab('request');
+    }
+  }, [searchParams]);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -293,7 +307,7 @@ export default function Auth() {
       <main className="flex-1 offset-header py-16 bg-muted/50">
         <div className="container-custom">
           <div className="max-w-md mx-auto">
-            <Tabs defaultValue="login" className="w-full">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="login">Login</TabsTrigger>
                 <TabsTrigger value="request">Request Access</TabsTrigger>
