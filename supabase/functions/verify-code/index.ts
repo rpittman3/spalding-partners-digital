@@ -86,20 +86,12 @@ serve(async (req) => {
       );
     }
 
-    // Get client data from imports
+    // Get client data from imports (may not exist for admin-approved requests)
     const { data: importedClient } = await supabase
       .from('client_imports')
       .select('*')
       .eq('email', email.toLowerCase())
       .single();
-
-    if (!importedClient) {
-      console.error('Client import lookup failed for email');
-      return new Response(
-        JSON.stringify({ error: 'Invalid verification request' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
 
     // Create auth user
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
@@ -113,8 +105,8 @@ serve(async (req) => {
       throw new Error('Account creation failed');
     }
 
-    // Create profile
-    await supabase.from('profiles').insert({
+    // Create profile using imported client data if available, otherwise use access request data
+    const profileData = importedClient ? {
       id: authData.user.id,
       email: email.toLowerCase(),
       first_name: importedClient.first_name,
@@ -124,7 +116,15 @@ serve(async (req) => {
       work_phone: importedClient.work_phone,
       cell_phone: importedClient.cell_phone,
       is_main_user: true,
-    });
+    } : {
+      id: authData.user.id,
+      email: email.toLowerCase(),
+      first_name: '', // Will need to be updated by user or admin
+      last_name: accessRequest.last_name,
+      is_main_user: true,
+    };
+
+    await supabase.from('profiles').insert(profileData);
 
     // Create user role
     await supabase.from('user_roles').insert({
@@ -132,8 +132,8 @@ serve(async (req) => {
       role: 'client',
     });
 
-    // Parse and assign categories
-    if (importedClient.categories) {
+    // Parse and assign categories (only if imported client exists with categories)
+    if (importedClient?.categories) {
       const categoryNames = importedClient.categories.split(',').map((c: string) => c.trim());
       const { data: categories } = await supabase
         .from('categories')
@@ -155,11 +155,13 @@ serve(async (req) => {
       .update({ status: 'approved', used_at: new Date().toISOString() })
       .eq('id', accessRequest.id);
 
-    // Mark import as processed
-    await supabase
-      .from('client_imports')
-      .update({ account_created: true, processed_at: new Date().toISOString() })
-      .eq('id', importedClient.id);
+    // Mark import as processed (only if imported client exists)
+    if (importedClient) {
+      await supabase
+        .from('client_imports')
+        .update({ account_created: true, processed_at: new Date().toISOString() })
+        .eq('id', importedClient.id);
+    }
 
     return new Response(
       JSON.stringify({ success: true }),
