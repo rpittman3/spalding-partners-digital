@@ -90,10 +90,99 @@ serve(async (req) => {
       .ilike('last_name', lastName)
       .single();
 
-    if (importError || !importedClient) {
-      console.log('Client lookup failed or no match found');
+    const isImportedClient = !importError && importedClient;
+
+    if (!isImportedClient) {
+      console.log('Client not in import list - creating pending request for admin approval');
+      
+      // Check if there's already a pending request for this email
+      const { data: existingPendingRequest } = await supabase
+        .from('access_requests')
+        .select('*')
+        .eq('email', email.toLowerCase())
+        .eq('status', 'pending_approval')
+        .single();
+
+      if (existingPendingRequest) {
+        console.log('Pending approval request already exists');
+        return new Response(
+          JSON.stringify({ pending: true, message: 'Your request is pending admin approval' }),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Create a pending approval request (no access code - admin must approve first)
+      const { error: requestError } = await supabase.from('access_requests').insert({
+        email: email.toLowerCase(),
+        last_name: lastName,
+        access_code: 'PENDING', // Placeholder - will be generated after admin approval
+        code_expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
+        status: 'pending_approval',
+      });
+
+      if (requestError) {
+        console.error('Failed to create pending request:', requestError);
+        throw new Error('Failed to create access request');
+      }
+
+      // Send notification email to admin
+      try {
+        const smtpHostname = Deno.env.get('SMTP_HOSTNAME');
+        const smtpUsername = Deno.env.get('SMTP_USERNAME');
+        const smtpPassword = Deno.env.get('SMTP_PASSWORD');
+        const smtpPort = parseInt(Deno.env.get('SMTP_PORT') || '587');
+        const smtpFrom = Deno.env.get('SMTP_FROM');
+
+        if (smtpHostname && smtpUsername && smtpPassword && smtpFrom) {
+          const { SMTPClient } = await import('https://deno.land/x/denomailer@1.6.0/mod.ts');
+          
+          const smtpClient = new SMTPClient({
+            connection: {
+              hostname: smtpHostname,
+              port: smtpPort,
+              tls: true,
+              auth: {
+                username: smtpUsername,
+                password: smtpPassword,
+              },
+            },
+          });
+
+          await smtpClient.send({
+            from: smtpFrom,
+            to: 'admin@sp-financial.com',
+            subject: 'New Access Request Pending Approval - SP Financial',
+            html: `
+              <html>
+                <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                  <h2 style="color: #333;">New Access Request Pending Approval</h2>
+                  <p>A new client has requested access to the SP Financial client portal but was not found in the import list.</p>
+                  <div style="background-color: #f5f5f5; padding: 15px; margin: 20px 0; border-radius: 5px;">
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Last Name:</strong> ${lastName}</p>
+                    <p><strong>Requested At:</strong> ${new Date().toLocaleString()}</p>
+                  </div>
+                  <p>Please log in to the admin dashboard to review and approve or deny this request.</p>
+                  <p style="color: #666; font-size: 12px; margin-top: 30px;">
+                    This is an automated notification from SP Financial Client Portal.
+                  </p>
+                </body>
+              </html>
+            `,
+          });
+
+          await smtpClient.close();
+          console.log('Admin notification email sent for pending approval request');
+        } else {
+          console.warn('SMTP not configured - skipping admin notification email');
+        }
+      } catch (emailError) {
+        console.error('Error sending admin notification email:', emailError);
+        // Don't fail the request if email fails
+      }
+
       return new Response(
-        JSON.stringify({ pending: true }),
+        JSON.stringify({ pending: true, message: 'Your request has been submitted for admin approval' }),
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }

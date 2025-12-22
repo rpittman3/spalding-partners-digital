@@ -11,6 +11,7 @@ import CategoryManagement from '@/components/admin/CategoryManagement';
 import SubUserManagement from '@/components/admin/SubUserManagement';
 import ImportClients from '@/components/admin/ImportClients';
 import ViewImportedClients from '@/components/admin/ViewImportedClients';
+import AccessRequestManagement from '@/components/admin/AccessRequestManagement';
 import AuditLogs from '@/components/admin/AuditLogs';
 import MeetingRequestManagement from '@/components/admin/MeetingRequestManagement';
 import Settings from '@/components/admin/Settings';
@@ -64,6 +65,7 @@ export default function Admin() {
     { id: 'faqs', label: 'FAQs', icon: HelpCircle },
     { id: 'import', label: 'Import Clients', icon: Upload },
     { id: 'view-imports', label: 'Imported Clients', icon: Eye },
+    { id: 'access-requests', label: 'Access Requests', icon: UserCircle },
     { id: 'audit', label: 'Audit Logs', icon: History },
     { id: 'settings', label: 'Settings', icon: SettingsIcon },
   ];
@@ -130,6 +132,7 @@ export default function Admin() {
                 {activeSection === 'faqs' && 'Manage frequently asked questions'}
                 {activeSection === 'import' && 'Import clients from CSV'}
                 {activeSection === 'view-imports' && 'View imported clients and their access request status'}
+                {activeSection === 'access-requests' && 'Approve or deny access requests from clients not in import list'}
                 {activeSection === 'audit' && 'View system audit logs'}
                 {activeSection === 'settings' && 'Configure system settings'}
               </CardDescription>
@@ -147,6 +150,7 @@ export default function Admin() {
               {activeSection === 'faqs' && <FAQManagement />}
               {activeSection === 'import' && <ImportClients />}
               {activeSection === 'view-imports' && <ViewImportedClients />}
+              {activeSection === 'access-requests' && <AccessRequestManagement />}
               {activeSection === 'audit' && <AuditLogs />}
               {activeSection === 'settings' && <Settings />}
               {activeSection === 'notifications' && <NotificationManagement />}
