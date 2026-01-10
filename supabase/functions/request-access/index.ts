@@ -214,7 +214,7 @@ serve(async (req) => {
 
     // Generate 6-digit code
     const accessCode = Math.floor(100000 + Math.random() * 900000).toString();
-    const codeExpiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString();
+    const codeExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24 hours
 
     // Store access request
     const { error: requestError } = await supabase.from('access_requests').insert({

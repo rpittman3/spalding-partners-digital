@@ -60,7 +60,7 @@ export default function AccessRequestManagement() {
     mutationFn: async (request: AccessRequest) => {
       // Generate new access code
       const accessCode = Math.floor(100000 + Math.random() * 900000).toString();
-      const codeExpiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString();
+      const codeExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24 hours
 
       // Update the request with the new code and status
       const { error: updateError } = await supabase
@@ -135,7 +135,7 @@ export default function AccessRequestManagement() {
     mutationFn: async (request: AccessRequest) => {
       // Generate new access code
       const accessCode = Math.floor(100000 + Math.random() * 900000).toString();
-      const codeExpiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString();
+      const codeExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24 hours
 
       // Update the request with the new code
       const { error: updateError } = await supabase
