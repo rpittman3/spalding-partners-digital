@@ -56,7 +56,7 @@ serve(async (req) => {
             <div style="background-color: #f5f5f5; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; letter-spacing: 3px; margin: 20px 0;">
               ${accessCode}
             </div>
-            <p>This code will expire in 30 minutes.</p>
+            <p>This code will expire in 24 hours.</p>
             <p style="text-align: center; margin: 25px 0;">
               <a href="${authLink}" style="background-color: #1a365d; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">
                 Enter Your Code
