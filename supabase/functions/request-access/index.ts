@@ -77,8 +77,8 @@ serve(async (req) => {
     if (existingUser) {
       console.log('Account already exists for email');
       return new Response(
-        JSON.stringify({ error: 'An account already exists for this email' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: 'An account already exists for this email. Please log in or use "Forgot Password" to reset your password.' }),
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
